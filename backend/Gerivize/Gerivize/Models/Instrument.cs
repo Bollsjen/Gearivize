@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Gerivize.EnumTypes;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gerivize.Models
@@ -22,7 +24,8 @@ namespace Gerivize.Models
         public string Type { get; set; }
 
         [Column("test")]
-        public string Test { get; set; }
+        [EnumDataType(typeof(TestType))]
+        public TestType Test { get; set; }
 
         [Column("serial_number")]
         public string SerialNumber { get; set; }
@@ -53,5 +56,10 @@ namespace Gerivize.Models
 
         [Column("external_calibration")]
         public bool ExternalCalibration { get; set; }
+
+
+        [ForeignKey(nameof(UserId))]
+        [JsonIgnore]
+        public virtual User? User { get; set; }
     }
 }
