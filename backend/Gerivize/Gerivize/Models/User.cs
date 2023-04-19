@@ -22,6 +22,6 @@ namespace Gerivize.Models
         public bool SuperUser { get; set; }
 
         [Column("responsible")]
-        public bool Responsible
+        public bool Responsible { get; set; }
     }
 }
