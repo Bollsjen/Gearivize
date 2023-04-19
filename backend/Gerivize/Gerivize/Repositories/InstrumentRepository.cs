@@ -51,10 +51,11 @@ namespace Gerivize.Repositories
         private string nextANumber()
         {
             List<Instrument> instruments = _localContext.Instruments.ToList();
+            List<Instrument> list = instruments.OrderBy(i => int.Parse(new string(i.ANumber.Where(char.IsDigit).ToArray()))).ThenBy(s=>s).ToList();
             int lastNumber = 1;
             if(instruments.Count > 0)
             {
-                string lastANumber = instruments.Last().ANumber;
+                string lastANumber = list.Last().ANumber;
                 lastANumber = lastANumber.Replace('A', ' ');
                 lastANumber = lastANumber.Trim();
                 lastNumber = Convert.ToInt32(lastANumber);

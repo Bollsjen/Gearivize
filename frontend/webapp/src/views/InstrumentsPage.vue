@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="w-75 text-start">
     <h1>Instruments</h1>
-    <common-table :items="instruments" :fields="fields" />
+    <common-table :items="instruments" :fields="fields" striped hover pagination :filter-properties="filterProperties" />
   </b-container>
 </template>
 
@@ -17,27 +17,55 @@ export default {
   },
   data(){
     return {
-      instruments: Array,
+      instruments: [],
+      filterProperties: [
+        {
+          key: 'inactive',
+          value: true,
+          label: 'Inactive',
+          default: 0,
+        },
+        {
+          key: 'inactive',
+          value: false,
+          label: 'Active',
+          default: 1,
+        },
+      ]
     }
   },
   methods: {
     getInstruments(){
       instrumentsService.getAll()
-          .then(result => this.instruments = result.data)
+          .then(result => this.instruments = this.sortInstruments(result.data))
           .catch(error => console.log(error))
+    },
+    sortInstruments(array){
+      return array.sort(function(a,b){
+        const aNumber = parseInt(a.aNumber.match(/\d+/)[0]);
+        const bNumber = parseInt(b.aNumber.match(/\d+/)[0]);
+        if (aNumber === bNumber) {
+          return a.aNumber.localeCompare(b.aNumber, undefined, { numeric: true, sensitivity: 'base' });
+        } else {
+          return aNumber - bNumber;
+        }
+      })
     }
   },
   computed: {
     fields(){
       return [
         {
-          key: 'aNumber'
+          key: 'aNumber',
+          sortable: true,
         },
         {
-          key: 'instrumentName'
+          key: 'instrumentName',
+          sortable: true,
         },
         {
-          key: 'value'
+          key: 'value',
+          sortable: true,
         },
         {
           key: 'actions',
