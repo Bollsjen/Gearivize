@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerivize", "Gerivize\Gerivize.csproj", "{2B9FF156-4062-4DEA-9F7B-A1236398043E}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "webapp", "..\..\frontend\webapp\webapp\webapp.esproj", "{6B83CF33-F79F-4917-8FE6-2331E57CE639}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "webapp", "..\..\frontend\webapp\webapp.esproj", "{6B83CF33-F79F-4917-8FE6-2331E57CE639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
