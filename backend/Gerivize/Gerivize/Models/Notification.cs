@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Gerivize.Models
 {
+    [Table("notification")]
     public class Notification
     {
         [Key]
@@ -17,7 +19,8 @@ namespace Gerivize.Models
         public string ANumber { get; set; }
 
         [Column("creation_date")]
-        public DateTime CreationDate { get; set; }
+        [DefaultValue(typeof(DateTime), "")]
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         [Column("has_reacted")]
         public bool HasReacted { get; set; }

@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gerivize.Models
 {
+    [Table("user")]
     public class User
     {
         [Key]
@@ -18,10 +20,14 @@ namespace Gerivize.Models
         [Column("password")]
         public string Password { get; set; }
 
+        [Column("creation_date")]
+        [DefaultValue(typeof(DateTime), "")]
+        public DateTime CreateDate { get; set; } = DateTime.Now;
+
         [Column("super_user")]
         public bool SuperUser { get; set; }
 
         [Column("responsible")]
-        public bool Responsible
+        public bool Responsible { get; set; }
     }
 }
