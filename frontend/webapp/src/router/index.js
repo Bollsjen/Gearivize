@@ -1,22 +1,44 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import DashboardFrontPage from "@/views/DashboardFrontPage.vue";
+import InstrumentsPage from "@/views/InstrumentsPage.vue";
+import InactiveInstrumentsPage from "@/views/InactiveInstrumentsPage.vue";
+import TemplatesPage from "@/views/TemplatesPage.vue";
+import SiginPage from "@/views/SiginPage.vue";
+import SettingsPage from "@/views/SettingsPage.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    name: 'Dashboard',
+    component: DashboardFrontPage
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/instruments',
+    name: 'Instruments',
+    component: InstrumentsPage
+  },
+  {
+    path: '/inactive-instruments',
+    name: 'Inactive Instruments',
+    component: InactiveInstrumentsPage
+  },
+  {
+    path: '/templates',
+    name: 'Templates',
+    component: TemplatesPage
+  },
+  {
+    path: '/signin',
+    name: 'Signin',
+    component: SiginPage
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: SettingsPage
   }
 ]
 

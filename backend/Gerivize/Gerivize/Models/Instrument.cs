@@ -1,10 +1,14 @@
 ﻿using Gerivize.EnumTypes;
-using Newtonsoft.Json;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Gerivize.Models
 {
+    [Table("instrument")]
     public class Instrument
     {
         [Key]
@@ -13,6 +17,10 @@ namespace Gerivize.Models
 
         [Column("user_id")]
         public Guid UserId { get; set; }
+
+        [Column("test_template_id")]
+        [DefaultValue(null)]
+        public Guid? TestTemplateId { get; set; }
 
         [Column("instrument_name")]
         public string InstrumentName { get; set; }
@@ -36,6 +44,10 @@ namespace Gerivize.Models
         [Column("next_calibration_date")]
         public DateTime NextCalibrationDate { get; set; }
 
+        [Column("creation_date")]
+        [DefaultValue(typeof(DateTime), "")]
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
         [Column("comment")]
         public string Comment { get; set; }
 
@@ -57,9 +69,16 @@ namespace Gerivize.Models
         [Column("external_calibration")]
         public bool ExternalCalibration { get; set; }
 
+        [Column("inactive")]
+        public bool Inactive { get; set; }
+
 
         [ForeignKey(nameof(UserId))]
         [JsonIgnore]
         public virtual User? User { get; set; }
+
+        [ForeignKey(nameof(TestTemplateId))]
+        [JsonIgnore]
+        public virtual TestTemplate? TestTemplate { get; set; }
     }
 }
