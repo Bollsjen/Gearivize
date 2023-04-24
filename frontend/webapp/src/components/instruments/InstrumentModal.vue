@@ -152,6 +152,7 @@
             <b-form-datepicker v-if="purpose === 'add' || purpose === 'edit'"
                           v-model="instrument.lastCalibratedDate"
                                :class="{error: v$.instrument.lastCalibratedDate.$error}"
+                               @input="onLastCalibrationDateChange"
             >
             </b-form-datepicker>
 
@@ -285,6 +286,35 @@
             >
             </b-checkbox>
           </b-form-group>
+
+
+
+          <b-form-group label="Instrument Responsible" class="col-sm-6">
+            <b-form-select v-if="purpose === 'add' || purpose === 'edit'"
+                           v-model="instrument.userId"
+                           :class="{error: v$.instrument.userId.$error}"
+                           :options="users"
+                           :value-field="'id'"
+                           :text-field="'name'"
+            >
+              <template #first>
+                <option :value="null">Select responsible</option>
+              </template>
+            </b-form-select>
+
+            <b-select v-if="purpose === 'watch'"
+                      v-model="instrument.test"
+                      :class="{error: v$.instrument.test.$error}"
+                      disabled
+            >
+              <option v-for="(user, index) in users" :key="index" :value="user.id">
+                {{user.name}}
+              </option>
+            </b-select>
+            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.userId.$error">
+              {{v$.instrument.userId.$errors[0].$message}}
+            </span>
+          </b-form-group>
         </b-row>
       </b-col>
     </b-row>
@@ -305,6 +335,7 @@
 <script>
 import {testTypes} from "@/types/TestTypes";
 import {instrumentsService} from "@/services/instrumentsService";
+import {userService} from "@/services/userService";
 import {required} from "vuelidate/lib/validators";
 import { useVuelidate } from '@vuelidate/core'
 import {computed, reactive} from "vue";
@@ -323,6 +354,7 @@ export default {
       active: false,
       purpose: '',
       testTypes: testTypes,
+      users: [],
       instruments: [],
       instrument: {},
       defaultInstrument: {
@@ -370,11 +402,19 @@ export default {
         },
         type: {
           required
+        },
+        userId: {
+          required
         }
       }
     }
   },
   methods: {
+    load(){
+      userService.getAll()
+          .then(result => this.users = result.data)
+          .catch(error => console.error(error))
+    },
     show(purpose, instrument){
       const date = new Date().setFullYear(new Date().getFullYear() + 2)
       const twoYearsFromNow = new Date(date)
@@ -384,6 +424,7 @@ export default {
     },
 
     hide(){
+      this.v$.$reset()
       this.active = false
     },
 
@@ -403,7 +444,6 @@ export default {
               centered: true
             }))
       }else {
-        alert("error")
         this.v$.$errors.forEach(error => {
           error.$message = "Required"
         })
@@ -423,7 +463,6 @@ export default {
               centered: true
             }))
       }else {
-        alert("error")
         this.v$.$errors.forEach(error => {
           error.$message = "Required"
         })
@@ -454,13 +493,17 @@ export default {
             okVariant: 'success',
             centered: true
           }))
+    },
+
+    onLastCalibrationDateChange(){
+      this.instrument.nextCalibrationDate = new Date(new Date(this.instrument.lastCalibratedDate).setFullYear(new Date(this.instrument.lastCalibratedDate).getFullYear() + 2)).toISOString().slice(0, 10)
     }
   },
   computed: {
 
   },
   mounted(){
-
+    this.load()
   }
 }
 </script>

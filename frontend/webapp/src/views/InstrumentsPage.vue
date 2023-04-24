@@ -102,6 +102,16 @@ export default {
           key: 'actions',
           label:'',
           template: {
+            head: [
+              {
+                icon: 'fa-plus',
+                text: 'New instrument',
+                placement: 'right',
+                variant: 'success',
+                size: 'sm',
+                action: (data) => this.$refs['InstrumentModal'].show('add',null)
+              }
+            ],
             cell: [
               {
                 icon: 'fa-eye',

@@ -91,5 +91,10 @@ namespace Gerivize.Models
         [ForeignKey(nameof(TestTemplateId))]
         [JsonIgnore]
         public virtual TestTemplate? TestTemplate { get; set; }
+
+        public override string ToString()
+        {
+            return $"A-Number: {ANumber}";
+        }
     }
 }

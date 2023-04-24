@@ -34,190 +34,67 @@ namespace Gerivize.Managers
                     }
                 });
                 Notification notification = instrumentNotifications.Find(n => n.CreationDate == oldDate);
-                /*if (instrument.ExternalCalibration)
-                {
-                    //_external += instrument.ANumber + " | " + (instrument.NextCalibrationDate - DateTime.Today).Days + "\n";
-                    
-                    if (notification != null)
-                    {
-                        if (instrument.NextCalibrationDate >= DateTime.Today.AddMonths(1).AddDays(15) && instrument.NextCalibrationDate <= DateTime.Today.AddMonths(3))
-                        {
-                            if (notification.CreationDate < DateTime.Today.AddMonths(-1).AddDays(-14) && notification.CreationDate >= DateTime.Today.AddMonths(-3))
-                            {
-                                //  Send notification
-                                Console.WriteLine("1.5 - 3 måneder: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                                instrumentsToCreateNotifications.Add(instrument);
-                            }
-                        }
-                        else if(instrument.NextCalibrationDate > DateTime.Today.AddMonths(1).AddDays(1) && instrument.NextCalibrationDate <= DateTime.Today.AddMonths(1).AddDays(14))
-                        {
-                            if(notification.CreationDate >= DateTime.Today.AddMonths(-1).AddDays(-14))
-                            {
-                                //  Send notification
-                                Console.WriteLine("1 - 1.5 måneder: "+instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                                instrumentsToCreateNotifications.Add(instrument);
-                            }
-                        }
-                    }
-                    else
-                    {
 
-                        if (instrument.NextCalibrationDate > DateTime.Today.AddMonths(1).AddDays(1) && instrument.NextCalibrationDate <= DateTime.Today.AddMonths(1).AddDays(1))
-                        {
-                            //  Send notification
-                            Console.WriteLine("1 - 1.5 måneder: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                            instrumentsToCreateNotifications.Add(instrument);
-                        }
-                        else if (instrument.NextCalibrationDate >= DateTime.Today.AddMonths(1).AddDays(15) && instrument.NextCalibrationDate <= DateTime.Today.AddMonths(3))
-                        {
-                            
-                            //  Send notification
-                            Console.WriteLine("1.5 - 3 måneder: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                            instrumentsToCreateNotifications.Add(instrument);
-                        }
-                    }
-                }
-                if (notification != null)
-                {
+                DateTime todayWeekAhead = DateTime.Today.AddDays(7);
 
-                    if (instrument.NextCalibrationDate <= DateTime.Today.AddMonths(1) && instrument.NextCalibrationDate > DateTime.Today.AddDays(7))
-                    {
-                        if (notification.CreationDate <= DateTime.Today.AddDays(-14))
-                        {
-                            //  Send notification
-                            Console.WriteLine("14 - 30 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                            instrumentsToCreateNotifications.Add(instrument);
-                        }
-                    }
-                    else if (instrument.NextCalibrationDate > DateTime.Today && instrument.NextCalibrationDate <= DateTime.Today.AddDays(7))
-                    {
-                        if (notification.CreationDate > DateTime.Today && notification.CreationDate <= DateTime.Today.AddDays(-7))
-                        {
-                            //  Send notification
-                            Console.WriteLine("1 - 7 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                            instrumentsToCreateNotifications.Add(instrument);
-                        }
-                    }
-                    else if (instrument.NextCalibrationDate <= DateTime.Today)
-                    {
-                        if (notification.CreationDate < DateTime.Today)
-                        {
-                            //  Send notification
-                            Console.WriteLine("Overdue: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + notification.CreationDate.Date.ToString());
-                            instrumentsToCreateNotifications.Add(instrument);
-                        }
-                    }
-                }
-                else
-                {
-
-                    if (instrument.NextCalibrationDate > DateTime.Today.AddDays(14) && instrument.NextCalibrationDate <= DateTime.Today.AddMonths(1))
-                    {
-                        //  Send notification
-                        Console.WriteLine("14 - 30 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                        instrumentsToCreateNotifications.Add(instrument);
-                    }
-                    else if (instrument.NextCalibrationDate >= DateTime.Today.AddDays(7) && instrument.NextCalibrationDate <= DateTime.Today.AddDays(14))
-                    {
-
-                        //  Send notification
-                        Console.WriteLine("7 - 14 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                        instrumentsToCreateNotifications.Add(instrument);
-                    }
-                    else if (instrument.NextCalibrationDate >= DateTime.Today && instrument.NextCalibrationDate <= DateTime.Today.AddDays(7))
-                    {                     
-                        //  Send notification
-                        Console.WriteLine("0 - 7 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                        instrumentsToCreateNotifications.Add(instrument);
-                    }
-                    else if (instrument.NextCalibrationDate < DateTime.Today)
-                    {
-                        //  Send notification
-                        Console.WriteLine("Overdue: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
-                        instrumentsToCreateNotifications.Add(instrument);
-                    }
-                }*/
-
-                if(instrument.ExternalCalibration && 
-                    (instrument.NextCalibrationDate - DateTime.Today).TotalDays <= (instrument.ExternalCalibration ? 90 : 45) && 
-                    (instrument.NextCalibrationDate - DateTime.Today).TotalDays > 30)
+                if (instrument.ExternalCalibration && 
+                    (instrument.NextCalibrationDate - todayWeekAhead).TotalDays <= (instrument.ExternalCalibration ? 90 : 45) && 
+                    (instrument.NextCalibrationDate - todayWeekAhead).TotalDays > 30)
                 {
                     if(notification != null && (notification.CreationDate - DateTime.Today).TotalDays <= -45)
                     {
-                        Console.WriteLine("1 - 3 måneder######: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
                         instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
                     }
                     else if(notification == null)
                     {
-                        Console.WriteLine("1 - 3 måneder: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration);
                         instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                    }
-                }else if((instrument.NextCalibrationDate - DateTime.Today).TotalDays <= -7 ||
-                    instrument.NextCalibrationDate == DateTime.Today ||
-                    (instrument.NextCalibrationDate - DateTime.Today).TotalDays <= 7 ||
-                    (instrument.NextCalibrationDate - DateTime.Today).TotalDays <= 14 ||
-                    (instrument.NextCalibrationDate - DateTime.Today).TotalDays <= 30){
+                    }                 
+                }else{
                     
-                    if (notification == null || (notification != null && !notification.HasReacted))
+                    if (notification == null)
                     {
-                        if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 14)
-                        {
-                            Console.WriteLine("14 - 30 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
+                        if ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays >= 14)
+                        {                        
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
                         }
-                        else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 7)
+                        else if ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays >= 7)
                         {
-                            Console.WriteLine("7 - 14 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
                         }
-                        else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays > 0)
+                        else if ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays > 0)
                         {
-                            Console.WriteLine("1 - 7 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
                         }
-                        else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= -7)
+                        else if ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays >= -7)
                         {
-                            Console.WriteLine("-7 - 0 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("everyone", instrument));
                         }
-                        else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7)
+                        else if ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays < -7)
                         {
-                            Console.WriteLine("Overdue: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
-                        }
+                        }                        
                     }
-                    else if(notification != null)
+                    else if(notification != null || (notification != null && !notification.HasReacted))
                     {
-                        if(!notification.HasReacted && (instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 14 && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
-                        {
-                            Console.WriteLine("14 - 30 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                        if(!notification.HasReacted && (instrument.NextCalibrationDate - todayWeekAhead).TotalDays >= 14 && (notification.CreationDate - DateTime.Today).TotalDays <= -14)
+                        {                           
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }else if(!notification.HasReacted && (instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 7 && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
+                        }else if(!notification.HasReacted && ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays >= 7 && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -14) && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
                         {
-                            Console.WriteLine("7 - 14 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }else if(!notification.HasReacted && ((instrument.NextCalibrationDate - DateTime.Today).TotalDays > 0 && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7) && (notification.CreationDate - DateTime.Today).TotalDays < 0)
+                        }else if(!notification.HasReacted && ((instrument.NextCalibrationDate - todayWeekAhead).TotalDays > 0 && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7) && (notification.CreationDate - DateTime.Today).TotalDays < 0)
                         {
-                            Console.WriteLine("1 - 7 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
+                        }else if (((instrument.NextCalibrationDate - todayWeekAhead).TotalDays >= -7 && (instrument.NextCalibrationDate - todayWeekAhead).TotalDays <= 0) && (notification.CreationDate - DateTime.Today).TotalDays < 0)
                         {
-                            Console.WriteLine("-7 - 0 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("everyone", instrument));
-                        }else if (!notification.HasReacted && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
-                        {
-                            Console.WriteLine("Overdue: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                        }else if (!notification.HasReacted && (instrument.NextCalibrationDate - todayWeekAhead).TotalDays < -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
+                        {                           
                             instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
                         }
                     }
                 }
             }
-            //Console.WriteLine("External:\n"+_external+"\n\n");
-            //Console.WriteLine("Internal:\n"+_internal);
             if(instrumentsToCreateNotifications.Count > 0)
             {
                 CreateNotifications(instrumentsToCreateNotifications);
@@ -241,12 +118,47 @@ namespace Gerivize.Managers
                 });
             }
 
-            //SendEmailNotification(instruments);
+            SendEmailNotification(instruments);
         }
 
         public void SendEmailNotification(List<KeyValuePair<string, Instrument>> instruments)
         {
+            List<User> users = _userRepository.getAll();
+            List<Instrument> emailEveryone = new List<Instrument>();
+            List<KeyValuePair<User, Instrument>> emailResponsibles = new List< KeyValuePair < User, Instrument>> ();
 
+            instruments.ForEach(item =>
+            {
+                if(item.Key == "responsible")
+                {
+                    emailResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User, item.Value));
+                }else if(item.Key == "everyone")
+                {
+                    emailEveryone.Add(item.Value);
+                }
+            });
+
+            Console.WriteLine("Everyone:");
+            emailEveryone.ForEach(item =>
+            {
+                Console.WriteLine("\t"+item);
+            });
+
+
+            Console.WriteLine("\n\nResponsibles:");
+            users.ForEach(user =>
+            {
+                Console.WriteLine(user.Name);
+                string message = "";
+                emailResponsibles.ForEach(item =>
+                {
+                    if(item.Key.Id == user.Id)
+                    {
+                        message += $"\t{item.Value}, User name: {item.Key.Name}\n";
+                    }
+                });
+                Console.WriteLine(message);
+            });
         }
     }
 }
