@@ -1,9 +1,9 @@
-﻿using Gerivize.Interfaces;
-using Gerivize.Models;
+﻿using Gerivize.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gerivize.Repositories
 {
-    public class InstrumentRepository : IInstrumentRepository
+    public class InstrumentRepository
     {
         private readonly GearivizeLocalContext _localContext;
 
@@ -26,6 +26,21 @@ namespace Gerivize.Repositories
         {
             return _localContext.Instruments.Where(i => i.UserId == userId).ToList();
         }
+
+        public List<Instrument> getByNextCalibrationDate()
+        {
+            DateTime threeMothsAhead = DateTime.Now.AddMonths(3).AddDays(-7);
+            DateTime oneMonthAhead = DateTime.Now.AddMonths(1).AddDays(-7);
+            List<Instrument> instruments = _localContext.Instruments.Include(i => i.User).Where(i =>
+                (((i.ExternalCalibration) && i.NextCalibrationDate <= threeMothsAhead) ||
+                ((!i.ExternalCalibration) && i.NextCalibrationDate <= oneMonthAhead)) ||
+                i.NextCalibrationDate >= DateTime.Now ||
+                i.NextCalibrationDate < DateTime.Now &&
+                i.NeedsCalibration
+            ).ToList();
+            return instruments;
+        }
+
         public Instrument createInstrument(Instrument instrument)
         {
             instrument.ANumber = nextANumber();

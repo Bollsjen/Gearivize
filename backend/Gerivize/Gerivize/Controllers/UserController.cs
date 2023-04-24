@@ -1,5 +1,6 @@
-﻿using Gerivize.Interfaces;
+﻿using Gerivize.Managers;
 using Gerivize.Models;
+using Gerivize.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,13 +11,13 @@ namespace Gerivize.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUserManager _userManager;
+        private readonly UserRepository _userRepository;
+        private readonly UserManager _userManager;
 
-        public UserController(IUserRepository userRepository, IUserManager userManager)
+        public UserController()
         {
-            _userRepository = userRepository;
-            _userManager = userManager;
+            _userRepository = new UserRepository();
+            _userManager = new UserManager();
         }
 
         // GET: api/<UserController>

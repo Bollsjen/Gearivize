@@ -1,14 +1,17 @@
-﻿using Gerivize.Interfaces;
+﻿
+
+using Gerivize.EnumTypes;
+using Gerivize.Repositories;
 
 namespace Gerivize.Managers
 {
-    public class InstrumentsManager : IInstrumentsManager
+    public class InstrumentsManager
     {
-        private readonly IInstrumentRepository _instrumentRepository;
+        private readonly InstrumentRepository _instrumentRepository;
 
-        public InstrumentsManager(IInstrumentRepository instrumentRepository)
+        public InstrumentsManager()
         {
-            _instrumentRepository = instrumentRepository;
+            _instrumentRepository = new InstrumentRepository();
         }
     }
 }

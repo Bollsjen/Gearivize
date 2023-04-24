@@ -1,6 +1,6 @@
-﻿using Gerivize.Interfaces;
-using Gerivize.Managers;
+﻿using Gerivize.Managers;
 using Gerivize.Models;
+using Gerivize.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,13 +11,13 @@ namespace Gerivize.Controllers
     [ApiController]
     public class InstrumentsController : ControllerBase
     {
-        private readonly IInstrumentRepository _instrumentRepository;
-        private readonly IInstrumentsManager _instrumentsManager;
+        private readonly InstrumentRepository _instrumentRepository;
+        private readonly InstrumentsManager _instrumentsManager;
 
-        public InstrumentsController(IInstrumentRepository instrumentRepository, IInstrumentsManager instrumentsManager)
+        public InstrumentsController()
         {
-            _instrumentRepository = instrumentRepository;
-            _instrumentsManager = instrumentsManager;
+            _instrumentRepository = new InstrumentRepository();
+            _instrumentsManager = new InstrumentsManager();
         }
 
 
@@ -31,7 +31,7 @@ namespace Gerivize.Controllers
 
         // GET api/<InstrumentsController>/5
         [HttpGet("{aNumber}")]
-        public ActionResult<Instrument> Get(string aNumber)
+        public ActionResult<Instrument> GetByANumber(string aNumber)
         {
             return _instrumentRepository.getById(aNumber);
         }
@@ -50,8 +50,14 @@ namespace Gerivize.Controllers
             return Ok(_instrumentRepository.updateInstrument(instrument));
         }
 
+        [HttpPut("inactive")]
+        public ActionResult<Instrument> Activate([FromBody] Instrument instrument)
+        {
+            return Ok(_instrumentRepository.updateInstrument(instrument));
+        }
+
         // DELETE api/<InstrumentsController>/5
-        [HttpDelete]
+        [HttpDelete("inactive/{aNumber}")]
         public ActionResult<Instrument> Delete(string aNumber)
         {
             return Ok(_instrumentRepository.deleteInstrument(aNumber));
