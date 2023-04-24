@@ -158,31 +158,7 @@ namespace Gerivize.Managers
                     (instrument.NextCalibrationDate - DateTime.Today).TotalDays <= 14 ||
                     (instrument.NextCalibrationDate - DateTime.Today).TotalDays <= 30){
                     
-                    if(notification != null && !notification.HasReacted)
-                    {
-                        if((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 14 && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
-                        {
-                            Console.WriteLine("14 - 30 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
-                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }else if((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 7 && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
-                        {
-                            Console.WriteLine("7 - 14 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
-                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }else if(((instrument.NextCalibrationDate - DateTime.Today).TotalDays > 0 && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7) && (notification.CreationDate - DateTime.Today).TotalDays < 0)
-                        {
-                            Console.WriteLine("1 - 7 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
-                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
-                        {
-                            Console.WriteLine("-7 - 0 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
-                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("everyone", instrument));
-                        }else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
-                        {
-                            Console.WriteLine("Overdue: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
-                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
-                        }
-                    }
-                    else if(notification == null || (notification != null && !notification.HasReacted))
+                    if (notification == null || (notification != null && !notification.HasReacted))
                     {
                         if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 14)
                         {
@@ -212,6 +188,30 @@ namespace Gerivize.Managers
                         else
                         {
                             Console.WriteLine("Error: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays);
+                        }
+                    }
+                    else if(notification != null)
+                    {
+                        if(!notification.HasReacted && (instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 14 && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
+                        {
+                            Console.WriteLine("14 - 30 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
+                        }else if(!notification.HasReacted && (instrument.NextCalibrationDate - DateTime.Today).TotalDays >= 7 && (notification.CreationDate - DateTime.Today).TotalDays <= -7)
+                        {
+                            Console.WriteLine("7 - 14 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
+                        }else if(!notification.HasReacted && ((instrument.NextCalibrationDate - DateTime.Today).TotalDays > 0 && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7) && (notification.CreationDate - DateTime.Today).TotalDays < 0)
+                        {
+                            Console.WriteLine("1 - 7 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
+                        }else if ((instrument.NextCalibrationDate - DateTime.Today).TotalDays >= -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
+                        {
+                            Console.WriteLine("-7 - 0 dage: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("everyone", instrument));
+                        }else if (!notification.HasReacted && (instrument.NextCalibrationDate - DateTime.Today).TotalDays < -7 && (notification.CreationDate - DateTime.Today).TotalDays < 0)
+                        {
+                            Console.WriteLine("Overdue: " + instrument.ANumber + " | External: " + instrument.ExternalCalibration + " | " + (instrument.NextCalibrationDate - DateTime.Today).TotalDays + " | " + (notification.CreationDate - DateTime.Today).TotalDays);
+                            instrumentsToCreateNotifications.Add(new KeyValuePair<string, Instrument>("responsible", instrument));
                         }
                     }
                 }
