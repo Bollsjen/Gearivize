@@ -103,6 +103,7 @@
                       style="margin-left: 5px"
                       :class="getPlacement(cell.placement)"
                       @click="cell.action(data.item)">
+              <span v-if="cell.text" style="margin-right: 7px">{{cell.text}}</span>
               <i class="fa-solid" :class="cell.icon"></i>
             </b-button>
           </div>

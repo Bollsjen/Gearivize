@@ -102,6 +102,17 @@ export default {
           key: 'actions',
           label:'',
           template: {
+            //
+            //  For at tilføje et knapper til headeren af common table laves et array kaldet head
+            //  I dette array laves objekter. Hvert objekt vil blive til en knap
+            //  En knap kan opbygges af:
+            //    label:  tekst en kolonne som andre kolonner
+            //    text: knap tekst
+            //    placement: left, center, right
+            //    variant: baggrundsfarven for knappen
+            //    size: bootstrap størrelser som sm, md osv.
+            //    action: tager en metode
+            //
             head: [
               {
                 icon: 'fa-plus',
@@ -109,9 +120,20 @@ export default {
                 placement: 'right',
                 variant: 'success',
                 size: 'sm',
-                action: (data) => this.$refs['InstrumentModal'].show('add',null)
+                action: () => this.$refs['InstrumentModal'].show('add',null)
               }
             ],
+
+            //
+            //  For at tilføje et knapper til cellerne af common table laves et array kaldet cell
+            //  I dette array laves objekter. Hvert objekt vil blive til en knap
+            //  En knap kan opbygges af:
+            //    text: knap tekst
+            //    placement: left, center, right
+            //    variant: baggrundsfarven for knappen
+            //    size: bootstrap størrelser som sm, md osv.
+            //    action: tager en metode. En metode kan tage én parameter vil blive cellens celle data (data.field for field data og data.item for cellens element fra items arrayet)
+            //
             cell: [
               {
                 icon: 'fa-eye',
