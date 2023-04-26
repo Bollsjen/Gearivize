@@ -35,7 +35,6 @@ namespace Gerivize.Controllers
             return Ok();
         }
 
-        // POST api/<AthenticationController>
         [HttpPost("{email}/{password}")]
         public async Task<ActionResult> Post(string email, string password)
         {
@@ -53,8 +52,6 @@ namespace Gerivize.Controllers
             {
                 IsPersistent = true,
             });
-            HttpContext.Items.Add("User",user);
-            Console.WriteLine(HttpContext.Items["User"]);
             return Ok();
         }
 

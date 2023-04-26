@@ -23,7 +23,9 @@ builder.Services.AddAuthentication("gearivise")
         options.Cookie.Name = "gearivize-session";
         options.Cookie.HttpOnly = true;
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    });
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    }
+);
 
 builder.Services.AddSingleton<User>();
 
