@@ -1,6 +1,6 @@
 ﻿namespace Gerivize.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class SchedulerAttribute : Attribute
     {
         public string Parameter { get; }

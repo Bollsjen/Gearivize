@@ -20,8 +20,6 @@ namespace Gerivize.Managers
             List<Instrument> instruments = _instrumentRepository.getByNextCalibrationDate();
             List<Notification> notifications = _notificationRepository.getNotificationsBetweenDates(DateTime.Today.AddMonths(-3), DateTime.Today);
             List<KeyValuePair<string, Instrument>> instrumentsToCreateNotifications = new List<KeyValuePair<string, Instrument>>();
-            string _external = "";
-            string _internal = "";
             foreach (Instrument instrument in instruments)
             {
                 List<Notification> instrumentNotifications = notifications.Where(n => n.ANumber == instrument.ANumber).ToList();
@@ -98,7 +96,8 @@ namespace Gerivize.Managers
             if(instrumentsToCreateNotifications.Count > 0)
             {
                 CreateNotifications(instrumentsToCreateNotifications);
-            }else
+            }
+            else
             {
                 Console.WriteLine("Everything is up to date");
             }

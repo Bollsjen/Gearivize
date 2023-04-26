@@ -24,7 +24,6 @@ builder.Services.AddHangfire(configuration => {
 });
 
 builder.Services.AddHangfireServer();
-GlobalConfiguration.Configuration.UseMemoryStorage();
 
 var app = builder.Build();
 
