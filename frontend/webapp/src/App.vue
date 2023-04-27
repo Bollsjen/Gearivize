@@ -18,7 +18,7 @@
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
-            <b-navbar-nav class="ms-auto">
+            <b-navbar-nav class="ml-auto">
               <b-nav-item class="notification-box">
                 <router-link to="/notifications">
                   <i class="fa-solid fa-bell notification-bell"></i>
