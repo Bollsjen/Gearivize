@@ -35,8 +35,8 @@ namespace Gerivize.Repositories
 
         public List<Instrument> getByNextCalibrationDate()
         {
-            DateTime threeMothsAhead = DateTime.Now.AddMonths(3).AddDays(-7);
-            DateTime oneMonthAhead = DateTime.Now.AddMonths(1).AddDays(-7);
+            DateTime threeMothsAhead = DateTime.Now.AddMonths(3).AddDays(7);
+            DateTime oneMonthAhead = DateTime.Now.AddMonths(1).AddDays(7);
             List<Instrument> instruments = _localContext.Instruments.Include(i => i.User).Where(i =>
                 (((i.ExternalCalibration) && i.NextCalibrationDate <= threeMothsAhead) ||
                 ((!i.ExternalCalibration) && i.NextCalibrationDate <= oneMonthAhead)) &&
