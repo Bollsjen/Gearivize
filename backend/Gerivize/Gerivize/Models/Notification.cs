@@ -28,10 +28,10 @@ namespace Gerivize.Models
 
         [ForeignKey(nameof(UserId))]
         [JsonIgnore]
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
         [ForeignKey(nameof(ANumber))]
         [JsonIgnore]
-        public virtual Instrument Instrument { get; set; }
+        public virtual Instrument? Instrument { get; set; }
     }
 }

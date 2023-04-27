@@ -9,6 +9,8 @@ node_modules
 # local env files
 .env.local
 .env.*.local
+**.env
+.env
 
 # Log files
 npm-debug.log*
@@ -165,3 +167,5 @@ $RECYCLE.BIN/
 
 _NCrunch*
 /backend/Gerivize/Gerivize/.env
+/backend/Gerivize/Gerivize/.env
+/backend/Gerivize/Gerivize/mykeys

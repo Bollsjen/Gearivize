@@ -1,9 +1,9 @@
-﻿using Gerivize.Interfaces;
-using Gerivize.Models;
+﻿using Gerivize.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gerivize.Repositories
 {
-    public class InstrumentRepository : IInstrumentRepository
+    public class InstrumentRepository
     {
         private readonly GearivizeLocalContext _localContext;
 
@@ -26,6 +26,19 @@ namespace Gerivize.Repositories
         {
             return _localContext.Instruments.Where(i => i.UserId == userId).ToList();
         }
+
+        public List<Instrument> getByNextCalibrationDate()
+        {
+            DateTime threeMothsAhead = DateTime.Now.AddMonths(3).AddDays(-7);
+            DateTime oneMonthAhead = DateTime.Now.AddMonths(1).AddDays(-7);
+            List<Instrument> instruments = _localContext.Instruments.Include(i => i.User).Where(i =>
+                (((i.ExternalCalibration) && i.NextCalibrationDate <= threeMothsAhead) ||
+                ((!i.ExternalCalibration) && i.NextCalibrationDate <= oneMonthAhead)) &&
+                i.NeedsCalibration
+            ).ToList();
+            return instruments;
+        }
+
         public Instrument createInstrument(Instrument instrument)
         {
             instrument.ANumber = nextANumber();
@@ -51,17 +64,18 @@ namespace Gerivize.Repositories
         private string nextANumber()
         {
             List<Instrument> instruments = _localContext.Instruments.ToList();
-            List<Instrument> list = instruments.OrderBy(i => int.Parse(new string(i.ANumber.Where(char.IsDigit).ToArray()))).ThenBy(s=>s).ToList();
+            instruments = instruments.OrderBy(i => int.Parse(i.ANumber.Substring(1))).ToList();
             int lastNumber = 1;
             if(instruments.Count > 0)
             {
-                string lastANumber = list.Last().ANumber;
+                string lastANumber = instruments.Last().ANumber;
                 lastANumber = lastANumber.Replace('A', ' ');
                 lastANumber = lastANumber.Trim();
                 lastNumber = Convert.ToInt32(lastANumber);
                 lastNumber++;
             }
             string nextANumber = "A" + lastNumber;
+            Console.WriteLine(nextANumber);
             return nextANumber;
         }
     }

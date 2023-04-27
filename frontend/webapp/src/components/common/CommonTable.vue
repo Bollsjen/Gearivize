@@ -1,91 +1,135 @@
 <template>
   <div>
-    <b-row v-if="filterProperties.length > 0">
-      <b-col lg="6" class="my-1 mb-0">
-        <b-form-group
-            description="Leave all checked to filter on all data"
-            label-cols-sm="3"
-            label-align-sm="right"
-            label-size="sm"
-            class="mb-0"
-            v-slot="{ ariaDescribedby }"
-        >
-          <b-form-checkbox-group
-              v-model="filterOn"
-              :aria-describedby="ariaDescribedby"
-              class="mt-1 d-flex flex-row"
+    <div class="common-table-top-container w-100">
+      <b-row v-if="filterProperties.length > 0" style="margin-left: 0px;" class="w-100">
+        <b-col sm="3">
+          <b-form-group
+              label-cols-sm="0"
+              label-align-sm="right"
+              label-size="sm"
+              class="mb-0 text-left w-100 mt-1"
+              v-slot="{ ariaDescribedby }"
           >
-            <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 5px"><span style="margin-left: 4px">{{filter.label}}</span></b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-form-group>
-      </b-col>
-    </b-row>
-    <b-table
-        :striped="striped"
-        :bordered="bordered"
-        :borderless="borderless"
-        :outlined="outlined"
-        :small="small"
-        :hover="hover"
-        :dark="dark"
-        :fixed="fixed"
-        :responsive="resposive"
-        :sticky-header="stickyHeader"
-        :stacked="stacked"
-        :caption-top="captionTop"
-        :table-variant="tableVariant"
-        :head-variant="headVariant"
-        :foot-variant="footVariant"
-        :foot-clone="footClone"
-        :no-footer-sorting="noFooterSorting"
-        :no-border-collapse="noBorderCollapse"
-
-        :per-page="perPage"
-        :current-page="currentPage"
-
-        :fields="fields"
-        :items="filterItems"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc">
-      <template #head(actions)="data">
-        {{data.label}}
-      </template>
-
-      <template #cell(actions)="data">
-        <div :class="getPlacement(data.field.template.cell[0].placement)">
-          <b-button v-for="(cell, index) in data.field.template.cell"
-                    :striped="striped"
-                    :key="index"
-                    :variant="cell.variant"
-                    :size="cell.size"
-                    style="margin-left: 5px"
-                    :class="getPlacement(cell.placement)"
-                    @click="cell.action(data.item)">
-            <i class="fa-solid" :class="cell.icon"></i>
+            <b-form-checkbox-group
+                v-model="filterOn"
+                :aria-describedby="ariaDescribedby"
+                class="mt-1 d-flex flex-row"
+            >
+              <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 10px"><span style="margin-left: 0px">{{filter.label}}</span></b-form-checkbox>
+            </b-form-checkbox-group>
+          </b-form-group>
+        </b-col>
+        <b-col sm="6">
+          <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
+        </b-col>
+        <b-col sm="3" class="text-right" v-if="true">
+          <b-button variant="success" size="sm" class="mt-1">
+            <span style="margin-right: 7px">New instrument</span>
+            <i class="fa-solid fa-plus"></i>
           </b-button>
-        </div>
-      </template>
+        </b-col>
+      </b-row>
+    </div>
+    <div class="common-table-container">
+      <b-table
+          :striped="striped"
+          :bordered="bordered"
+          :borderless="borderless"
+          :outlined="outlined"
+          :small="small"
+          :hover="hover"
+          :dark="dark"
+          :fixed="fixed"
+          :responsive="resposive"
+          :sticky-header="stickyHeader"
+          :stacked="stacked"
+          :caption-top="captionTop"
+          :table-variant="tableVariant"
+          :head-variant="headVariant"
+          :foot-variant="footVariant"
+          :foot-clone="footClone"
+          :no-footer-sorting="noFooterSorting"
+          :no-border-collapse="noBorderCollapse"
 
-    </b-table>
-    <b-row>
-      <div v-if="pagination" class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <b-button-group size="sm">
-            <b-button key="10" variant="outline-secondary" :class="perPage === 10 ? 'active' : ''" @click="changePageLimit(10)">10</b-button>
-            <b-button key="25" variant="outline-secondary" :class="perPage === 25 ? 'active' : ''" @click="changePageLimit(25)">25</b-button>
-            <b-button key="50" variant="outline-secondary" :class="perPage === 50 ? 'active' : ''" @click="changePageLimit(50)">50</b-button>
-          </b-button-group>
+          thead-class="text-left"
+          tbody-class="text-left"
+          class="w-100"
+
+          :per-page="perPage"
+          :current-page="currentPage"
+
+          :fields="fields"
+          :items="filterItems"
+          show-empty
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc">
+        <template #empty="scope">
+          <div class="my-3 text-center">
+            <span>No items to display</span>
+          </div>
+        </template>
+
+        <template #head(actions)="data">
+          <div :class="getPlacement(data.field.template.head[0].placement)" class="text-left" v-if="data.field.template.head">
+            <div v-for="(cell, index) in data.field.template.head">
+              <b-button v-if="!cell.label"
+                        :key="index"
+                        :variant="cell.variant"
+                        :size="cell.size"
+                        style="margin-left: 5px"
+                        :class="getPlacement(cell.placement)"
+                        @click="cell.action(data.item)">
+                <span v-if="cell.text" style="margin-right: 7px">{{cell.text}}</span>
+                <i class="fa-solid" :class="cell.icon"></i>
+              </b-button>
+              <span v-else>{{cell.label}}</span>
+            </div>
+          </div>
+        </template>
+
+        <template v-for="item in fields" v-slot:[`cell(${item.key})`]="data">
+          <div v-if="data.item">
+            <span v-if="item.formatter">{{item.formatter(data.item)}}</span>
+            <span v-else>{{data.item[item.key]}}</span>
+          </div>
+        </template>
+
+        <template #cell(actions)="data">
+          <div :class="getPlacement(data.field.template.cell[0].placement)" class="text-left">
+            <b-button v-for="(cell, index) in data.field.template.cell"
+                      :key="index"
+                      :variant="cell.variant"
+                      :size="cell.size"
+                      style="margin-left: 5px"
+                      :class="getPlacement(cell.placement)"
+                      @click="cell.action(data.item)">
+              <span v-if="cell.text" style="margin-right: 7px">{{cell.text}}</span>
+              <i class="fa-solid" :class="cell.icon"></i>
+            </b-button>
+          </div>
+        </template>
+
+      </b-table>
+      <b-row style="margin-bottom: 10px; margin-left: 0px" class="w-100">
+        <div v-if="pagination" class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center">
+            <b-button-group size="sm">
+              <b-button key="10" variant="outline-secondary" :class="perPage === 10 ? 'active' : ''" @click="changePageLimit(10)">10</b-button>
+              <b-button key="25" variant="outline-secondary" :class="perPage === 25 ? 'active' : ''" @click="changePageLimit(25)">25</b-button>
+              <b-button key="50" variant="outline-secondary" :class="perPage === 50 ? 'active' : ''" @click="changePageLimit(50)">50</b-button>
+            </b-button-group>
+          </div>
+          <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              align="fill"
+              size="sm"
+              class="my-0"
+          ></b-pagination>
         </div>
-        <b-pagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="fill"
-            size="sm"
-            class="my-0"
-        ></b-pagination>
-      </div>
-    </b-row>
+      </b-row>
+    </div>
   </div>
 </template>
 
@@ -204,19 +248,17 @@ export default {
       currentPage: 0,
       perPage: 10,
       filterOn: [],
-      filterItems: []
+      filterItems: [],
+      search: '',
     }
   },
   methods: {
     getPlacement(placement){
       if(placement === 'left'){
-        console.log('start')
-        return 'text-start'
+        return 'text-left'
       }else if (placement === 'right'){
-        console.log('end')
-        return 'text-end'
+        return 'text-right'
       }
-      console.log('center | ' + placement)
       return 'text-center'
     },
     changePageLimit(limit){
@@ -234,8 +276,30 @@ export default {
         })
       })
     },
+
+    filterSearch(){
+      this.filterProperties.length > 0 ? this.filterItemsList() : this.filterItems = this.items
+      let itemProperties = Object.keys(this.filterItems[0])
+      let regex = new RegExp(this.search, 'g')
+      this.filterItems = this.filterItems.filter(item =>
+          {
+            for(let i = 0; i < itemProperties.length; i++){
+              let prop = itemProperties[i]
+              if(prop.toLowerCase().includes("id")) continue
+              let value = item[prop]
+              if(value != null && value.toString().toLocaleLowerCase().includes(this.search.toLowerCase()) ||
+                  (typeof value == 'number' && value.toString().match(regex))){
+                return true
+              }
+            }
+            return false
+          })
+    },
   },
   computed: {
+    mapFilterdItemsKeys(){
+      return Object.keys(this.filterItems)
+    },
     checkedFilters() {
       return this.filterProperties.filter((filter, index) => this.filterOn[index]);
     },
@@ -254,13 +318,28 @@ export default {
     },
     items(){
       this.filterProperties.length > 0 ? this.filterItemsList() : this.filterItems = this.items
+      console.log(this.filterItems)
+    },
+
+    search(){
+      this.filterSearch()
     }
   }
 }
 </script>
 
 <style>
-.active {
-  background-color: #0d6efd;
+.common-table-top-container {
+  background-color: #F7F7F7;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.common-table-container {
+  background-color: #F7F7F7;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 </style>

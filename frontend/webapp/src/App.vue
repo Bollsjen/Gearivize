@@ -20,7 +20,7 @@
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ms-auto">
               <b-nav-item class="notification-box">
-                <router-link to="/templates">
+                <router-link to="/notifications">
                   <i class="fa-solid fa-bell notification-bell"></i>
                   <span class="badge-buble" v-if="false">9</span>
                 </router-link>
@@ -45,7 +45,6 @@
 </template>
 
 <style lang="scss">
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,6 +68,7 @@ nav {
 
   a:hover, .nav-link:hover {
     color: #BFC1C1;
+    text-decoration: none;
   }
 
   .bolls-logo {

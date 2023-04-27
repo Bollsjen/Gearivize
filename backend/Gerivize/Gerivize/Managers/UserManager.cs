@@ -1,14 +1,14 @@
-﻿using Gerivize.Interfaces;
+﻿using Gerivize.Repositories;
 
 namespace Gerivize.Managers
 {
-    public class UserManager : IUserManager
+    public class UserManager
     {
-        private readonly IUserRepository _repository;
+        private readonly UserRepository _userRepository;
 
-        public UserManager(IUserRepository repository)
+        public UserManager()
         {
-            _repository = repository;
+            _userRepository = new UserRepository();
         }
     }
 }

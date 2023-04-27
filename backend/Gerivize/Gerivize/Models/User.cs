@@ -29,5 +29,10 @@ namespace Gerivize.Models
 
         [Column("responsible")]
         public bool Responsible { get; set; }
+
+        public override string ToString()
+        {
+            return $"ID: {Id}, Name: {Name}";
+        }
     }
 }
