@@ -22,9 +22,9 @@
         <b-col sm="6">
           <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
         </b-col>
-        <b-col sm="3" class="text-right" v-if="true">
-          <b-button variant="success" size="sm" class="mt-1">
-            <span style="margin-right: 7px">New instrument</span>
+        <b-col sm="3" class="text-right" v-if="fields.actions.template.head">
+          <b-button variant="success" size="sm" class="mt-1" v-for="item in fields.actions.template.head">
+            <span style="margin-right: 7px">{{item.text}}</span>
             <i class="fa-solid fa-plus"></i>
           </b-button>
         </b-col>
