@@ -13,7 +13,6 @@
             <b-navbar-nav>
               <b-nav-item><router-link to="/">Dashboard</router-link></b-nav-item>
               <b-nav-item><router-link to="/instruments">Instruments</router-link></b-nav-item>
-              <b-nav-item><router-link to="/inactive-instruments">Inactive Instruments</router-link></b-nav-item>
               <b-nav-item><router-link to="/templates">Templates</router-link></b-nav-item>
             </b-navbar-nav>
 
