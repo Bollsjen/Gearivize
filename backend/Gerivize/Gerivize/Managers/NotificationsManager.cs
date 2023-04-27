@@ -8,11 +8,13 @@ namespace Gerivize.Managers
         private NotificationRepository _notificationRepository;
         private InstrumentRepository _instrumentRepository;
         private UserRepository _userRepository;
+        private InstrumentsManager _instrumentsManager;
 
         public NotificationsManager() {
             _notificationRepository = new NotificationRepository();
             _instrumentRepository = new InstrumentRepository();
             _userRepository = new UserRepository();
+            _instrumentsManager = new InstrumentsManager();
         }
 
         public void findIstrumenmtsToCreateNotificationsFor()
@@ -148,14 +150,16 @@ namespace Gerivize.Managers
             users.ForEach(user =>
             {
                 Console.WriteLine(user.Name);
-                string message = "";
+                string message = "<ul>";
                 emailResponsibles.ForEach(item =>
                 {
                     if(item.Key.Id == user.Id)
                     {
-                        message += $"\t{item.Value}, User name: {item.Key.Name}\n";
+                        message += $"<li>{item.Value}, User name: {item.Key.Name}</li>";
                     }
                 });
+                message += "</ul>";
+                _instrumentsManager.SendCalibrationDueEmails(message, user);
                 Console.WriteLine(message);
             });
         }

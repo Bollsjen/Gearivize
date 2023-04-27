@@ -16,24 +16,22 @@ namespace Gerivize.Managers
             _instrumentRepository = new InstrumentRepository();
         }
 
-        public void SendCalibrationDueEmails()
+        public void SendCalibrationDueEmails(string _message, User user)
         {
-            List<Instrument> instruments = _instrumentRepository.GetInstrumentsDueForCalibration(DateTime.Today);
 
-            foreach (Instrument instrument in instruments)
-            {
-                MailMessage message = new MailMessage();
-                message.To.Add("gearivize@gmail.com");
-                message.Subject = $"Calibration due for instrument {instrument.ANumber}";
-                message.Body = $"The calibration for instrument {instrument.ANumber} is due today.";
+            MailMessage message = new MailMessage();
+            message.To.Add(user.Email);
+            message.Subject = $"Calibration due for instrument";
+            message.Body = $"The calibration for instrument {_message} is due today.";
+            message.From = new MailAddress("gearivize@gmail.com");
+            message.IsBodyHtml = true;
 
-                SmtpClient client = new SmtpClient("smtp.gmail.com");
-                client.Port = 587;
-                client.Credentials = new NetworkCredential("gearivize@gmail.com", "hvxqpuybmydpzemb");
-                client.EnableSsl = true;
+            SmtpClient client = new SmtpClient("smtp.gmail.com");
+            client.Port = 587;
+            client.Credentials = new NetworkCredential("gearivize@gmail.com", "hvxqpuybmydpzemb");
+            client.EnableSsl = true;
 
-                client.Send(message);
-            }
+            client.Send(message);
         }
     }
 }
