@@ -1,5 +1,11 @@
 ﻿using Gerivize.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
+using Gerivize.Models;
+using Gerivize.Repositories;
 
 namespace Gerivize.Repositories
 {
@@ -77,6 +83,11 @@ namespace Gerivize.Repositories
             string nextANumber = "A" + lastNumber;
             Console.WriteLine(nextANumber);
             return nextANumber;
+        }
+
+        public List<Instrument> GetInstrumentsDueForCalibration(DateTime date)
+        {
+            return _localContext.Instruments.Where(i => i.NextCalibrationDate <= date && !i.Inactive).ToList();
         }
     }
 }
