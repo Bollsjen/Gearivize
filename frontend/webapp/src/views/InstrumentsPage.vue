@@ -118,6 +118,7 @@ export default {
                 icon: 'fa-plus',
                 text: 'New instrument',
                 placement: 'right',
+                section: 'filter',
                 variant: 'success',
                 size: 'sm',
                 action: () => this.$refs['InstrumentModal'].show('add',null)

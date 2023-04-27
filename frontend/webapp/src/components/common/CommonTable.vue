@@ -22,8 +22,8 @@
         <b-col sm="6">
           <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
         </b-col>
-        <b-col sm="3" class="text-right" v-if="fields.actions.template.head">
-          <b-button variant="success" size="sm" class="mt-1" v-for="item in fields.actions.template.head">
+        <b-col sm="3" class="text-right" v-if="actionsField">
+          <b-button variant="success" size="sm" class="mt-1" v-for="item in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter'">
             <span style="margin-right: 7px">{{item.text}}</span>
             <i class="fa-solid fa-plus"></i>
           </b-button>
@@ -71,7 +71,7 @@
 
         <template #head(actions)="data">
           <div :class="getPlacement(data.field.template.head[0].placement)" class="text-left" v-if="data.field.template.head">
-            <div v-for="(cell, index) in data.field.template.head">
+            <div v-for="(cell, index) in data.field.template.head" v-if="cell.section === 'table'">
               <b-button v-if="!cell.label"
                         :key="index"
                         :variant="cell.variant"
@@ -307,6 +307,11 @@ export default {
     totalRows(){
       return this.filterItems.length
     },
+
+    actionsField(){
+      let actions = this.fields.find(field => field.key === 'actions')
+      return actions
+    }
   },
   mounted() {
     this.pagination === true ? this.perPage = 10 : this.perPage = 900719925474099
