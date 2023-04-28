@@ -1,5 +1,11 @@
 ﻿using Gerivize.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
+using Gerivize.Models;
+using Gerivize.Repositories;
 
 namespace Gerivize.Repositories
 {
@@ -29,8 +35,8 @@ namespace Gerivize.Repositories
 
         public List<Instrument> getByNextCalibrationDate()
         {
-            DateTime threeMothsAhead = DateTime.Now.AddMonths(3).AddDays(-7);
-            DateTime oneMonthAhead = DateTime.Now.AddMonths(1).AddDays(-7);
+            DateTime threeMothsAhead = DateTime.Now.AddMonths(3).AddDays(7);
+            DateTime oneMonthAhead = DateTime.Now.AddMonths(1).AddDays(7);
             List<Instrument> instruments = _localContext.Instruments.Include(i => i.User).Where(i =>
                 (((i.ExternalCalibration) && i.NextCalibrationDate <= threeMothsAhead) ||
                 ((!i.ExternalCalibration) && i.NextCalibrationDate <= oneMonthAhead)) &&
@@ -77,6 +83,11 @@ namespace Gerivize.Repositories
             string nextANumber = "A" + lastNumber;
             Console.WriteLine(nextANumber);
             return nextANumber;
+        }
+
+        public List<Instrument> GetInstrumentsDueForCalibration(DateTime date)
+        {
+            return _localContext.Instruments.Where(i => i.NextCalibrationDate <= date && !i.Inactive).ToList();
         }
     }
 }
