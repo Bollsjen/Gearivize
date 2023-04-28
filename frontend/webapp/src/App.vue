@@ -13,12 +13,11 @@
             <b-navbar-nav>
               <b-nav-item><router-link to="/">Dashboard</router-link></b-nav-item>
               <b-nav-item><router-link to="/instruments">Instruments</router-link></b-nav-item>
-              <b-nav-item><router-link to="/inactive-instruments">Inactive Instruments</router-link></b-nav-item>
               <b-nav-item><router-link to="/templates">Templates</router-link></b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
-            <b-navbar-nav class="ms-auto">
+            <b-navbar-nav class="ml-auto">
               <b-nav-item class="notification-box">
                 <router-link to="/notifications">
                   <i class="fa-solid fa-bell notification-bell"></i>
@@ -43,6 +42,20 @@
     <router-view/>
   </div>
 </template>
+
+<script>
+import {mapActions} from "vuex";
+
+export default {
+  name: 'App',
+  created() {
+    this.checkAuthentication()
+  },
+  methods: {
+    ...mapActions(['checkAuthentication'])
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

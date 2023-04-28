@@ -8,7 +8,6 @@ namespace Gerivize.Managers
         private NotificationRepository _notificationRepository;
         private InstrumentRepository _instrumentRepository;
         private UserRepository _userRepository;
-
         private InstrumentsManager _instrumentsManager;
 
         public NotificationsManager() {
@@ -156,15 +155,13 @@ namespace Gerivize.Managers
                 {
                     if(item.Key.Id == user.Id)
                     {
-                        message += $"<li>{item.Value}, User name: {item.Key.Name}</li>";
+                        message += $"<li>{item.Value.ANumber} which is scheduled for {item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
                     }
                 });
                 message += "</ul>";
                 _instrumentsManager.SendCalibrationDueEmails(message, user);
                 Console.WriteLine(message);
             });
-
-
         }
     }
 }
