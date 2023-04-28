@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="common-table-top-container w-100">
-      <b-row v-if="filterProperties.length > 0" style="margin-left: 0px;" class="w-100">
+      <b-row v-if="filterProperties.length > 0" class="w-100">
         <b-col sm="3">
           <b-form-group
               label-cols-sm="0"
@@ -15,7 +15,7 @@
                 :aria-describedby="ariaDescribedby"
                 class="mt-1 d-flex flex-row"
             >
-              <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 10px"><span style="margin-left: 0px">{{filter.label}}</span></b-form-checkbox>
+              <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 10px"><span>{{filter.label}}</span></b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -23,7 +23,7 @@
           <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
         </b-col>
         <b-col sm="3" class="text-right" v-if="actionsField">
-          <b-button variant="success" size="sm" class="mt-1" v-for="item in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter'">
+          <b-button variant="success" size="sm" class="mt-1" v-for="item in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible">
             <span style="margin-right: 7px">{{item.text}}</span>
             <i class="fa-solid fa-plus"></i>
           </b-button>
@@ -71,7 +71,7 @@
 
         <template #head(actions)="data">
           <div :class="getPlacement(data.field.template.head[0].placement)" class="text-left" v-if="data.field.template.head">
-            <div v-for="(cell, index) in data.field.template.head" v-if="cell.section === 'table'">
+            <div v-for="(cell, index) in data.field.template.head" v-if="cell.section === 'table' && cell.visible" :key="index">
               <b-button v-if="!cell.label"
                         :key="index"
                         :variant="cell.variant"
@@ -97,6 +97,7 @@
         <template #cell(actions)="data">
           <div :class="getPlacement(data.field.template.cell[0].placement)" class="text-left">
             <b-button v-for="(cell, index) in data.field.template.cell"
+                      v-if="cell.visible"
                       :key="index"
                       :variant="cell.variant"
                       :size="cell.size"
@@ -110,7 +111,7 @@
         </template>
 
       </b-table>
-      <b-row style="margin-bottom: 10px; margin-left: 0px" class="w-100">
+      <b-row style="margin-bottom: 10px;" class="w-100">
         <div v-if="pagination" class="d-flex justify-content-between align-items-center w-100">
           <div class="d-flex align-items-center">
             <b-button-group size="sm">

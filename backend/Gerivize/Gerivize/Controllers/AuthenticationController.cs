@@ -29,10 +29,9 @@ namespace Gerivize.Controllers
         // GET: api/<AthenticationController>
         [Authorize]
         [HttpGet]
-        public ActionResult Get([AuthenticatedUser] User user)
+        public ActionResult<User> Get([AuthenticatedUser] User user)
         {
-            Console.WriteLine(user.ToString());
-            return Ok();
+            return Ok(user);
         }
 
         [HttpPost("{email}/{password}")]
