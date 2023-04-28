@@ -21,8 +21,8 @@ namespace Gerivize.Managers
 
             MailMessage message = new MailMessage();
             message.To.Add(user.Email);
-            message.Subject = $"Calibration due for instrument";
-            message.Body = $"The calibration for instrument {_message} is due today.";
+            message.Subject = $"Calibration due for instrument(s)";
+            message.Body = $"<p>Hello {user.Name},</p> <p>The following instrument(s) are due for calibration soon:<br>{_message}</p>";
             message.From = new MailAddress("gearivize@gmail.com");
             message.IsBodyHtml = true;
 
