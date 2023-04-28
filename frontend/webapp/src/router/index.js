@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DashboardFrontPage from "@/views/DashboardFrontPage.vue";
 import InstrumentsPage from "@/views/InstrumentsPage.vue";
-import InactiveInstrumentsPage from "@/views/InactiveInstrumentsPage.vue";
 import TemplatesPage from "@/views/TemplatesPage.vue";
 import SiginPage from "@/views/SiginPage.vue";
 import SettingsPage from "@/views/SettingsPage.vue";
@@ -19,11 +18,6 @@ const routes = [
     path: '/instruments',
     name: 'Instruments',
     component: InstrumentsPage
-  },
-  {
-    path: '/inactive-instruments',
-    name: 'Inactive Instruments',
-    component: InactiveInstrumentsPage
   },
   {
     path: '/templates',

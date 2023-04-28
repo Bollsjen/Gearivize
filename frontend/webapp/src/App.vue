@@ -13,14 +13,13 @@
             <b-navbar-nav>
               <b-nav-item><router-link to="/">Dashboard</router-link></b-nav-item>
               <b-nav-item><router-link to="/instruments">Instruments</router-link></b-nav-item>
-              <b-nav-item><router-link to="/inactive-instruments">Inactive Instruments</router-link></b-nav-item>
               <b-nav-item><router-link to="/templates">Templates</router-link></b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->
-            <b-navbar-nav class="ms-auto">
+            <b-navbar-nav class="ml-auto">
               <b-nav-item class="notification-box">
-                <router-link to="/templates">
+                <router-link to="/notifications">
                   <i class="fa-solid fa-bell notification-bell"></i>
                   <span class="badge-buble" v-if="false">9</span>
                 </router-link>
@@ -45,7 +44,6 @@
 </template>
 
 <style lang="scss">
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,6 +67,7 @@ nav {
 
   a:hover, .nav-link:hover {
     color: #BFC1C1;
+    text-decoration: none;
   }
 
   .bolls-logo {

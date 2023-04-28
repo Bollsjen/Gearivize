@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="dotenv.net" Version="3.1.2" />
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Hangfire" Version="1.7.34" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.34" />
     <PackageReference Include="Hangfire.Core" Version="1.7.34" />
@@ -23,8 +22,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AttributeHelpers\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

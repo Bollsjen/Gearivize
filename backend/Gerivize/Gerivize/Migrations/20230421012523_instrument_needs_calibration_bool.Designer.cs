@@ -3,16 +3,19 @@ using System;
 using Gerivize.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MyApp.Models
+namespace Gerivize.Migrations
 {
     [DbContext(typeof(GearivizeLocalContext))]
-    partial class GearivizeLocalContextModelSnapshot : ModelSnapshot
+    [Migration("20230421012523_instrument_needs_calibration_bool")]
+    partial class instrument_needs_calibration_bool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

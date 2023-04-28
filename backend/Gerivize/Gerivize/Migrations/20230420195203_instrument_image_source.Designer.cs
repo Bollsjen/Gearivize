@@ -3,16 +3,19 @@ using System;
 using Gerivize.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MyApp.Models
+namespace Gerivize.Migrations
 {
     [DbContext(typeof(GearivizeLocalContext))]
-    partial class GearivizeLocalContextModelSnapshot : ModelSnapshot
+    [Migration("20230420195203_instrument_image_source")]
+    partial class instrument_image_source
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,10 +52,12 @@ namespace MyApp.Models
                         .HasColumnName("a_number");
 
                     b.Property<string>("CalibrationReportNumber")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("calibration_report_number");
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("comment");
 
@@ -78,6 +83,7 @@ namespace MyApp.Models
                         .HasColumnName("instrument_name");
 
                     b.Property<string>("InternalCalibration")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("internal_calibration");
 
@@ -90,23 +96,22 @@ namespace MyApp.Models
                         .HasColumnType("longtext")
                         .HasColumnName("manufacturer");
 
-                    b.Property<bool>("NeedsCalibration")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("needs_calibration");
-
                     b.Property<DateTime>("NextCalibrationDate")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("next_calibration_date");
 
                     b.Property<string>("Note")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("note");
 
                     b.Property<string>("ReferenceCalibrationInstruction")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("reference_calibration_instruction");
 
                     b.Property<string>("SerialNumber")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("serial_number");
 
@@ -127,8 +132,9 @@ namespace MyApp.Models
                         .HasColumnType("char(36)")
                         .HasColumnName("user_id");
 
-                    b.Property<int?>("Value")
-                        .HasColumnType("int")
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext")
                         .HasColumnName("value");
 
                     b.HasKey("ANumber");

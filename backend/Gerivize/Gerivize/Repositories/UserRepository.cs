@@ -1,9 +1,8 @@
-﻿using Gerivize.Interfaces;
-using Gerivize.Models;
+﻿using Gerivize.Models;
 
 namespace Gerivize.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository
     {
         private readonly GearivizeLocalContext _localContext;
 
@@ -45,7 +44,7 @@ namespace Gerivize.Repositories
         public User deleteUser(Guid id)
         {
             User user = getById(id);
-            _localContext.Remove(id);
+            _localContext.Remove(user);
             _localContext.SaveChanges();
             return user;
         }

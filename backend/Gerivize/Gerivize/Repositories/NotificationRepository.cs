@@ -1,9 +1,9 @@
-﻿using Gerivize.Interfaces;
-using Gerivize.Models;
+﻿using Gerivize.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gerivize.Repositories
 {
-    public class NotificationRepository : INotificationRepository
+    public class NotificationRepository
     {
         private readonly GearivizeLocalContext _localContext;
 
@@ -33,13 +33,20 @@ namespace Gerivize.Repositories
 
         public List<Notification> getNotificationsBetweenDates(DateTime fromDate, DateTime toDate)
         {
-            return _localContext.Notifications.Where(n => n.CreationDate > fromDate && n.CreationDate < toDate).ToList();
+            return _localContext.Notifications.Include(n => n.User).Include(n => n.Instrument).Where(n => n.CreationDate > fromDate).ToList();
         }
 
         public void createNotification(Notification notification)
         {
             _localContext.Notifications.Add(notification);
             _localContext.SaveChanges();
+        }
+
+        public Notification updateNotification(Notification notification)
+        {
+            _localContext.Notifications.Update(notification);
+            _localContext.SaveChanges();
+            return notification;
         }
 
         public Notification hasReadtedOnNotifcation(Guid id)

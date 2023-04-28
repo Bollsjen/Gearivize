@@ -1,5 +1,6 @@
-﻿using Gerivize.Interfaces;
+﻿using Gerivize.Managers;
 using Gerivize.Models;
+using Gerivize.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,13 +11,13 @@ namespace Gerivize.Controllers
     [ApiController]
     public class NotificationsController : ControllerBase
     {
-        private INotificationRepository _notificationRepository;
-        private INotificationManager _notificationManager;
+        private NotificationRepository _notificationRepository;
+        private NotificationsManager _notificationManager;
 
-        public NotificationsController(INotificationRepository notificationRepository, INotificationManager notificationManager)
+        public NotificationsController()
         {
-            _notificationRepository = notificationRepository;
-            _notificationManager = notificationManager;
+            _notificationRepository = new NotificationRepository();
+            _notificationManager = new NotificationsManager();
         }
 
         // GET: api/<NotificationsController>
@@ -38,17 +39,19 @@ namespace Gerivize.Controllers
         }
 
         // POST api/<NotificationsController>
-        [HttpPost("create/{aNumber}")]
-        public ActionResult Post(string aNumber)
+        [HttpPost("create")]
+        public ActionResult Post()
         {
-            _notificationManager.CreateNotifications(aNumber);
+            _notificationManager.findIstrumenmtsToCreateNotificationsFor();
             return Ok();
         }
 
         // PUT api/<NotificationsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public ActionResult Put([FromBody] Notification notification)
         {
+            _notificationRepository.updateNotification(notification);
+            return Ok();
         }
 
         // DELETE api/<NotificationsController>/5

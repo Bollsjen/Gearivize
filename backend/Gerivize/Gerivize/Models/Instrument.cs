@@ -16,7 +16,8 @@ namespace Gerivize.Models
         public string ANumber { get; set; }
 
         [Column("user_id")]
-        public Guid UserId { get; set; }
+        [DefaultValue(null)]
+        public Guid? UserId { get; set; }
 
         [Column("test_template_id")]
         [DefaultValue(null)]
@@ -36,7 +37,7 @@ namespace Gerivize.Models
         public TestType Test { get; set; }
 
         [Column("serial_number")]
-        public string SerialNumber { get; set; }
+        public string? SerialNumber { get; set; }
 
         [Column("last_calibrated_date")]
         public DateTime LastCalibratedDate { get; set; }
@@ -49,28 +50,38 @@ namespace Gerivize.Models
         public DateTime CreationTime { get; set; } = DateTime.Now;
 
         [Column("comment")]
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         [Column("reference_calibration_instruction")]
-        public string ReferenceCalibrationInstruction { get; set; }
+        public string? ReferenceCalibrationInstruction { get; set; }
 
         [Column("internal_calibration")]
-        public string InternalCalibration { get; set; }
+        public string? InternalCalibration { get; set; }
 
         [Column("calibration_report_number")]
-        public string CalibrationReportNumber { get; set; }
+        public string? CalibrationReportNumber { get; set; }
 
         [Column("note")]
-        public string Note { get; set; }
+        public string? Note { get; set; }
 
         [Column("value")]
-        public string Value { get; set; }
+        [DefaultValue(0)]
+        public int? Value { get; set; }
 
         [Column("external_calibration")]
+        [DefaultValue(false)]
         public bool ExternalCalibration { get; set; }
 
         [Column("inactive")]
+        [DefaultValue(false)]
         public bool Inactive { get; set; }
+
+        [Column("image_source")]
+        public string? Image { get; set; }
+
+        [Column("needs_calibration")]
+        [DefaultValue(true)]
+        public bool NeedsCalibration { get; set; }
 
 
         [ForeignKey(nameof(UserId))]
@@ -80,5 +91,10 @@ namespace Gerivize.Models
         [ForeignKey(nameof(TestTemplateId))]
         [JsonIgnore]
         public virtual TestTemplate? TestTemplate { get; set; }
+
+        public override string ToString()
+        {
+            return $"A-Number: {ANumber}";
+        }
     }
 }
