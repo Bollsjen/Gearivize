@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {storeService} from "@/services/storeService";
+import {authService} from "@/services/authService";
 
 Vue.use(Vuex)
 
@@ -18,8 +18,8 @@ export default new Vuex.Store({
   },
   actions: {
     async checkAuthentication({commit}){
-      storeService.checkAuthenticationcation()
-          .then(result => commit('setAuthenticated', result.data))
+      authService.checkAuthenticationcation()
+          .then(result => {commit('setAuthenticated', result.data);})
           .catch(error => commit('setAuthenticated', {}))
     }
   },

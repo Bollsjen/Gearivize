@@ -118,7 +118,7 @@ export default {
                 icon: 'fa-plus',
                 text: 'New instrument',
                 placement: 'right',
-                section: 'filter',
+                section: 'table',
                 visible: this.$store.state.isAuthenticated.responsible,
                 variant: 'success',
                 size: 'sm',

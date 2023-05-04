@@ -31,7 +31,7 @@
                                     <em>User</em>
                                 </template>
                                 <b-dropdown-item href="/settings">Settings</b-dropdown-item>
-                                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                                <b-dropdown-item href="#" @click="signout">Sign Out</b-dropdown-item>
                             </b-nav-item-dropdown>
                             <b-nav-item href="/signin" v-else>Signin</b-nav-item>
                         </b-navbar-nav>
@@ -45,6 +45,7 @@
 
 <script>
 import {mapActions} from "vuex";
+import {authService} from "@/services/authService";
 
 export default {
   name: 'App',
@@ -52,7 +53,14 @@ export default {
     this.checkAuthentication()
   },
   methods: {
-    ...mapActions(['checkAuthentication'])
+    ...mapActions(['checkAuthentication']),
+    signout(){
+      authService.logout().then(result => window.location.href="/")
+          .catch(error => console.log(error))
+    }
+  },
+  beforeMount() {
+    mapActions(['checkAuthentication']).checkAuthentication()
   }
 }
 </script>
