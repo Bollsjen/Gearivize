@@ -3,16 +3,19 @@ using System;
 using Gerivize.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MyApp.Models
+namespace Gerivize.Migrations
 {
     [DbContext(typeof(GearivizeLocalContext))]
-    partial class GearivizeLocalContextModelSnapshot : ModelSnapshot
+    [Migration("20230504082005_instrument-secondary-responsible")]
+    partial class instrumentsecondaryresponsible
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,8 +132,7 @@ namespace MyApp.Models
 
                     b.Property<Guid?>("UserId2")
                         .HasColumnType("char(36)")
-                        .HasColumnName("user_id2")
-                        .HasColumnOrder(2);
+                        .HasColumnName("user_id2");
 
                     b.Property<int?>("Value")
                         .HasColumnType("int")

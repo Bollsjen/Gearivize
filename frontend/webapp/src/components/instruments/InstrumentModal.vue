@@ -37,285 +37,249 @@
       </b-col>
 
       <b-col sm="8">
-        <b-row class="pl-5 w-100">
-          <b-form-group label="A-Number" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          :value="purpose === 'add' ? 'Auto generated' : instrument.aNumber"
-                          disabled
-            >
-            </b-form-input>
+          <b-row class="pl-5 w-100">
+              <b-form-group label="A-Number" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                :value="purpose === 'add' ? 'Auto generated' : instrument.aNumber"
+                                disabled>
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.aNumber"
-                          required
-                          disabled
-            >
-            </b-form-input>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.aNumber"
+                                required
+                                disabled>
+                  </b-form-input>
+              </b-form-group>
 
 
-          <b-form-group label="Name" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.instrumentName"
-                          :class="{error: v$.instrument.instrumentName.$error}"
-            >
-            </b-form-input>
+              <b-form-group label="Name" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                v-model="instrument.instrumentName"
+                                :class="{error: v$.instrument.instrumentName.$error}">
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.instrumentName"
-                          disabled
-            >
-            </b-form-input>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.instrumentName.$error">
-              {{v$.instrument.instrumentName.$errors[0].$message}}
-            </span>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.instrumentName"
+                                disabled>
+                  </b-form-input>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.instrumentName.$error">
+                      {{v$.instrument.instrumentName.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
-          <b-form-group label="Manufacturer" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.manufacturer"
-                          :class="{error: v$.instrument.manufacturer.$error}"
-            >
-            </b-form-input>
+              <b-form-group label="Manufacturer" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                v-model="instrument.manufacturer"
+                                :class="{error: v$.instrument.manufacturer.$error}">
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.manufacturer"
-                          required
-                          disabled
-            >
-            </b-form-input>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.manufacturer.$error">
-              {{v$.instrument.manufacturer.$errors[0].$message}}
-            </span>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.manufacturer"
+                                required
+                                disabled>
+                  </b-form-input>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.manufacturer.$error">
+                      {{v$.instrument.manufacturer.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
-          <b-form-group label="Serial Number" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.serialNumber"
-                          required
-            >
-            </b-form-input>
+              <b-form-group label="Serial Number" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                v-model="instrument.serialNumber"
+                                required>
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.serialNumber"
-                          required
-                          disabled
-            >
-            </b-form-input>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.serialNumber"
+                                required
+                                disabled>
+                  </b-form-input>
+              </b-form-group>
 
 
-          <b-form-group label="Type" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.type"
-                          :class="{error: v$.instrument.type.$error}"
-            >
-            </b-form-input>
+              <b-form-group label="Type" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                v-model="instrument.type"
+                                :class="{error: v$.instrument.type.$error}">
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.type"
-                          required
-                          disabled
-            >
-            </b-form-input>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.type.$error">
-              {{v$.instrument.type.$errors[0].$message}}
-            </span>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.type"
+                                required
+                                disabled>
+                  </b-form-input>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.type.$error">
+                      {{v$.instrument.type.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
-          <b-form-group label="Test" class="col-sm-6">
-            <b-select v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.test"
-                          :class="{error: v$.instrument.test.$error}"
-            >
-              <option v-for="(test, index) in testTypes" :key="index" :value="index">
-                {{test}}
-              </option>
-            </b-select>
+              <b-form-group label="Test" class="col-sm-6">
+                  <b-select v-if="purpose === 'add' || purpose === 'edit'"
+                            v-model="instrument.test"
+                            :class="{error: v$.instrument.test.$error}">
+                      <option v-for="(test, index) in testTypes" :key="index" :value="index">
+                          {{test}}
+                      </option>
+                  </b-select>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.test"
-                          required
-                          disabled
-            >
-            </b-form-input>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.test.$error">
-              {{v$.instrument.test.$errors[0].$message}}
-            </span>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.test"
+                                required
+                                disabled>
+                  </b-form-input>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.test.$error">
+                      {{v$.instrument.test.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
-          <b-form-group label="Last calibreated" class="col-sm-6">
-            <b-form-datepicker v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.lastCalibratedDate"
-                               :class="{error: v$.instrument.lastCalibratedDate.$error}"
-                               @input="onLastCalibrationDateChange"
-            >
-            </b-form-datepicker>
+              <b-form-group label="Last calibreated" class="col-sm-6">
+                  <b-form-datepicker v-if="purpose === 'add' || purpose === 'edit'"
+                                     v-model="instrument.lastCalibratedDate"
+                                     :class="{error: v$.instrument.lastCalibratedDate.$error}"
+                                     @input="onLastCalibrationDateChange">
+                  </b-form-datepicker>
 
-            <b-form-datepicker v-if="purpose === 'watch'"
-                          v-model="instrument.lastCalibratedDate"
-                          required
-                          disabled
-            >
-            </b-form-datepicker>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.lastCalibratedDate.$error">
-              {{v$.instrument.lastCalibratedDate.$errors[0].$message}}
-            </span>
-          </b-form-group>
+                  <b-form-datepicker v-if="purpose === 'watch'"
+                                     v-model="instrument.lastCalibratedDate"
+                                     required
+                                     disabled>
+                  </b-form-datepicker>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.lastCalibratedDate.$error">
+                      {{v$.instrument.lastCalibratedDate.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
-          <b-form-group label="Next calibration" class="col-sm-6">
-            <b-form-datepicker v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.nextCalibrationDate"
-                               :class="{error: v$.instrument.nextCalibrationDate.$error}"
-            >
-            </b-form-datepicker>
+              <b-form-group label="Next calibration" class="col-sm-6">
+                  <b-form-datepicker v-if="purpose === 'add' || purpose === 'edit'"
+                                     v-model="instrument.nextCalibrationDate"
+                                     :class="{error: v$.instrument.nextCalibrationDate.$error}">
+                  </b-form-datepicker>
 
-            <b-form-datepicker v-if="purpose === 'watch'"
-                          v-model="instrument.nextCalibrationDate"
-                          required
-                          disabled
-            >
-            </b-form-datepicker>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.nextCalibrationDate.$error">
-              {{v$.instrument.nextCalibrationDate.$errors[0].$message}}
-            </span>
-          </b-form-group>
+                  <b-form-datepicker v-if="purpose === 'watch'"
+                                     v-model="instrument.nextCalibrationDate"
+                                     required
+                                     disabled>
+                  </b-form-datepicker>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.nextCalibrationDate.$error">
+                      {{v$.instrument.nextCalibrationDate.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
 
-          <b-form-group label="Value" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.value"
-                          type="number"
-            >
-            </b-form-input>
+              <b-form-group label="Value" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                v-model="instrument.value"
+                                type="number">
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.value"
-                          required
-                          disabled
-            >
-            </b-form-input>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.value"
+                                required
+                                disabled>
+                  </b-form-input>
+              </b-form-group>
 
 
 
-          <b-form-group label="Reference calibration instruction" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.referenceCalibrationInstruction"
-            >
-            </b-form-input>
+              <b-form-group label="Primary Responsible" class="col-sm-6">
+                  <b-form-select v-if="purpose === 'add' || purpose === 'edit'"
+                                 v-model="instrument.userId"
+                                 :class="{error: v$.instrument.userId.$error}"
+                                 :options="users"
+                                 :value-field="'id'"
+                                 :text-field="'name'">
+                      <template #first>
+                          <option :value="null">Select primary responsible</option>
+                      </template>
+                  </b-form-select>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.referenceCalibrationInstruction"
-                          required
-                          disabled
-            >
-            </b-form-input>
-          </b-form-group>
-
-
-
-          <b-form-group label="Internal calibration" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.internalCalibration"
-            >
-            </b-form-input>
-
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.internalCalibration"
-                          required
-                          disabled
-            >
-            </b-form-input>
-          </b-form-group>
+                  <b-select v-if="purpose === 'watch'"
+                            v-model="instrument.test"
+                            :class="{error: v$.instrument.test.$error}"
+                            disabled>
+                      <option v-for="(user, index) in users" :key="index" :value="user.id">
+                          {{user.name}}
+                      </option>
+                  </b-select>
+                  <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.userId.$error">
+                      {{v$.instrument.userId.$errors[0].$message}}
+                  </span>
+              </b-form-group>
 
 
 
-          <b-form-group label="Calibration report number" class="col-sm-6">
-            <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.calibrationReportNumber"
-            >
-            </b-form-input>
+              <b-form-group label="Internal calibration" class="col-sm-6">
+                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                                v-model="instrument.internalCalibration">
+                  </b-form-input>
 
-            <b-form-input v-if="purpose === 'watch'"
-                          v-model="instrument.calibrationReportNumber"
-                          required
-                          disabled
-            >
-            </b-form-input>
-          </b-form-group>
+                  <b-form-input v-if="purpose === 'watch'"
+                                v-model="instrument.internalCalibration"
+                                required
+                                disabled>
+                  </b-form-input>
+              </b-form-group>
 
 
 
-          <b-form-group label="External calibration" class="col-sm-6">
-            <b-checkbox v-if="purpose === 'add' || purpose === 'edit'"
-                          v-model="instrument.externalCalibration"
-                          type="number"
-                        switch
-            >
-            </b-checkbox>
+              <b-form-group label="Secondary Responsible" class="col-sm-6">
+                  <b-form-select v-if="purpose === 'add' || purpose === 'edit'"
+                                 v-model="instrument.userId2"
+                                 :options="users"
+                                 :value-field="'id'"
+                                 :text-field="'name'">
+                      <template #first>
+                          <option :value="null">Select secondary responsible</option>
+                      </template>
+                  </b-form-select>
 
-            <b-checkbox v-if="purpose === 'watch'"
-                          v-model="instrument.externalCalibration"
-                          disabled
-                        switch
-            >
-            </b-checkbox>
-          </b-form-group>
-
-
-
-          <b-form-group label="Needs calibration?" class="col-sm-6">
-            <b-checkbox v-if="purpose === 'add' || purpose === 'edit'"
-                        v-model="instrument.needsCalibration"
-                        type="number"
-                        switch
-            >
-            </b-checkbox>
-
-            <b-checkbox v-if="purpose === 'watch'"
-                        v-model="instrument.needsCalibration"
-                        disabled
-                        switch
-            >
-            </b-checkbox>
-          </b-form-group>
+                  <b-select v-if="purpose === 'watch'"
+                            v-model="instrument.test"
+                            disabled>
+                      <option v-for="(user, index) in users" :key="index" :value="user.id">
+                          {{user.name}}
+                      </option>
+                  </b-select>
+              </b-form-group>
 
 
 
-          <b-form-group label="Instrument Responsible" class="col-sm-6">
-            <b-form-select v-if="purpose === 'add' || purpose === 'edit'"
-                           v-model="instrument.userId"
-                           :class="{error: v$.instrument.userId.$error}"
-                           :options="users"
-                           :value-field="'id'"
-                           :text-field="'name'"
-            >
-              <template #first>
-                <option :value="null">Select responsible</option>
-              </template>
-            </b-form-select>
+              <b-form-group label="External calibration" class="col-sm-6">
+                  <b-checkbox v-if="purpose === 'add' || purpose === 'edit'"
+                              v-model="instrument.externalCalibration"
+                              type="number"
+                              switch>
+                  </b-checkbox>
 
-            <b-select v-if="purpose === 'watch'"
-                      v-model="instrument.test"
-                      :class="{error: v$.instrument.test.$error}"
-                      disabled
-            >
-              <option v-for="(user, index) in users" :key="index" :value="user.id">
-                {{user.name}}
-              </option>
-            </b-select>
-            <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.userId.$error">
-              {{v$.instrument.userId.$errors[0].$message}}
-            </span>
-          </b-form-group>
-        </b-row>
+                  <b-checkbox v-if="purpose === 'watch'"
+                              v-model="instrument.externalCalibration"
+                              disabled
+                              switch>
+                  </b-checkbox>
+              </b-form-group>
+
+
+
+              <b-form-group label="Needs calibration?" class="col-sm-6">
+                  <b-checkbox v-if="purpose === 'add' || purpose === 'edit'"
+                              v-model="instrument.needsCalibration"
+                              type="number"
+                              switch>
+                  </b-checkbox>
+
+                  <b-checkbox v-if="purpose === 'watch'"
+                              v-model="instrument.needsCalibration"
+                              disabled
+                              switch>
+                  </b-checkbox>
+              </b-form-group>
+          </b-row>
       </b-col>
     </b-row>
 
@@ -377,6 +341,7 @@ export default {
         testTemplateId: null,
         type: '',
         userId: null,
+        userId2: null,
         value: 0,
         needsCalibration: true,
       },
