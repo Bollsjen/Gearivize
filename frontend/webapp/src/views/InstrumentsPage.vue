@@ -118,7 +118,8 @@ export default {
                 icon: 'fa-plus',
                 text: 'New instrument',
                 placement: 'right',
-                section: 'filter',
+                section: 'table',
+                visible: this.$store.state.isAuthenticated.responsible,
                 variant: 'success',
                 size: 'sm',
                 action: () => this.$refs['InstrumentModal'].show('add',null)
@@ -140,6 +141,7 @@ export default {
                 icon: 'fa-eye',
                 placement: 'right',
                 variant: 'primary',
+                visible: true,
                 size: 'sm',
                 action: (data) => this.$refs['InstrumentModal'].show('watch',data)
               },
@@ -147,6 +149,7 @@ export default {
                 icon: 'fa-pen-to-square',
                 placement: 'right',
                 variant: 'success',
+                visible: this.$store.state.isAuthenticated.responsible,
                 size: 'sm',
                 action: (data) => this.$refs['InstrumentModal'].show('edit',data)
               }

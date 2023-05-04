@@ -24,6 +24,14 @@ builder.Services.AddAuthentication("gearivise")
         options.Cookie.HttpOnly = true;
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.LoginPath = "/api/Authentication";
+        options.AccessDeniedPath = "/api/Authentication";
+
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            return Task.CompletedTask;
+        };
     }
 );
 

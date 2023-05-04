@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import DashboardFrontPage from "@/views/DashboardFrontPage.vue";
 import InstrumentsPage from "@/views/InstrumentsPage.vue";
 import TemplatesPage from "@/views/TemplatesPage.vue";
@@ -40,6 +41,12 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('checkAuthentication')
+      .then(() => next())
+      .catch(() => next())
 })
 
 export default router

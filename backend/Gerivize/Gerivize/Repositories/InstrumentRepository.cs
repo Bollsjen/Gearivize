@@ -28,6 +28,7 @@ namespace Gerivize.Repositories
             return _localContext.Instruments.ToList().Find(i => i.ANumber == aNumber);
         }
 
+        //Potentiel update if it gets used to include userId2
         public List<Instrument> getByUserId(Guid userId)
         {
             return _localContext.Instruments.Where(i => i.UserId == userId).ToList();
@@ -63,6 +64,14 @@ namespace Gerivize.Repositories
             Instrument instrument = getById(aNumber);
             instrument.Inactive = true;
             _localContext.Update(instrument);
+            _localContext.SaveChanges();
+            return instrument;
+        }
+
+        public Instrument actualDeleteInstrument(string aNumber)
+        {
+            Instrument instrument = getById(aNumber);
+            _localContext.Remove(instrument);
             _localContext.SaveChanges();
             return instrument;
         }

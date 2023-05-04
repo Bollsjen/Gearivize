@@ -1,6 +1,7 @@
 ﻿using Gerivize.Managers;
 using Gerivize.Models;
 using Gerivize.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,6 +38,7 @@ namespace Gerivize.Controllers
         }
 
         // POST api/<InstrumentsController>
+        [Authorize]
         [HttpPost]
         public ActionResult<Instrument> Post([FromBody] Instrument instrument)
         {
@@ -44,12 +46,14 @@ namespace Gerivize.Controllers
         }
 
         // PUT api/<InstrumentsController>/5
+        [Authorize]
         [HttpPut]
         public ActionResult<Instrument> Put([FromBody] Instrument instrument)
         {
             return Ok(_instrumentRepository.updateInstrument(instrument));
         }
 
+        [Authorize]
         [HttpPut("inactive")]
         public ActionResult<Instrument> Activate([FromBody] Instrument instrument)
         {
@@ -57,10 +61,18 @@ namespace Gerivize.Controllers
         }
 
         // DELETE api/<InstrumentsController>/5
+        [Authorize]
         [HttpDelete("inactive/{aNumber}")]
         public ActionResult<Instrument> Delete(string aNumber)
         {
             return Ok(_instrumentRepository.deleteInstrument(aNumber));
+        }
+
+        [Authorize]
+        [HttpDelete("{aNumber}")]
+        public ActionResult<Instrument> ActualDelete(string aNumber)
+        {
+            return Ok(_instrumentRepository.actualDeleteInstrument(aNumber));
         }
     }
 }

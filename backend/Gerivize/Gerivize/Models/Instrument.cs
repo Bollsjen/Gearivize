@@ -19,6 +19,10 @@ namespace Gerivize.Models
         [DefaultValue(null)]
         public Guid? UserId { get; set; }
 
+        [Column("user_id2", Order =2)]
+        [DefaultValue(null)]
+        public Guid? UserId2 { get; set; }
+
         [Column("test_template_id")]
         [DefaultValue(null)]
         public Guid? TestTemplateId { get; set; }
@@ -87,6 +91,10 @@ namespace Gerivize.Models
         [ForeignKey(nameof(UserId))]
         [JsonIgnore]
         public virtual User? User { get; set; }
+
+        [ForeignKey(nameof(UserId2))]
+        [JsonIgnore]
+        public virtual User? User2 { get; set; }
 
         [ForeignKey(nameof(TestTemplateId))]
         [JsonIgnore]
