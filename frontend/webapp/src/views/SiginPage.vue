@@ -1,5 +1,25 @@
+<style>
+    .container {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+    }
+</style>
+
 <template>
-    <div>
+    <div class="container">
         <form>
             <div class="form-group">
                 <label for="username">Username</label>
