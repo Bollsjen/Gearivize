@@ -159,8 +159,11 @@ namespace Gerivize.Managers
                     }
                 });
                 message += "</ul>";
-                _instrumentsManager.SendCalibrationDueEmails(message, user);
-                Console.WriteLine(message);
+                if (message != "<ul></ul>")
+                {
+                    _instrumentsManager.SendCalibrationDueEmails(message, user);
+                    Console.WriteLine(message);
+                }
             });
         }
     }

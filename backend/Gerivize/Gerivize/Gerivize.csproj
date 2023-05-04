@@ -30,6 +30,7 @@
   <ItemGroup>
     <Folder Include="AttributeHelpers\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="mykeys\" />
   </ItemGroup>
 
 </Project>

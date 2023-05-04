@@ -58,9 +58,6 @@ export default {
       authService.logout().then(result => window.location.href="/")
           .catch(error => console.log(error))
     }
-  },
-  beforeMount() {
-    mapActions(['checkAuthentication']).checkAuthentication()
   }
 }
 </script>
