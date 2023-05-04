@@ -155,23 +155,23 @@ namespace Gerivize.Managers
             users.ForEach(user =>
             {
                 Console.WriteLine(user.Name);
-                string message = "<ul>";
+                string table = "<table border='1'><tr><th>ID</th><th>Instrument</th><th>Manufacturer</th><th>Type</th><th>Test</th><th>Scheduled</th></tr>";
                 emailResponsibles.ForEach(item =>
                 {
                     if (item.Key.Id == user.Id)
                     {
-                        message += $"<li>{item.Value.ANumber} which is scheduled for {item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
+                        table += $"<tr><td>{item.Value.ANumber}</td><td>{item.Value.InstrumentName}</td><td>{item.Value.Manufacturer}</td><td>{item.Value.Type}</td><td>{item.Value.Test}</td><td>{item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</td></tr>";
                     }
                 });
                 emailEveryone.ForEach(item =>
                 {
-                        message += $"<li>{item.ANumber} which is scheduled for {item.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
+                    table += $"<tr><td>{item.ANumber}</td><td>{item.InstrumentName}</td><td>{item.Manufacturer}</td><td>{item.Type}</td><td>{item.Test}</td><td>{item.NextCalibrationDate.ToString("dd/MM/yy")}</td></tr>";
                 });
-                message += "</ul>";
-                if (message != "<ul></ul>")
+                table += "</table>";
+                if (table != "<table border='1'><tr><th>ID</th><th>Instrument</th><th>Manufacturer</th><th>Type</th><th>Test</th><th>Scheduled</th></tr></table>")
                 {
-                    _instrumentsManager.SendCalibrationDueEmails(message, user);
-                    Console.WriteLine(message);
+                    _instrumentsManager.SendCalibrationDueEmails(table, user);
+                    Console.WriteLine(table);
                 }
             });
         }
