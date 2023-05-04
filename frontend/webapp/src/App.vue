@@ -33,7 +33,7 @@
                                 <b-dropdown-item href="/settings">Settings</b-dropdown-item>
                                 <b-dropdown-item href="#" @click="signout">Sign Out</b-dropdown-item>
                             </b-nav-item-dropdown>
-                            <b-nav-item href="/signin" v-else>Signin</b-nav-item>
+                            <b-nav-item href="/signin" v-else>Sign In</b-nav-item>
                         </b-navbar-nav>
                     </b-collapse>
                 </b-container>

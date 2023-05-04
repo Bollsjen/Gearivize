@@ -28,6 +28,7 @@ namespace Gerivize.Repositories
             return _localContext.Instruments.ToList().Find(i => i.ANumber == aNumber);
         }
 
+        //Potentiel update if it gets used to include userId2
         public List<Instrument> getByUserId(Guid userId)
         {
             return _localContext.Instruments.Where(i => i.UserId == userId).ToList();
