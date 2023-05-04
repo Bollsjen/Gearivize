@@ -19,7 +19,7 @@ export default new Vuex.Store({
   actions: {
     async checkAuthentication({commit}){
       storeService.checkAuthenticationcation()
-          .then(result => commit('setAuthenticated', result.data))
+          .then(result => {commit('setAuthenticated', result.data);})
           .catch(error => commit('setAuthenticated', {}))
     }
   },
