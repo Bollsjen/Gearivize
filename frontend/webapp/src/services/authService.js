@@ -7,5 +7,9 @@ export const authService = {
 
     logout(){
         return axios.delete(`/authentication`)
+    },
+
+    checkAuthenticationcation() {
+        return axios.get(`/authentication`)
     }
 }
