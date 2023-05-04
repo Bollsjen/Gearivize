@@ -1,9 +1,10 @@
 <template>
   <b-modal v-model="active" centered size="xl">
     <template #modal-header>
-      <div class="text-right w-100">
-        <b-button v-if="!instrument.inactive && purpose !== 'add' && purpose !== 'watch'" @click="deleteInstrument" variant="danger"><span style="margin-right: 7px">Make inactive</span><i class="fa-solid fa-trash"></i></b-button>
-        <b-button v-else-if="purpose !== 'add' && purpose !== 'watch'" @click="reactivateInstrument" variant="primary"><span style="margin-right: 7px">Make active</span><i class="fa-solid fa-circle-check"></i></b-button>
+      <div class="text-right w-100 d-flex flex-row justify-content-between">
+        <b-button v-if="!instrument.inactive && purpose !== 'add' && purpose !== 'watch'" @click="actualDeleteInstrument" variant="danger"><span style="margin-right: 7px">Delete</span><i class="fa-solid fa-trash"></i></b-button>
+        <b-button v-if="!instrument.inactive && purpose !== 'add' && purpose !== 'watch'" @click="deleteInstrument" variant="warning"><span style="margin-right: 7px">Make inactive</span><i class="fa-solid fa-eye-slash"></i></b-button>
+        <b-button v-else-if="purpose !== 'add' && purpose !== 'watch'" @click="reactivateInstrument" variant="primary" class="ml-auto"><span style="margin-right: 7px">Make active</span><i class="fa-solid fa-circle-check"></i></b-button>
       </div>
     </template>
 
@@ -450,6 +451,18 @@ export default {
     deleteInstrument(){
       this.instrument.inactive = true
       instrumentsService.deleteInstrument(this.instrument.aNumber)
+          .then(result => this.hide())
+          .catch(error => this.$bvModal.msgBoxOk(error.status, {
+            title: 'Error',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'success',
+            centered: true
+          }))
+    },
+
+    actualDeleteInstrument(){
+      instrumentsService.actualDeleteInstrument(this.instrument.aNumber)
           .then(result => this.hide())
           .catch(error => this.$bvModal.msgBoxOk(error.status, {
             title: 'Error',

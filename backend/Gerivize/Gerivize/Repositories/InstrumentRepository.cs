@@ -68,6 +68,14 @@ namespace Gerivize.Repositories
             return instrument;
         }
 
+        public Instrument actualDeleteInstrument(string aNumber)
+        {
+            Instrument instrument = getById(aNumber);
+            _localContext.Remove(instrument);
+            _localContext.SaveChanges();
+            return instrument;
+        }
+
         private string nextANumber()
         {
             List<Instrument> instruments = _localContext.Instruments.ToList();
