@@ -124,86 +124,18 @@ namespace Gerivize.Managers
 
         public void SendEmailNotification(List<KeyValuePair<string, Instrument>> instruments)
         {
-            //List<User> users = _userRepository.getAll();
-            //List<Instrument> emailEveryone = new List<Instrument>();
-            //List<KeyValuePair<User, Instrument>> emailResponsibles = new List< KeyValuePair < User, Instrument>> ();
-
-            //instruments.ForEach(item =>
-            //{
-            //    if(item.Key == "responsible")
-            //    {
-            //        emailResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User, item.Value));
-            //    }else if(item.Key == "everyone")
-            //    {
-            //        emailEveryone.Add(item.Value);
-            //    }
-            //});
-
-            //Console.WriteLine("Everyone:");
-            //emailEveryone.ForEach(item =>
-            //{
-            //    Console.WriteLine("\t"+item);
-            //});
-
-
-            //Console.WriteLine("\n\nResponsibles:");
-            //users.ForEach(user =>
-            //{
-            //    Console.WriteLine(user.Name);
-            //    string message = "<ul>";
-            //    emailResponsibles.ForEach(item =>
-            //    {
-            //        if (item.Key.Id == user.Id)
-            //        {
-            //            message += $"<li>{item.Value.ANumber} which is scheduled for {item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
-            //        }
-            //    });
-            //    message += "</ul>";
-            //    if (message != "<ul></ul>")
-            //    {
-            //        _instrumentsManager.SendCalibrationDueEmails(message, user);
-            //        Console.WriteLine(message);
-            //    }
-            //});
-
-            //ChatGPT attempt #1
-            //Console.WriteLine("\n\nResponsibles:");
-            //emailResponsibles.ForEach(item =>
-            //{
-            //    Console.WriteLine(item.Key.Name);
-            //    string message = $"<li>{item.Value.ANumber} which is scheduled for {item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
-            //    if (item.Value.User != null && item.Value.User.Email != null)
-            //    {
-            //        _instrumentsManager.SendCalibrationDueEmails(message, item.Value.User);
-            //        Console.WriteLine(message);
-            //    }
-            //    if (item.Value.User2 != null && item.Value.User2.Email != null && item.Value.User2.Id != item.Value.User.Id)
-            //    {
-            //        _instrumentsManager.SendCalibrationDueEmails(message, item.Value.User2);
-            //        Console.WriteLine(message);
-            //    }
-            //});
-
             List<User> users = _userRepository.getAll();
             List<Instrument> emailEveryone = new List<Instrument>();
-            List<KeyValuePair<User, Instrument>> emailPrimaryResponsibles = new List<KeyValuePair<User, Instrument>>();
-            List<KeyValuePair<User, Instrument>> emailSecondaryResponsibles = new List<KeyValuePair<User, Instrument>>();
+            List<KeyValuePair<User, Instrument>> emailResponsibles = new List<KeyValuePair<User, Instrument>>();
 
             instruments.ForEach(item =>
             {
                 if (item.Key == "responsible")
                 {
-                    if (item.Value.User != null)
+                    emailResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User, item.Value));
+                    if (item.Value.User2 != null)
                     {
-                        emailPrimaryResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User, item.Value));
-                        if (item.Value.User2 != null)
-                        {
-                            emailSecondaryResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User2, item.Value));
-                        }
-                    }
-                    else if (item.Value.User2 != null)
-                    {
-                        emailSecondaryResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User2, item.Value));
+                        emailResponsibles.Add(new KeyValuePair<User, Instrument>(item.Value.User2, item.Value));
                     }
                 }
                 else if (item.Key == "everyone")
@@ -219,37 +151,21 @@ namespace Gerivize.Managers
             });
 
 
-            Console.WriteLine("\n\nPrimary Responsibles:");
+            Console.WriteLine("\n\nResponsibles:");
             users.ForEach(user =>
             {
                 Console.WriteLine(user.Name);
                 string message = "<ul>";
-                emailPrimaryResponsibles.ForEach(item =>
+                emailResponsibles.ForEach(item =>
                 {
                     if (item.Key.Id == user.Id)
                     {
                         message += $"<li>{item.Value.ANumber} which is scheduled for {item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
                     }
                 });
-                message += "</ul>";
-                if (message != "<ul></ul>")
+                emailEveryone.ForEach(item =>
                 {
-                    _instrumentsManager.SendCalibrationDueEmails(message, user);
-                    Console.WriteLine(message);
-                }
-            });
-
-            Console.WriteLine("\n\nSecondary Responsibles:");
-            users.ForEach(user =>
-            {
-                Console.WriteLine(user.Name);
-                string message = "<ul>";
-                emailSecondaryResponsibles.ForEach(item =>
-                {
-                    if (item.Key.Id == user.Id)
-                    {
-                        message += $"<li>{item.Value.ANumber} which is scheduled for {item.Value.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
-                    }
+                        message += $"<li>{item.ANumber} which is scheduled for {item.NextCalibrationDate.ToString("dd/MM/yy")}</li>";
                 });
                 message += "</ul>";
                 if (message != "<ul></ul>")
