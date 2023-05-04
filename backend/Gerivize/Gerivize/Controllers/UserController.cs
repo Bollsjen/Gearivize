@@ -1,6 +1,7 @@
 ﻿using Gerivize.Managers;
 using Gerivize.Models;
 using Gerivize.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -47,6 +48,7 @@ namespace Gerivize.Controllers
         }
 
         // POST api/<UserController>
+        [Authorize]
         [HttpPost]
         public ActionResult<User> Post([FromBody] User value)
         {
@@ -56,6 +58,7 @@ namespace Gerivize.Controllers
         }
 
         // PUT api/<UserController>/5
+        [Authorize]
         [HttpPut]
         public ActionResult<User> Put([FromBody] User value)
         {
@@ -65,6 +68,7 @@ namespace Gerivize.Controllers
         }
 
         // DELETE api/<UserController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult<User> Delete(Guid id)
         {

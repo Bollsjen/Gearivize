@@ -1,6 +1,7 @@
 ﻿using Gerivize.Managers;
 using Gerivize.Models;
 using Gerivize.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,6 +40,7 @@ namespace Gerivize.Controllers
         }
 
         // POST api/<NotificationsController>
+        [Authorize]
         [HttpPost("create")]
         public ActionResult Post()
         {
@@ -47,6 +49,7 @@ namespace Gerivize.Controllers
         }
 
         // PUT api/<NotificationsController>/5
+        [Authorize]
         [HttpPut]
         public ActionResult Put([FromBody] Notification notification)
         {
@@ -55,6 +58,7 @@ namespace Gerivize.Controllers
         }
 
         // DELETE api/<NotificationsController>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
