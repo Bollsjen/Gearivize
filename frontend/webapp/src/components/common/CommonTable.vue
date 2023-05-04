@@ -23,7 +23,7 @@
           <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
         </b-col>
         <b-col sm="3" class="text-right" v-if="actionsField">
-          <b-button variant="success" size="sm" class="mt-1" v-for="item in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible">
+          <b-button variant="success" size="sm" class="mt-1" v-for="(item, index) in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible" :key="index">
             <span style="margin-right: 7px">{{item.text}}</span>
             <i class="fa-solid fa-plus"></i>
           </b-button>
@@ -87,8 +87,8 @@
           </div>
         </template>
 
-        <template v-for="item in fields" v-slot:[`cell(${item.key})`]="data">
-          <div v-if="data.item">
+        <template v-for="(item, index) in fields" v-slot:[`cell(${item.key})`]="data">
+          <div v-if="data.item" :key="index">
             <span v-if="item.formatter">{{item.formatter(data.item)}}</span>
             <span v-else>{{data.item[item.key]}}</span>
           </div>

@@ -67,5 +67,12 @@ namespace Gerivize.Controllers
         {
             return Ok(_instrumentRepository.deleteInstrument(aNumber));
         }
+
+        [Authorize]
+        [HttpDelete("{aNumber}")]
+        public ActionResult<Instrument> ActualDelete(string aNumber)
+        {
+            return Ok(_instrumentRepository.actualDeleteInstrument(aNumber));
+        }
     }
 }

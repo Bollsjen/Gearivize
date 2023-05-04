@@ -18,5 +18,9 @@ export const instrumentsService = {
 
     deleteInstrument(aNumber){
         return axios.delete(`/instruments/inactive/${aNumber}`)
+    },
+
+    actualDeleteInstrument(aNumber){
+        return axios.delete(`/instruments/${aNumber}`)
     }
 }
