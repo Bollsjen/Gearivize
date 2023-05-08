@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="w-75 text-left" style="margin-bottom: 100px">
     <h1>Instruments</h1>
-    <common-table :items="instruments" :fields="fields" striped hover pagination :filter-properties="filterProperties" borderless />
+    <common-table :items="instruments" :fields="fields" striped hover pagination :filter-properties="filterProperties" borderless :page-sizes="[10,25,50]" />
     <instrument-modal ref="InstrumentModal" />
   </b-container>
 </template>

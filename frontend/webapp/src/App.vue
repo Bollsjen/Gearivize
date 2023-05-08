@@ -58,20 +58,22 @@ export default {
       authService.logout().then(result => window.location.href="/")
           .catch(error => console.log(error))
     }
-  },
-  beforeMount() {
-    mapActions(['checkAuthentication']).checkAuthentication()
   }
 }
 </script>
 
 <style lang="scss">
+body, html {
+  background-color: #F7F7F7;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #F7F7F7;
 }
 
 nav {

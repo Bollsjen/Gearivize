@@ -37,6 +37,18 @@ namespace Gerivize.Controllers
             return _instrumentRepository.getById(aNumber);
         }
 
+        [HttpGet("list/x-months/{months}/{external}")]
+        public ActionResult<List<Instrument>> GetInstrumentByXMonths(int months, bool external)
+        {
+            return Ok(_instrumentRepository.getCalibrationNextXMonths(months, external));
+        }
+
+        [HttpGet("list/overdue/{external}")]
+        public ActionResult<List<Instrument>> GetInstrumentOverdue(bool external)
+        {
+            return Ok(_instrumentRepository.getCalibrationOverdue(external));
+        }
+
         // POST api/<InstrumentsController>
         [Authorize]
         [HttpPost]
