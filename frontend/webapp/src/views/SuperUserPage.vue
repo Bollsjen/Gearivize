@@ -1,5 +1,6 @@
 <template>
   <b-container fluid class="w-75 text-left">
+    <authenticator minimum-requirement="superUser" />
     <b-row>
       <b-col sm="12">
         <h1 style="margin: 25px 0px;">Super user</h1>
@@ -20,10 +21,12 @@
 import CommonTable from "@/components/common/CommonTable.vue";
 import {userService} from "@/services/userService";
 import UserModal from "@/components/users/UserModal.vue";
+import Authenticator from "@/components/authentication/Authenticator.vue";
 export default {
   components: {
     UserModal,
-    CommonTable
+    CommonTable,
+    Authenticator
   },
   props: {
 
@@ -74,7 +77,7 @@ export default {
                 text: 'New instrument',
                 placement: 'right',
                 section: 'table',
-                visible: this.$store.state.isAuthenticated.superUser,
+                visible: true,
                 variant: 'success',
                 size: 'sm',
                 action: () => this.$refs['UserModal'].show('add',null)
@@ -93,7 +96,7 @@ export default {
                 icon: 'fa-pen-to-square',
                 placement: 'right',
                 variant: 'success',
-                visible: this.$store.state.isAuthenticated.superUser,
+                visible: true,
                 size: 'sm',
                 action: (data) => this.$refs['UserModal'].show('edit',data)
               },
