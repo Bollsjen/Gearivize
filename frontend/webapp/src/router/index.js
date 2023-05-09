@@ -6,6 +6,7 @@ import InstrumentsPage from "@/views/InstrumentsPage.vue";
 import TemplatesPage from "@/views/TemplatesPage.vue";
 import SiginPage from "@/views/SiginPage.vue";
 import SettingsPage from "@/views/SettingsPage.vue";
+import SuperUserPage from "@/views/SuperUserPage.vue";
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: SettingsPage
+  },
+  {
+    path: '/super-user',
+    name: 'Super user',
+    component: SuperUserPage
   }
 ]
 

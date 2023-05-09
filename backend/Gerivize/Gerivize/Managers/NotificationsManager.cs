@@ -101,7 +101,7 @@ namespace Gerivize.Managers
             }
             else
             {
-                Console.WriteLine("Everything is up to date");
+                Console.WriteLine($"[{DateTime.Now}] Everything is up to date");
             }
         }
 

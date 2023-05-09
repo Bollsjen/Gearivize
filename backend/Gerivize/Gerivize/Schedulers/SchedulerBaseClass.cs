@@ -37,7 +37,7 @@ namespace Gerivize.Schedulers
                         if (instance != null)
                         {
                             //  Opretter et recurring job for metoden der benytter attributten der køres så ofte som var bestemt i attributtens data
-                            manager.AddOrUpdate(type.Namespace + "." + type.Name + "." + method.Name, job, cronJobAttribute.Parameter);
+                            manager.AddOrUpdate(type.Namespace + "." + type.Name + "." + method.Name, job, cronJobAttribute.Parameter, TimeZoneInfo.Local);
                             Console.WriteLine("Job created");
                         }
                         else

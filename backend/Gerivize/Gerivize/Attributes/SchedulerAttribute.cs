@@ -13,7 +13,7 @@
         public SchedulerAttribute(string parameter)
         {
             string[] splitUp = parameter.Split(' ');
-            if (splitUp.Length != 6) throw new ArgumentException();
+            if (splitUp.Length != 5) throw new ArgumentException();
             Parameter = parameter;
         }
     }

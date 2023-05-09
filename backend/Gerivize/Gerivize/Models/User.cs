@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Gerivize.Models
 {
@@ -18,6 +19,7 @@ namespace Gerivize.Models
         public string Email { get; set; }
 
         [Column("password")]
+        [JsonIgnore]
         public string Password { get; set; }
 
         [Column("creation_date")]

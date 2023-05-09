@@ -293,6 +293,9 @@
         <b-button variant="secondary" @click="hide" style="margin-right: 10px">Cancel</b-button>
         <b-button variant="success" type="submit" @click="updateInstrument">Update</b-button>
       </div>
+      <div v-else-if="purpose === 'watch'">
+        <b-button variant="secondary" @click="hide" style="margin-right: 10px">Close</b-button>
+      </div>
     </template>
   </b-modal>
 </template>

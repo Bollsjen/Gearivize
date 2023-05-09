@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="common-table-top-container w-100">
-      <b-row v-if="filterProperties.length > 0" class="w-100">
+    <div class="common-table-top-container w-100" v-if="filterProperties.length > 0">
+      <b-row class="w-100">
         <b-col sm="3">
           <b-form-group
               label-cols-sm="0"
@@ -23,14 +23,14 @@
           <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
         </b-col>
         <b-col sm="3" class="text-right" v-if="actionsField">
-          <b-button variant="success" size="sm" class="mt-1" v-for="(item, index) in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible" :key="index">
+          <b-button variant="success" size="sm" class="mt-1" v-for="item in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible">
             <span style="margin-right: 7px">{{item.text}}</span>
             <i class="fa-solid fa-plus"></i>
           </b-button>
         </b-col>
       </b-row>
     </div>
-    <div class="common-table-container">
+    <div :class="background ? 'common-table-container' : ''">
       <b-table
           :striped="striped"
           :bordered="bordered"
@@ -64,7 +64,7 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc">
         <template #empty="scope">
-          <div class="my-3 text-center">
+          <div class="my-0 text-center">
             <span>No items to display</span>
           </div>
         </template>
@@ -87,9 +87,10 @@
           </div>
         </template>
 
-        <template v-for="(item, index) in fields" v-slot:[`cell(${item.key})`]="data">
-          <div v-if="data.item" :key="index">
+        <template v-for="item in fields" v-slot:[`cell(${item.key})`]="data">
+          <div v-if="data.item">
             <span v-if="item.formatter">{{item.formatter(data.item)}}</span>
+            <b-checkbox switch v-if="typeof data.item[item.key] === 'boolean'" v-model="data.item[item.key]" disabled />
             <span v-else>{{data.item[item.key]}}</span>
           </div>
         </template>
@@ -115,9 +116,7 @@
         <div v-if="pagination" class="d-flex justify-content-between align-items-center w-100">
           <div class="d-flex align-items-center">
             <b-button-group size="sm">
-              <b-button key="10" variant="outline-secondary" :class="perPage === 10 ? 'active' : ''" @click="changePageLimit(10)">10</b-button>
-              <b-button key="25" variant="outline-secondary" :class="perPage === 25 ? 'active' : ''" @click="changePageLimit(25)">25</b-button>
-              <b-button key="50" variant="outline-secondary" :class="perPage === 50 ? 'active' : ''" @click="changePageLimit(50)">50</b-button>
+              <b-button v-for="(pageSize, index) in pageSizes" :key="index" variant="outline-secondary" :class="perPage === pageSize ? 'active' : ''" @click="changePageLimit(pageSize)">{{pageSize}}</b-button>
             </b-button-group>
           </div>
           <b-pagination
@@ -140,11 +139,19 @@ export default {
 
   },
   props: {
+    pageSizes:{
+      type: Array,
+      default: () => [10, 25, 50]
+    },
+    background: {
+      type: Boolean,
+      default: false
+    },
     fields: Array,
     items: Array,
     filterProperties: {
       type: Array,
-      default: [],
+      default: () => [],
     },
 
     striped: {
@@ -247,7 +254,7 @@ export default {
       sortBy: '',
       sortDesc: false,
       currentPage: 0,
-      perPage: 10,
+      perPage: this.pageSizes[0],
       filterOn: [],
       filterItems: [],
       search: '',
@@ -315,7 +322,7 @@ export default {
     }
   },
   mounted() {
-    this.pagination === true ? this.perPage = 10 : this.perPage = 900719925474099
+    this.pagination === true ? this.perPage = this.pageSizes[0] : this.perPage = 900719925474099
     this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
   },
   watch: {
@@ -329,7 +336,7 @@ export default {
 
     search(){
       this.filterSearch()
-    }
+    },
   }
 }
 </script>

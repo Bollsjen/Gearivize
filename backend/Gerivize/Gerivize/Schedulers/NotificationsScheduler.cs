@@ -12,7 +12,7 @@ namespace Gerivize.Schedulers
             _notificationsManager = new NotificationsManager();
         }
 
-        [Scheduler("*/10 * * * * *")]
+        [Scheduler("45 11 * * *")]
         public void CheckForCalibrationAndSendNotifications()
         {
             _notificationsManager.findIstrumenmtsToCreateNotificationsFor();
