@@ -25,7 +25,7 @@
                                 </router-link>
                             </b-nav-item>
 
-                            <b-nav-item-dropdown right v-if="$store.state.isAuthenticated.responsible">
+                            <b-nav-item-dropdown right v-if="$store.state.isAuthenticated !== null && $store.state.isAuthenticated.responsible">
                                 <!-- Using 'button-content' slot -->
                                 <template #button-content>
                                     <em>User</em>

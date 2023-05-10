@@ -37,7 +37,10 @@ namespace Gerivize.Repositories
         public User updateUser(User user, Guid id)
         {
             User dims = getById(id);
-            dims = user;
+            dims.Email = user.Email;
+            dims.Name = user.Name;
+            dims.Responsible = user.Responsible;
+            dims.SuperUser = user.SuperUser;
             _localContext.SaveChanges();
             return user;
         }

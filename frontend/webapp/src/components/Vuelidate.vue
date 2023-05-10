@@ -1,5 +1,5 @@
 <template>
-  <span v-if="vModel.$error" class="error-text">{{message}}</span>
+  <span v-if="vModel.$error" class="error-text">{{vModel.$errors[0].$message === '' ? message : vModel.$errors[0].$message}}</span>
 </template>
 
 <script>

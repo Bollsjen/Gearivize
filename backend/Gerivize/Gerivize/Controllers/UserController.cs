@@ -64,6 +64,7 @@ namespace Gerivize.Controllers
         [HttpPut("{id}")]
         public ActionResult<User> Put([FromBody] User value, Guid id, [AuthenticatedUser] User user)
         {
+            Console.WriteLine("Fisk");
             if (!user.SuperUser) return Unauthorized();
             User _user = _userRepository.updateUser(value, id);
             if(_user == null) { return NotFound();}

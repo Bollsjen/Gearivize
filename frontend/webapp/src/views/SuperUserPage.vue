@@ -13,7 +13,8 @@
         <common-table :items="users" :fields="fields" />
       </b-col>
     </b-row>
-    <user-modal ref="UserModal" />
+    <user-modal ref="UserModal" @delete-user="deleteUser" />
+    <create-user-modal ref="CreateUserModal" @add-user="addUser"/>
   </b-container>
 </template>
 
@@ -21,22 +22,20 @@
 import CommonTable from "@/components/common/CommonTable.vue";
 import {userService} from "@/services/userService";
 import UserModal from "@/components/users/UserModal.vue";
+import CreateUserModal from "@/components/users/CreateUserModal.vue";
 import Authenticator from "@/components/authentication/Authenticator.vue";
 export default {
   components: {
     UserModal,
     CommonTable,
+    CreateUserModal,
     Authenticator
   },
   props: {
-
   },
   data(){
     return {
-      users: {
-        type: Array,
-        default: () => []
-      }
+      users: []
     }
   },
   methods: {
@@ -50,6 +49,21 @@ export default {
             okVariant: 'success',
             centered: true
           }))
+    },
+
+    deleteUser(userToDelete){
+      let theUser = null
+      this.users.forEach(user => {
+        if(user.id === userToDelete.id){
+          theUser = user
+        }
+      })
+
+      this.users = this.users.filter(user => user !== theUser)
+    },
+
+    addUser(user){
+      this.users.push(user)
     }
   },
   computed: {
@@ -80,7 +94,7 @@ export default {
                 visible: true,
                 variant: 'success',
                 size: 'sm',
-                action: () => this.$refs['UserModal'].show('add',null, this.users)
+                action: () => this.$refs['CreateUserModal'].show()
               }
             ],
             cell: [
@@ -108,6 +122,11 @@ export default {
   },
   mounted(){
     this.load()
+  },
+  watch: {
+    users () {
+      console.log(this.users)
+    }
   }
 }
 </script>

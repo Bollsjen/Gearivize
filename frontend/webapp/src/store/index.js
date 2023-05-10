@@ -21,11 +21,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async checkAuthentication({commit}){
+    checkAuthentication({commit}){
       commit('setIsChecking', true)
       authService.checkAuthenticationcation()
-          .then(result => {commit('setAuthenticated', result.data); commit('setIsChecking', false);})
-          .catch(error => commit('setAuthenticated', null))
+          .then(result => {commit('setAuthenticated', result.data); commit('setIsChecking', false)})
+          .catch(error => {commit('setAuthenticated', {responsible: false, superUser: false}); commit('setIsChecking', false)})
     }
   },
   modules: {

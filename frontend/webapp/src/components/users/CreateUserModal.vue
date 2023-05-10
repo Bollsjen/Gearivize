@@ -3,23 +3,16 @@
     <template #modal-header>
       <div class="text-right w-100 d-flex flex-row justify-content-between">
         <h4>User</h4>
-        <b-button v-if="purpose !== 'watch'" @click="deleteUser" variant="danger"><span style="margin-right: 7px">Delete</span><i class="fa-solid fa-trash"></i></b-button>
       </div>
     </template>
 
     <b-row>
       <b-col sm="6">
         <b-form-group label="Name">
-          <b-form-input v-if="purpose === 'edit'"
+          <b-form-input
                         v-model="user.name"
                         vuelidate
                         :class="{error: v$.user.name.$error}">
-          </b-form-input>
-
-          <b-form-input v-else-if="purpose === 'watch'"
-                        v-model="user.name"
-                        :class="{error: v$.user.name.$error}"
-                        disabled>
           </b-form-input>
 
           <vuelidate :v-model="v$.user.name" />
@@ -28,58 +21,62 @@
 
       <b-col sm="6">
         <b-form-group label="E-mail">
-          <b-form-input v-if="purpose === 'edit'"
+          <b-form-input
                         v-model="user.email"
                         vuelidate
                         :class="{error: v$.user.email.$error}">
-          </b-form-input>
-
-          <b-form-input v-else-if="purpose === 'watch'"
-                        v-model="user.email"
-                        disabled>
           </b-form-input>
           <vuelidate :v-model="v$.user.email" />
         </b-form-group>
       </b-col>
 
       <b-col sm="6">
-        <b-form-group label="Responsible">
-          <b-checkbox v-if="purpose === 'edit'"
-                        v-model="user.responsible"
-                        switch>
-          </b-checkbox>
+        <b-form-group label="Password">
+          <b-form-input
+                        v-model="user.password"
+                        vuelidate
+                        type="password"
+                        :class="{error: v$.user.password.$error}">
+          </b-form-input>
+          <vuelidate :v-model="v$.user.password" />
+        </b-form-group>
+      </b-col>
 
-          <b-checkbox v-else-if="purpose === 'watch'"
-                        v-model="user.responsible"
-                        switch
-                        disabled>
+      <b-col sm="6">
+        <b-form-group label="Repeat Password">
+          <b-form-input
+                        v-model="repeatPassword"
+                        vuelidate
+                        type="password"
+                        :class="{error: v$.repeatPassword.$error}">
+          </b-form-input>
+          <vuelidate :v-model="v$.repeatPassword" message="Passwords not identical" />
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="6">
+        <b-form-group label="Responsible">
+          <b-checkbox
+                      v-model="user.responsible"
+                      switch>
           </b-checkbox>
         </b-form-group>
       </b-col>
 
       <b-col sm="6">
         <b-form-group label="Super user">
-          <b-checkbox v-if="purpose === 'edit'"
+          <b-checkbox
                       v-model="user.superUser"
                       switch>
-          </b-checkbox>
-
-          <b-checkbox v-else-if="purpose === 'watch'"
-                      v-model="user.superUser"
-                      switch
-                      disabled>
           </b-checkbox>
         </b-form-group>
       </b-col>
     </b-row>
 
     <template #modal-footer>
-      <div v-if="purpose === 'edit'">
+      <div>
         <b-button variant="secondary" @click="close" style="margin-right: 10px">Cancel</b-button>
-        <b-button variant="success" type="submit" @click="submit">Update</b-button>
-      </div>
-      <div v-else-if="purpose === 'watch'">
-        <b-button variant="secondary" @click="close" style="margin-right: 10px">Close</b-button>
+        <b-button variant="success" @click="submit">Add</b-button>
       </div>
     </template>
   </b-modal>
@@ -105,7 +102,6 @@ export default {
   data(){
     return {
       visible: false,
-      purpose: 'watch',
       user: {
         type: Object,
         default: ()=> {}
@@ -120,7 +116,6 @@ export default {
         createDate: new Date().toISOString()
       },
       repeatPassword: '',
-
     }
   },
   validations(){
@@ -133,58 +128,35 @@ export default {
           required,
           email
         },
+        password: {
+          required
+        },
       },
+      repeatPassword: {
+        required: requiredIf(function() {return false}),
+        sameAsPassword: sameAs(function(){
+          return this.user.password
+        }),
+      }
     }
   },
   methods: {
-    show(purpose, user){
-      this.purpose = purpose
+    show(){
       this.visible = true
-      this.user = user != null ? user : this.defaultUser
-      this.repeatPassword = this.user.password
     },
 
     close(){
       this.visible = false
       this.v$.$reset()
-    },
-
-    deleteUser(){
-      this.$bvModal.msgBoxConfirm(`Are you sure you want to delete ${this.user.name}? It cannot be undone!`, {
-        title: 'Delete user',
-        size: 'sm',
-        buttonSize: 'sm',
-        okVariant: 'danger',
-        centered: true
-      })
-          .then(result => {
-              if(result === true){
-                userService.deleteUser(this.user.id)
-                    .then(result => {
-                      this.$emit('delete-user',result.data)
-                      this.close()
-                    })
-                    .catch(error => this.$bvModal.msgBoxOk(error.status, {
-                      title: 'Error',
-                      size: 'sm',
-                      buttonSize: 'sm',
-                      okVariant: 'success',
-                      centered: true
-                    }))
-              }else{
-                console.log("cancel deletion")
-              }
-            }
-          )
+      console.log("Close")
     },
 
     submit(){
       this.v$.$touch()
       if(this.v$.$errors.length === 0){
-          this.createDate = new Date().toISOString()
-          userService.updateUser(this.user, this.user.id)
+          userService.createUser(this.user)
               .then(result => {
-                this.user = result.data
+                this.$emit('add-user',result.data)
                 this.close()
               })
               .catch(error => this.$bvModal.msgBoxOk(error.status, {

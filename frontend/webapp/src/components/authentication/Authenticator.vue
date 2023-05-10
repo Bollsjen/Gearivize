@@ -10,20 +10,16 @@ export default {
   },
   computed: {
     store(){
-      console.log(this.$store.state.isChecking)
       return this.$store.state.isChecking
     }
   },
   watch: {
-    store() {
-      if(!this.store){
-        console.log("snask")
+    '$store.state.isChecking': function (newVal,oldVal) {
+      if(!this.$store.state.isChecking){
         if(this.$store.state.isAuthenticated !== {} || this.$store.state.isAuthenticated !== null){
           if(this.minimumRequirement === '') this.$router.push('/')
           if(!this.$store.state.isAuthenticated[this.minimumRequirement]) this.$router.push('/')
           if(!this.$store.state.isAuthenticated) this.$router.push('/')
-          console.log("fisk")
-          console.log(this.$store.state.isAuthenticated)
         }else{
           this.$router.push('/')
         }

@@ -14,7 +14,7 @@ export const userService = {
     },
 
     updateUser(user, id){
-        return axios.post(`/user/${id}`, user)
+        return axios.put(`/user/${id}`, user)
     },
 
     deleteUser(id){
