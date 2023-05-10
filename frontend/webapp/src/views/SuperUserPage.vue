@@ -80,7 +80,7 @@ export default {
                 visible: true,
                 variant: 'success',
                 size: 'sm',
-                action: () => this.$refs['UserModal'].show('add',null)
+                action: () => this.$refs['UserModal'].show('add',null, this.users)
               }
             ],
             cell: [
@@ -90,7 +90,7 @@ export default {
                 variant: 'primary',
                 visible: true,
                 size: 'sm',
-                action: (data) => this.$refs['UserModal'].show('watch',data)
+                action: (data) => this.$refs['UserModal'].show('watch',data, null)
               },
               {
                 icon: 'fa-pen-to-square',
@@ -98,7 +98,7 @@ export default {
                 variant: 'success',
                 visible: true,
                 size: 'sm',
-                action: (data) => this.$refs['UserModal'].show('edit',data)
+                action: (data) => this.$refs['UserModal'].show('edit',data,null)
               },
             ]
           }

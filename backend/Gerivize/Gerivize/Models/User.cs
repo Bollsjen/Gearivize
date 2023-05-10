@@ -19,7 +19,6 @@ namespace Gerivize.Models
         public string Email { get; set; }
 
         [Column("password")]
-        [JsonIgnore]
         public string Password { get; set; }
 
         [Column("creation_date")]

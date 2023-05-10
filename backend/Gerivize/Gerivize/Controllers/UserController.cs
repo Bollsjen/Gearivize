@@ -1,4 +1,5 @@
-﻿using Gerivize.Managers;
+﻿using Gerivize.Attributes;
+using Gerivize.Managers;
 using Gerivize.Models;
 using Gerivize.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -50,31 +51,34 @@ namespace Gerivize.Controllers
         // POST api/<UserController>
         [Authorize]
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User value)
+        public ActionResult<User> Post([FromBody] User value, [AuthenticatedUser] User user)
         {
-            User user = _userRepository.createUser(value);
-            if(user == null) { return NotFound(); }
-            return Ok(user);
+            if (!user.SuperUser) return Unauthorized();
+            User _user = _userRepository.createUser(value);
+            if(_user == null) { return NotFound(); }
+            return Ok(_user);
         }
 
         // PUT api/<UserController>/5
         [Authorize]
-        [HttpPut]
-        public ActionResult<User> Put([FromBody] User value)
+        [HttpPut("{id}")]
+        public ActionResult<User> Put([FromBody] User value, Guid id, [AuthenticatedUser] User user)
         {
-            User user = _userRepository.updateUser(value);
-            if(user == null) { return NotFound();}
-            return Ok(user);
+            if (!user.SuperUser) return Unauthorized();
+            User _user = _userRepository.updateUser(value, id);
+            if(_user == null) { return NotFound();}
+            return Ok(_user);
         }
 
         // DELETE api/<UserController>/5
         [Authorize]
         [HttpDelete("{id}")]
-        public ActionResult<User> Delete(Guid id)
+        public ActionResult<User> Delete(Guid id, [AuthenticatedUser] User user)
         {
-            User user = _userRepository.deleteUser(id);
-            if(user == null) { return NotFound(); };
-            return Ok(user);
+            if(!user.SuperUser) return Unauthorized();
+            User _user = _userRepository.deleteUser(id);
+            if(_user == null) { return NotFound(); };
+            return Ok(_user);
         }
     }
 }

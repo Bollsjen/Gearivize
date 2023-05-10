@@ -90,7 +90,7 @@
         <template v-for="item in fields" v-slot:[`cell(${item.key})`]="data">
           <div v-if="data.item">
             <span v-if="item.formatter">{{item.formatter(data.item)}}</span>
-            <b-checkbox switch v-if="typeof data.item[item.key] === 'boolean'" v-model="data.item[item.key]" disabled />
+            <b-checkbox switch v-else-if="typeof data.item[item.key] === 'boolean'" v-model="data.item[item.key]" disabled />
             <span v-else>{{data.item[item.key]}}</span>
           </div>
         </template>
@@ -331,7 +331,6 @@ export default {
     },
     items(){
       this.filterProperties.length > 0 ? this.filterItemsList() : this.filterItems = this.items
-      console.log(this.filterItems)
     },
 
     search(){

@@ -25,7 +25,7 @@ export default new Vuex.Store({
       commit('setIsChecking', true)
       authService.checkAuthenticationcation()
           .then(result => {commit('setAuthenticated', result.data); commit('setIsChecking', false);})
-          .catch(error => commit('setAuthenticated', {}))
+          .catch(error => commit('setAuthenticated', null))
     }
   },
   modules: {

@@ -12,14 +12,17 @@
         <b-form-group label="Name">
           <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
                         v-model="user.name"
-                        :class="{error: $v.user.name.$error}">
+                        vuelidate
+                        :class="{error: v$.user.name.$error}">
           </b-form-input>
 
           <b-form-input v-else-if="purpose === 'watch'"
                         v-model="user.name"
-                        :class="{error: $v.user.name.$error}"
+                        :class="{error: v$.user.name.$error}"
                         disabled>
           </b-form-input>
+
+          <vuelidate :v-model="v$.user.name" />
         </b-form-group>
       </b-col>
 
@@ -27,13 +30,15 @@
         <b-form-group label="E-mail">
           <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
                         v-model="user.email"
-                        :class="{error: $v.user.email.$error}">
+                        vuelidate
+                        :class="{error: v$.user.email.$error}">
           </b-form-input>
 
           <b-form-input v-else-if="purpose === 'watch'"
                         v-model="user.email"
                         disabled>
           </b-form-input>
+          <vuelidate :v-model="v$.user.email" />
         </b-form-group>
       </b-col>
 
@@ -41,17 +46,21 @@
         <b-form-group label="Password">
           <b-form-input v-if="purpose === 'add'"
                         v-model="user.password"
-                        :class="{error: $v.password.$error}">
+                        vuelidate
+                        :class="{error: v$.user.password.$error}">
           </b-form-input>
+          <vuelidate :v-model="v$.user.password" />
         </b-form-group>
       </b-col>
 
       <b-col sm="6">
-        <b-form-group label="Password">
+        <b-form-group label="Repeat Password">
           <b-form-input v-if="purpose === 'add'"
-                        v-model="user.password"
-                        :class="{error: $v.password.$error}">
+                        v-model="repeatPassword"
+                        vuelidate
+                        :class="{error: v$.repeatPassword.$error}">
           </b-form-input>
+          <vuelidate :v-model="v$.repeatPassword" message="Passwords not identical" />
         </b-form-group>
       </b-col>
 
@@ -89,11 +98,11 @@
     <template #modal-footer>
       <div v-if="purpose === 'add'">
         <b-button variant="secondary" @click="close" style="margin-right: 10px">Cancel</b-button>
-        <b-button variant="success" type="submit" @click="addInstrument">Add</b-button>
+        <b-button variant="success" type="submit" @click="submit">Add</b-button>
       </div>
       <div v-else-if="purpose === 'edit'">
         <b-button variant="secondary" @click="close" style="margin-right: 10px">Cancel</b-button>
-        <b-button variant="success" type="submit" @click="updateInstrument">Update</b-button>
+        <b-button variant="success" type="submit" @click="update">Update</b-button>
       </div>
       <div v-else-if="purpose === 'watch'">
         <b-button variant="secondary" @click="close" style="margin-right: 10px">Close</b-button>
@@ -104,14 +113,16 @@
 
 <script>
 import {useVuelidate} from "@vuelidate/core";
-import {required} from "vuelidate/lib/validators";
+import {required, minLength, sameAs} from "vuelidate/lib/validators";
+import {userService} from "@/services/userService";
+import Vuelidate from "@/components/Vuelidate.vue";
 
 export default {
   setup(){
     return {v$: useVuelidate()}
   },
   components: {
-
+    Vuelidate
   },
   props: {
 
@@ -122,15 +133,20 @@ export default {
       purpose: 'watch',
       user:{
         type: Object,
-        default: () => {}
+        default: () => {
+          return {
+            id: '2d210a74-419d-4705-a1ec-820274894c6b',
+            name: '',
+            email: '',
+            password: '',
+            responsible: false,
+            superUser: false,
+            createDate: new Date().toISOString()
+          }
+        }
       },
-      defaultUser: {
-        name: '',
-        email:'',
-        password: '',
-        reponsible: false,
-        superUser: false
-      }
+      repeatPassword: '',
+      users: [],
     }
   },
   validations(){
@@ -142,21 +158,29 @@ export default {
         email: {
           required
         },
+        password: {
+          required
+        },
       },
-      password: {
-        required
+      repeatPassword: {
+        required,
+        sameAsPassword: sameAs(function(){
+          return this.user.password
+        })
       }
     }
   },
   methods: {
-    show(purpose, user){
+    show(purpose, user, users){
       this.purpose = purpose
       this.visible = true
-      this.user = user != null ? user : this.defaultUser
+      this.user = user != null ? user : this.user.default()
+      this.users = users
     },
 
     close(){
       this.visible = false
+      this.v$.$reset()
     },
 
     deleteUser(){
@@ -164,12 +188,31 @@ export default {
     },
 
     submit(){
+      this.v$.$touch()
+      if(this.v$.$errors.length === 0){
+        userService.createUser(this.user)
+            .then(result => {
+              this.users.push(result.data)
+              this.close()
+            })
+            .catch(error => this.$bvModal.msgBoxOk(error.status, {
+              title: 'Error',
+              size: 'sm',
+              buttonSize: 'sm',
+              okVariant: 'success',
+              centered: true
+            }))
+      }else{
+        console.log(this.v$.$errors)
+      }
 
     }
   },
   computed: {
-    repeatPassword(){
-
+  },
+  watch: {
+    'this.v$.user.name.$errors'(){
+      console.log("ting")
     }
   },
   mounted(){
@@ -177,3 +220,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.error {
+  border: 1px solid red;
+}
+</style>
