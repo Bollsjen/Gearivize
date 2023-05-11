@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection;
 using Gerivize.Models;
 using Gerivize.Repositories;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Gerivize.Managers
 {
@@ -33,6 +35,34 @@ namespace Gerivize.Managers
             client.EnableSsl = true;
 
             client.Send(message);
+        }
+
+        public bool ImageUpload(IFormFile formFile, string aNumber)
+        {
+            string outputPath = Environment.CurrentDirectory + @"\Public\Images\Instrument\";
+            try
+            {
+                if (!Directory.Exists(outputPath))
+                {
+                    Directory.CreateDirectory(outputPath);
+                }
+
+                Guid fileId = Guid.NewGuid();
+                string newFileName = fileId.ToString() + "-" + formFile.FileName + ".jpeg";
+
+                using (FileStream fileStream = System.IO.File.Create(outputPath + newFileName))
+                {
+                    formFile.CopyTo(fileStream);
+                    fileStream.Flush();                 
+                }
+                _instrumentRepository.saveImageToInstrument(newFileName, aNumber);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
         }
     }
 }

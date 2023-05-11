@@ -4,6 +4,13 @@ export const instrumentsService = {
     getAll(){
         return axios.get(`/instruments`)
     },
+
+    getImage(imageName){
+        return axios.get(`instruments/image/${imageName}`, {
+            responseType: 'blob'
+        })
+    },
+
     createNewInstrument(instrument){
         return axios.post(`/instruments`, instrument)
     },
@@ -22,5 +29,16 @@ export const instrumentsService = {
 
     actualDeleteInstrument(aNumber){
         return axios.delete(`/instruments/${aNumber}`)
+    },
+
+
+    uploadInstrumentImage(formData, aNumber){
+        console.log(aNumber)
+        console.log(formData)
+        return axios.post(`/instruments/${aNumber}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }
