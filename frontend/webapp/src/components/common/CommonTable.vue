@@ -11,11 +11,11 @@
               v-slot="{ ariaDescribedby }"
           >
             <b-form-checkbox-group
+                :options="mapFilterdItemsKeys"
                 v-model="filterOn"
                 :aria-describedby="ariaDescribedby"
                 class="mt-1 d-flex flex-row"
             >
-              <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 10px"><span>{{filter.label}}</span></b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -268,12 +268,11 @@ export default {
 
     filterItemsList(){
       this.filterItems = this.items.filter(item => {
-        return this.filterOn.some(index => {
-          const prop = this.filterProperties[index]
-          if (prop && prop.key in item) {
-            return prop.value === item[prop.key]
-          }
-          return false
+        return this.filterOn.some((index) => {
+          if(index !== true)
+            if(this.filterProperties.find(filter => filter.value === index)){
+              
+            }
         })
       })
     },
@@ -299,7 +298,10 @@ export default {
   },
   computed: {
     mapFilterdItemsKeys(){
-      return Object.keys(this.filterItems)
+      return this.filterProperties.map((filter) => ({
+        value: filter.value,
+        text: filter.label
+      }))
     },
     checkedFilters() {
       return this.filterProperties.filter((filter, index) => this.filterOn[index]);

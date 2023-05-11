@@ -26,16 +26,22 @@ export default {
       filterProperties: [
         {
           key: 'inactive',
-          value: true,
+          value: 'get_inactives',
           label: 'Inactive',
-          default: 0,
+          default: false,
         },
         {
           key: 'inactive',
-          value: false,
+          value: 'get_actives',
           label: 'Active',
-          default: 1,
+          default: true,
         },
+        {
+          key: 'needsCalibration',
+          value: 'get_need_calibration',
+          label: 'No Calibration',
+          default: false,
+        }
       ]
     }
   },
@@ -161,6 +167,7 @@ export default {
   },
   mounted() {
     this.getInstruments()
+    //this.filterOn = this.filterProperties.map()
   }
 }
 </script>
