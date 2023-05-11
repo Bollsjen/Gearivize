@@ -46,6 +46,15 @@ namespace Gerivize.Repositories
             return instruments;
         }
 
+        public string saveImageToInstrument(string imageName, string aNumber)
+        {
+            Instrument instrument = getById(aNumber);
+            instrument.Image = imageName;
+            _localContext.Instruments.Update(instrument);
+            _localContext.SaveChanges();
+            return imageName;
+        }
+
         public Instrument createInstrument(Instrument instrument)
         {
             instrument.ANumber = nextANumber();

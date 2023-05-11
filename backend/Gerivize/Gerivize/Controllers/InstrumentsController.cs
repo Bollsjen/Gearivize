@@ -37,12 +37,27 @@ namespace Gerivize.Controllers
             return _instrumentRepository.getById(aNumber);
         }
 
+        [Authorize]
+        [HttpGet("image/{imageFileName}")]
+        public ActionResult GetImage(string imageFileName)
+        {
+            var image = System.IO.File.OpenRead(Environment.CurrentDirectory + @"\Public\Images\Instrument\" + imageFileName);
+            return File(image, "image/jpeg");
+        }
+
         // POST api/<InstrumentsController>
         [Authorize]
         [HttpPost]
         public ActionResult<Instrument> Post([FromBody] Instrument instrument)
         {
             return Ok(_instrumentRepository.createInstrument(instrument));
+        }
+
+        [Authorize]
+        [HttpPost("{aNumber}")]
+        public ActionResult PostImage([FromForm] IFormFile file, string aNumber)
+        {
+            return Ok(_instrumentsManager.ImageUpload(file, aNumber));
         }
 
         // PUT api/<InstrumentsController>/5

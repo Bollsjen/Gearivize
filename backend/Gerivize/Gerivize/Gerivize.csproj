@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AttributeHelpers\**" />
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Public\Images\Instruments\**" />
+    <Content Remove="AttributeHelpers\**" />
+    <Content Remove="Interfaces\**" />
+    <Content Remove="Public\Images\Instruments\**" />
+    <EmbeddedResource Remove="AttributeHelpers\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Public\Images\Instruments\**" />
+    <None Remove="AttributeHelpers\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Public\Images\Instruments\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="dotenv.net" Version="3.1.2" />
     <PackageReference Include="Hangfire" Version="1.7.34" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.34" />
@@ -28,8 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AttributeHelpers\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="mykeys\" />
   </ItemGroup>
 
