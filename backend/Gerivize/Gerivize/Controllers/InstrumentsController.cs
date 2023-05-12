@@ -37,7 +37,6 @@ namespace Gerivize.Controllers
             return _instrumentRepository.getById(aNumber);
         }
 
-        
         [HttpGet("image/{imageFileName}")]
         public ActionResult GetImage(string imageFileName)
         {
