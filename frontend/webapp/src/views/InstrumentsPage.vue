@@ -37,7 +37,7 @@ export default {
         {
           condition: (item) => {return item.needsCalibration === false},
           value: 'get_need_calibration',
-          label: 'No calibration',
+          label: 'No cal.',
         }
       ]
     }
