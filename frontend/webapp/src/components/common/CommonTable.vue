@@ -273,15 +273,11 @@ export default {
         filterLists.push(this.items.filter(item => (filter.condition(item) && this.filterOn.includes(filter.value))))
       })
 
-      console.log(filterLists)
-
       let list = []
       filterLists.forEach(filter => {
         filter.forEach(item => {
           if(list.indexOf(item) === -1){
             list.push(item)
-          }else{
-            console.log(item)
           }
         })
       })
