@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="common-table-top-container w-100" v-if="filterProperties.length > 0">
-      <b-row class="w-100">
+    <div class="common-table-top-container w-100">
+      <b-row v-if="filterProperties.length > 0" class="w-100">
         <b-col sm="3">
           <b-form-group
               label-cols-sm="0"
@@ -11,11 +11,11 @@
               v-slot="{ ariaDescribedby }"
           >
             <b-form-checkbox-group
+                :options="mapFilterdItemsKeys"
                 v-model="filterOn"
                 :aria-describedby="ariaDescribedby"
                 class="mt-1 d-flex flex-row"
             >
-              <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 10px"><span>{{filter.label}}</span></b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -23,14 +23,14 @@
           <b-form-input v-model="search" placeholder="Search items..."></b-form-input>
         </b-col>
         <b-col sm="3" class="text-right" v-if="actionsField">
-          <b-button variant="success" size="sm" class="mt-1" v-for="item in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible">
+          <b-button variant="success" size="sm" class="mt-1" v-for="(item, index) in actionsField.template.head" @click="item.action()" v-if="item.section === 'filter' && item.visible" :key="index">
             <span style="margin-right: 7px">{{item.text}}</span>
             <i class="fa-solid fa-plus"></i>
           </b-button>
         </b-col>
       </b-row>
     </div>
-    <div :class="background ? 'common-table-container' : ''">
+    <div class="common-table-container">
       <b-table
           :striped="striped"
           :bordered="bordered"
@@ -64,7 +64,7 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc">
         <template #empty="scope">
-          <div class="my-0 text-center">
+          <div class="my-3 text-center">
             <span>No items to display</span>
           </div>
         </template>
@@ -147,11 +147,12 @@ export default {
       type: Boolean,
       default: false
     },
+    defaultFilter: [],
     fields: Array,
     items: Array,
     filterProperties: {
       type: Array,
-      default: () => [],
+      default: [],
     },
 
     striped: {
@@ -251,11 +252,11 @@ export default {
   },
   data(){
     return {
+      filterOn: [],
       sortBy: '',
       sortDesc: false,
       currentPage: 0,
       perPage: this.pageSizes[0],
-      filterOn: [],
       filterItems: [],
       search: '',
     }
@@ -274,15 +275,21 @@ export default {
     },
 
     filterItemsList(){
-      this.filterItems = this.items.filter(item => {
-        return this.filterOn.some(index => {
-          const prop = this.filterProperties[index]
-          if (prop && prop.key in item) {
-            return prop.value === item[prop.key]
+      let filterLists = []
+      this.mapFilterdItemsKeys.forEach(filter => {
+        filterLists.push(this.items.filter(item => (filter.condition(item) && this.filterOn.includes(filter.value))))
+      })
+
+      let list = []
+      filterLists.forEach(filter => {
+        filter.forEach(item => {
+          if(list.indexOf(item) === -1){
+            list.push(item)
           }
-          return false
         })
       })
+      list = this.sortInstruments(list)
+      this.filterItems = list
     },
 
     filterSearch(){
@@ -303,10 +310,26 @@ export default {
             return false
           })
     },
+
+    sortInstruments(array){
+      return array.sort(function(a,b){
+        const aNumber = parseInt(a.aNumber.match(/\d+/)[0]);
+        const bNumber = parseInt(b.aNumber.match(/\d+/)[0]);
+        if (aNumber === bNumber) {
+          return a.aNumber.localeCompare(b.aNumber, undefined, { numeric: true, sensitivity: 'base' });
+        } else {
+          return aNumber - bNumber;
+        }
+      })
+    }
   },
   computed: {
     mapFilterdItemsKeys(){
-      return Object.keys(this.filterItems)
+      return this.filterProperties.map((filter) => ({
+        condition: filter.condition,
+        value: filter.value,
+        text: filter.label
+      }))
     },
     checkedFilters() {
       return this.filterProperties.filter((filter, index) => this.filterOn[index]);
@@ -322,8 +345,9 @@ export default {
     }
   },
   mounted() {
+    this.filterOn = this.defaultFilter
     this.pagination === true ? this.perPage = this.pageSizes[0] : this.perPage = 900719925474099
-    this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
+    //this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
   },
   watch: {
     filterOn(){
