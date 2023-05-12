@@ -140,6 +140,7 @@ export default {
 
   },
   props: {
+    defaultFilter: [],
     fields: Array,
     items: Array,
     filterProperties: {
@@ -244,11 +245,11 @@ export default {
   },
   data(){
     return {
+      filterOn: [],
       sortBy: '',
       sortDesc: false,
       currentPage: 0,
       perPage: 10,
-      filterOn: [],
       filterItems: [],
       search: '',
     }
@@ -267,14 +268,25 @@ export default {
     },
 
     filterItemsList(){
-      this.filterItems = this.items.filter(item => {
-        return this.filterOn.some((index) => {
-          if(index !== true)
-            if(this.filterProperties.find(filter => filter.value === index)){
-              
-            }
+      let filterLists = []
+      this.mapFilterdItemsKeys.forEach(filter => {
+        filterLists.push(this.items.filter(item => (filter.condition(item) && this.filterOn.includes(filter.value))))
+      })
+
+      console.log(filterLists)
+
+      let list = []
+      filterLists.forEach(filter => {
+        filter.forEach(item => {
+          if(list.indexOf(item) === -1){
+            list.push(item)
+          }else{
+            console.log(item)
+          }
         })
       })
+      list = this.sortInstruments(list)
+      this.filterItems = list
     },
 
     filterSearch(){
@@ -295,10 +307,23 @@ export default {
             return false
           })
     },
+
+    sortInstruments(array){
+      return array.sort(function(a,b){
+        const aNumber = parseInt(a.aNumber.match(/\d+/)[0]);
+        const bNumber = parseInt(b.aNumber.match(/\d+/)[0]);
+        if (aNumber === bNumber) {
+          return a.aNumber.localeCompare(b.aNumber, undefined, { numeric: true, sensitivity: 'base' });
+        } else {
+          return aNumber - bNumber;
+        }
+      })
+    }
   },
   computed: {
     mapFilterdItemsKeys(){
       return this.filterProperties.map((filter) => ({
+        condition: filter.condition,
         value: filter.value,
         text: filter.label
       }))
@@ -318,7 +343,8 @@ export default {
   },
   mounted() {
     this.pagination === true ? this.perPage = 10 : this.perPage = 900719925474099
-    this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
+    //this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
+    this.filterOn = this.defaultFilter
   },
   watch: {
     filterOn(){
