@@ -11,11 +11,11 @@
               v-slot="{ ariaDescribedby }"
           >
             <b-form-checkbox-group
+                :options="mapFilterdItemsKeys"
                 v-model="filterOn"
                 :aria-describedby="ariaDescribedby"
                 class="mt-1 d-flex flex-row"
             >
-              <b-form-checkbox v-for="(filter, index) in filterProperties" :key="index" :value="index" style="margin-right: 10px"><span>{{filter.label}}</span></b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -87,9 +87,10 @@
           </div>
         </template>
 
-        <template v-for="(item, index) in fields" v-slot:[`cell(${item.key})`]="data">
-          <div v-if="data.item" :key="index">
+        <template v-for="item in fields" v-slot:[`cell(${item.key})`]="data">
+          <div v-if="data.item">
             <span v-if="item.formatter">{{item.formatter(data.item)}}</span>
+            <b-checkbox switch v-else-if="typeof data.item[item.key] === 'boolean'" v-model="data.item[item.key]" disabled />
             <span v-else>{{data.item[item.key]}}</span>
           </div>
         </template>
@@ -115,9 +116,7 @@
         <div v-if="pagination" class="d-flex justify-content-between align-items-center w-100">
           <div class="d-flex align-items-center">
             <b-button-group size="sm">
-              <b-button key="10" variant="outline-secondary" :class="perPage === 10 ? 'active' : ''" @click="changePageLimit(10)">10</b-button>
-              <b-button key="25" variant="outline-secondary" :class="perPage === 25 ? 'active' : ''" @click="changePageLimit(25)">25</b-button>
-              <b-button key="50" variant="outline-secondary" :class="perPage === 50 ? 'active' : ''" @click="changePageLimit(50)">50</b-button>
+              <b-button v-for="(pageSize, index) in pageSizes" :key="index" variant="outline-secondary" :class="perPage === pageSize ? 'active' : ''" @click="changePageLimit(pageSize)">{{pageSize}}</b-button>
             </b-button-group>
           </div>
           <b-pagination
@@ -140,6 +139,15 @@ export default {
 
   },
   props: {
+    pageSizes:{
+      type: Array,
+      default: () => [10, 25, 50]
+    },
+    background: {
+      type: Boolean,
+      default: false
+    },
+    defaultFilter: [],
     fields: Array,
     items: Array,
     filterProperties: {
@@ -244,11 +252,11 @@ export default {
   },
   data(){
     return {
+      filterOn: [],
       sortBy: '',
       sortDesc: false,
       currentPage: 0,
-      perPage: 10,
-      filterOn: [],
+      perPage: this.pageSizes[0],
       filterItems: [],
       search: '',
     }
@@ -267,15 +275,21 @@ export default {
     },
 
     filterItemsList(){
-      this.filterItems = this.items.filter(item => {
-        return this.filterOn.some(index => {
-          const prop = this.filterProperties[index]
-          if (prop && prop.key in item) {
-            return prop.value === item[prop.key]
+      let filterLists = []
+      this.mapFilterdItemsKeys.forEach(filter => {
+        filterLists.push(this.items.filter(item => (filter.condition(item) && this.filterOn.includes(filter.value))))
+      })
+
+      let list = []
+      filterLists.forEach(filter => {
+        filter.forEach(item => {
+          if(list.indexOf(item) === -1){
+            list.push(item)
           }
-          return false
         })
       })
+      list = this.sortInstruments(list)
+      this.filterItems = list
     },
 
     filterSearch(){
@@ -296,10 +310,26 @@ export default {
             return false
           })
     },
+
+    sortInstruments(array){
+      return array.sort(function(a,b){
+        const aNumber = parseInt(a.aNumber.match(/\d+/)[0]);
+        const bNumber = parseInt(b.aNumber.match(/\d+/)[0]);
+        if (aNumber === bNumber) {
+          return a.aNumber.localeCompare(b.aNumber, undefined, { numeric: true, sensitivity: 'base' });
+        } else {
+          return aNumber - bNumber;
+        }
+      })
+    }
   },
   computed: {
     mapFilterdItemsKeys(){
-      return Object.keys(this.filterItems)
+      return this.filterProperties.map((filter) => ({
+        condition: filter.condition,
+        value: filter.value,
+        text: filter.label
+      }))
     },
     checkedFilters() {
       return this.filterProperties.filter((filter, index) => this.filterOn[index]);
@@ -315,8 +345,9 @@ export default {
     }
   },
   mounted() {
-    this.pagination === true ? this.perPage = 10 : this.perPage = 900719925474099
-    this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
+    this.filterOn = this.defaultFilter
+    this.pagination === true ? this.perPage = this.pageSizes[0] : this.perPage = 900719925474099
+    //this.filterProperties ? this.filterProperties.forEach(filter => filter.default > 0 ?this.filterOn.push(filter.default) : null) : null
   },
   watch: {
     filterOn(){
@@ -324,12 +355,11 @@ export default {
     },
     items(){
       this.filterProperties.length > 0 ? this.filterItemsList() : this.filterItems = this.items
-      console.log(this.filterItems)
     },
 
     search(){
       this.filterSearch()
-    }
+    },
   }
 }
 </script>

@@ -22,7 +22,27 @@ namespace Gerivize.Controllers
         [HttpGet]
         public List<DirectoryData> Get()
         {
-            List<DirectoryData> files = _fileManager.GetDirectoryTree(_rootPath);
+            List<DirectoryData> files = new List<DirectoryData>() { 
+                new DirectoryData(){ 
+                    DirectoryName = _rootPath,
+                    Directories =  _fileManager.GetDirectoryTree(_rootPath),
+                    Files = new List<FileData>(),
+                    Size = 0,
+                    LastModified = new DirectoryInfo(_rootPath).LastWriteTime,
+        }
+            };
+            files[0].Files = _fileManager.GetFilesInDirectory(new DirectoryInfo(_rootPath));
+
+            foreach (var fileNode in files[0].Files)
+            {
+                files[0].Size += fileNode.Size;
+            }
+
+            foreach (var subDirectoryNode in files[0].Directories)
+            {
+                files[0].Size += subDirectoryNode.Size;
+            }
+
             return files;
         }
 

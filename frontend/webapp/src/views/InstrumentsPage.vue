@@ -1,7 +1,15 @@
 <template>
   <b-container fluid class="w-75 text-left" style="margin-bottom: 100px">
     <h1>Instruments</h1>
-    <common-table :items="instruments" :fields="fields" striped hover pagination :filter-properties="filterProperties" borderless />
+    <common-table
+        :items="instruments"
+        :fields="fields"
+        striped
+        hover
+        pagination
+        :filter-properties="filterProperties"
+        borderless
+        :default-filter="['get_active']" />
     <instrument-modal ref="InstrumentModal" />
   </b-container>
 </template>
@@ -25,17 +33,20 @@ export default {
       testTypes: testTypes,
       filterProperties: [
         {
-          key: 'inactive',
-          value: true,
+          condition: (item) => {return item.inactive === true},
+          value: 'get_inactive',
           label: 'Inactive',
-          default: 0,
         },
         {
-          key: 'inactive',
-          value: false,
+          condition: (item) => {return item.inactive === false && item.needsCalibration === true},
+          value: 'get_active',
           label: 'Active',
-          default: 1,
         },
+        {
+          condition: (item) => {return item.needsCalibration === false},
+          value: 'get_need_calibration',
+          label: 'No cal.',
+        }
       ]
     }
   },
@@ -161,6 +172,7 @@ export default {
   },
   mounted() {
     this.getInstruments()
+    //this.filterOn = this.filterProperties.map()
   }
 }
 </script>

@@ -294,7 +294,7 @@
         <b-button variant="success" type="submit" @click="updateInstrument">Update</b-button>
       </div>
     </template>
-      <file-explorer ref="FileExplorer" />
+      <file-explorer-modal ref="FileExplorer" />
   </b-modal>
 </template>
 
@@ -305,13 +305,13 @@ import {userService} from "@/services/userService";
 import {required} from "vuelidate/lib/validators";
 import { useVuelidate } from '@vuelidate/core'
 import {computed, reactive} from "vue";
-import FileExplorer from "@/components/instruments/FileExplorer.vue";
+import FileExplorerModal from "@/components/instruments/FileExplorerModal.vue";
 export default {
   setup(){
     return {v$: useVuelidate()}
   },
   components: {
-      FileExplorer
+    FileExplorerModal
   },
   props: {
 
