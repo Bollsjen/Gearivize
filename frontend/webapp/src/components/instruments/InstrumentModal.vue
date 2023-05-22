@@ -21,10 +21,10 @@
 
         <b-row>
           <b-col sm="12" class="text-center mt-3">
-              <b-button class="w-50" variant="primary"><span style="margin-right: 7px">Certificates</span><i class="fa-solid fa-arrow-right"></i></b-button>
+              <b-button class="w-50" variant="primary" @click="openFileExplorer"><span style="margin-right: 7px">Certificates</span><i class="fa-solid fa-arrow-right"></i></b-button>
           </b-col>
           <b-col sm="12" class="text-center mt-3">
-              <b-button class="w-50" variant="primary"><span style="margin-right: 7px">Manuals</span><i class="fa-solid fa-arrow-right"></i></b-button>
+              <b-button class="w-50" variant="primary" @click="openFileExplorer"><span style="margin-right: 7px">Manuals</span><i class="fa-solid fa-arrow-right"></i></b-button>
           </b-col>
         </b-row>
 
@@ -294,6 +294,7 @@
         <b-button variant="success" type="submit" @click="updateInstrument">Update</b-button>
       </div>
     </template>
+      <file-explorer ref="FileExplorer" />
   </b-modal>
 </template>
 
@@ -304,12 +305,13 @@ import {userService} from "@/services/userService";
 import {required} from "vuelidate/lib/validators";
 import { useVuelidate } from '@vuelidate/core'
 import {computed, reactive} from "vue";
+import FileExplorer from "@/components/instruments/FileExplorer.vue";
 export default {
   setup(){
     return {v$: useVuelidate()}
   },
   components: {
-
+      FileExplorer
   },
   props: {
 
@@ -376,6 +378,10 @@ export default {
     }
   },
   methods: {
+      openFileExplorer(){
+          this.$refs.FileExplorer.show(this.instrument.aNumber)
+      },
+      
     load(){
       userService.getAll()
           .then(result => this.users = result.data)
