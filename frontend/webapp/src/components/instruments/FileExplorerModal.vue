@@ -5,12 +5,12 @@
     </template>
       
       <b-row>
-          <b-col sm="4" style="overflow-x: visible; display: flex">
+          <b-col sm="4" style="overflow-x: visible; display: flex; border-right: 1px solid gray; padding: 0">
               <file-explorer-file-tree :directories="getFiles" :show-files="false" @select-directory="selectDirectory" do-in-tapping />
           </b-col>
           
           <b-col sm="8">
-            <fil-explorer-browse :directory="getDirectory" />
+            <fil-explorer-browse ref="fileBrowse" @select-directory="selectDirectory" :directory="getDirectory" :path="getPath" />
           </b-col>
       </b-row>
       
@@ -37,13 +37,16 @@ export default {
       active: false,
       aNumber: '',
         files: {},
-      selectedFolder: null
+      selectedFolder: null,
+      directoryTreeToSelectedFolder: null,
     }
   },
   methods: {
     show(aNumber){
       this.aNumber = aNumber
       this.active = true
+      this.directoryTreeToSelectedFolder = this.findInstrumentDirectory(aNumber)
+      this.selectedFolder = this.directoryTreeToSelectedFolder[0].directory
     },
 
     close(){
@@ -67,9 +70,61 @@ export default {
 
     selectDirectory(directory){
       this.selectedFolder = directory
-    }
+      console.log(this.$refs.fileBrowse.$refs.A1)
+      this.findInstrumentDirectory(directory.directoryName)
+    },
+
+    openDirectoryCollapseables(path){
+      this.$nextTick(() => {
+            this.$nextTick(() => {
+              this.$nextTick(() => {
+                this.$nextTick(() => {
+              if (path !== undefined && path !== null)
+                path.forEach((path, index) => {
+                  if(index > 0) {
+                    console.log(this.$refs.fileBrowse.$refs)
+                    this.$refs.fileBrowse.$refs[path].style.display = 'block'
+                  }
+                })
+              })
+            })
+          })
+      })
+    },
+
+    findInstrumentDirectory(aNumber){
+
+      const matchingDirectories = []
+
+      function traverseDirectories(directories, path){
+        for (const directory of directories) {
+          // Construct the current directory's path
+          const currentPath = path.concat(directory.directoryName);
+
+          if (directory.directoryName === aNumber) {
+            matchingDirectories.push({
+              directory: directory,
+              path: currentPath
+            });
+          }
+
+          if (directory.directories.length > 0) {
+            traverseDirectories(directory.directories, currentPath);
+          }
+        }
+      }
+
+      traverseDirectories(this.files, []);
+
+      this.openDirectoryCollapseables(matchingDirectories[0].path)
+      return matchingDirectories;
+    },
   },
   computed: {
+    getPath(){
+      return this.directoryTreeToSelectedFolder.path
+    },
+
     getFiles(){
       return this.files
     },

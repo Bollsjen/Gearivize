@@ -11,7 +11,7 @@
           <i class="fa-solid fa-folder mr-2"></i>{{ directory.directoryName }}
         </button>
         <template v-if="directory.directories.length > 0">
-          <b-collapse :id="(directory.directoryName).replace(' ', '')" :visible="false">
+          <b-collapse :id="!isParent ? (directory.directoryName).replace(' ', '') : ''" :ref="directory.directoryName" :visible="isParent">
             <file-explorer-file-tree
                 :directories="directory.directories"
                 :show-files="showFiles"
@@ -23,7 +23,7 @@
           </b-collapse>
         </template>
       </div>
-    </div>
+  </div>
 
 
   <!--
@@ -49,7 +49,6 @@
             </div>
         </template>
       </div>-->
-  </div>
 </template>
 
 <script>
