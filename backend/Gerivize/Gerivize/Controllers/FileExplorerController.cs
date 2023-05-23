@@ -54,9 +54,12 @@ namespace Gerivize.Controllers
         }
 
         // POST api/<FileExplorerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("file")]
+        public ActionResult Post([FromForm] FileExplorerFileUpload file)
         {
+            bool success = _fileManager.UploadFile(file);
+            if (success) { return Ok(); }
+            return StatusCode(500);
         }
 
         // PUT api/<FileExplorerController>/5

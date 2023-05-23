@@ -11,14 +11,15 @@
           <i class="fa-solid fa-folder mr-2"></i>{{ directory.directoryName }}
         </button>
         <template v-if="directory.directories.length > 0">
-          <b-collapse :id="!isParent ? (directory.directoryName).replace(' ', '') : ''" :ref="directory.directoryName" :visible="isParent">
+          <b-collapse :id="!isParent ? (directory.directoryName).replace(' ', '') : ''" :ref="(directory.directoryName).replace(' ', '')" :visible="!isParent ? getVisiblility(directory.directoryName) : isParent">
             <file-explorer-file-tree
                 :directories="directory.directories"
                 :show-files="showFiles"
                 :is-parent="false"
                 :in-tabbing="(inTabbing + 1)"
                 @select-directory="selectDirectory"
-                :do-in-tapping="doInTapping">
+                :do-in-tapping="doInTapping"
+                :path-prop="path">
             </file-explorer-file-tree>
           </b-collapse>
         </template>
@@ -74,11 +75,75 @@ export default {
     doInTapping: {
       type: Boolean,
       default: false
+    },
+    selectedDirectory: {
+      type: Object,
+      default: null
+    },
+    pathProp: [],
+  },
+  data(){
+    return {
+      path: [],
+      collapseVisible: {},
+      displayCollapse: false,
     }
   },
   methods: {
     selectDirectory(directory){
       this.$emit('select-directory', directory)
+
+    },
+
+    findInstrumentDirectory(searchDir){
+
+      const matchingDirectories = []
+
+      function traverseDirectories(directories, path){
+        for (const directory of directories) {
+          // Construct the current directory's path
+          const currentPath = path.concat(directory.directoryName);
+
+          if (directory.directoryName === searchDir) {
+            matchingDirectories.push({
+              directory: directory,
+              path: currentPath
+            });
+          }
+
+          if (directory.directories.length > 0) {
+            traverseDirectories(directory.directories, currentPath);
+          }
+        }
+      }
+
+      traverseDirectories(this.directories, []);
+      return matchingDirectories;
+    },
+
+    isCollapseVisible(directoryName) {
+      return this.collapseVisibility[directoryName] || false;
+    },
+  },
+  mounted() {
+    if(this.selectedDirectory !== null) {
+      this.path = this.findInstrumentDirectory(this.selectedDirectory.directoryName)[0].path
+    }
+  },
+  computed: {
+    getVisiblility(){
+      return (name) => {
+        if (this.pathProp.includes(name)) {
+          return true
+        }
+        return false
+      }
+    }
+  },
+  watch: {
+    selectedDirectory(){
+      this.path = this.findInstrumentDirectory(this.selectedDirectory.directoryName)[0].path
+      console.log(this.path)
     }
   }
 }

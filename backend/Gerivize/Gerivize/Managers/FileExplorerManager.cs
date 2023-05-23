@@ -76,5 +76,32 @@ namespace Gerivize.Managers
 
             return files;
         }
+
+        public bool UploadFile(FileExplorerFileUpload fileData)
+        {
+            string path = "";
+            foreach(string _path in fileData.Path)
+            {
+                path += _path;
+            }
+
+            path = path.Replace(",", "\\");
+
+            try
+            {
+                using (FileStream fileStream = System.IO.File.Create(path + "\\" + fileData.File.FileName))
+                {
+                    fileData.File.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+
+            return true;
+        }
     }
 }

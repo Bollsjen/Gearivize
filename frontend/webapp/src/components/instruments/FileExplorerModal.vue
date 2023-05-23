@@ -5,12 +5,17 @@
     </template>
       
       <b-row>
+        <b-col sm="12" style="border-bottom: 1px solid gray; padding-bottom: 10px">
+          <b-button>
+            <i class="fa-solid fa-folder-plus toolbar-icons"></i>
+          </b-button>
+        </b-col>
           <b-col sm="4" style="overflow-x: visible; display: flex; border-right: 1px solid gray; padding: 0">
-              <file-explorer-file-tree :directories="getFiles" :show-files="false" @select-directory="selectDirectory" do-in-tapping />
+              <file-explorer-file-tree :directories="getFiles" :show-files="false" @select-directory="selectDirectory" do-in-tapping :selected-directory="selectedFolder" />
           </b-col>
           
-          <b-col sm="8">
-            <fil-explorer-browse ref="fileBrowse" @select-directory="selectDirectory" :directory="getDirectory" :path="getPath" />
+          <b-col sm="8" ref="fileDrop" @dragover="fileDragOver" @dragleave="fileDragLeave" @drop="fileDrop">
+            <fil-explorer-browse v-if="!isDragingFile" ref="fileBrowse" @select-directory="selectDirectory" :directory="getDirectory" />
           </b-col>
       </b-row>
       
@@ -36,12 +41,47 @@ export default {
     return {
       active: false,
       aNumber: '',
-        files: {},
+      files: {},
       selectedFolder: null,
       directoryTreeToSelectedFolder: null,
+      isDragingFile: false
     }
   },
   methods: {
+    fileDragOver(event){
+      event.preventDefault()
+      if(event.dataTransfer.files) {
+        this.isDragingFile = true
+        this.$refs.fileDrop.classList.add('file-drop-zone')
+      }
+    },
+
+    fileDragLeave(event){
+      event.preventDefault()
+      if(event.dataTransfer.files) {
+        this.isDragingFile = false
+        this.$refs.fileDrop.classList.remove('file-drop-zone')
+      }
+    },
+
+    fileDrop(event){
+      event.preventDefault()
+      if(event.dataTransfer.files) {
+        this.isDragingFile = false
+        this.$refs.fileDrop.classList.remove('file-drop-zone')
+
+        let formData = new FormData()
+
+        formData.append('file',  event.dataTransfer.files[0])
+        formData.append('path', this.findInstrumentDirectory(this.selectedFolder.directoryName)[0].path)
+
+        fileExplorerService.uploadFile(formData)
+            .then(result => this.reload())
+            .catch(error => console.error(error))
+
+      }
+    },
+
     show(aNumber){
       this.aNumber = aNumber
       this.active = true
@@ -68,28 +108,24 @@ export default {
             }))
       },
 
-    selectDirectory(directory){
-      this.selectedFolder = directory
-      console.log(this.$refs.fileBrowse.$refs.A1)
-      this.findInstrumentDirectory(directory.directoryName)
+    reload(){
+      fileExplorerService.getAllFiles()
+          .then(result => {
+            this.files = result.data
+            this.selectedFolder = this.findInstrumentDirectory(this.selectedFolder.directoryName)[0].directory
+          })
+          .catch(error => this.$bvModal.msgBoxOk(error.status, {
+            title: 'Error',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'success',
+            centered: true
+          }))
     },
 
-    openDirectoryCollapseables(path){
-      this.$nextTick(() => {
-            this.$nextTick(() => {
-              this.$nextTick(() => {
-                this.$nextTick(() => {
-              if (path !== undefined && path !== null)
-                path.forEach((path, index) => {
-                  if(index > 0) {
-                    console.log(this.$refs.fileBrowse.$refs)
-                    this.$refs.fileBrowse.$refs[path].style.display = 'block'
-                  }
-                })
-              })
-            })
-          })
-      })
+    selectDirectory(directory){
+      this.selectedFolder = directory
+      this.findInstrumentDirectory(directory.directoryName)
     },
 
     findInstrumentDirectory(aNumber){
@@ -115,8 +151,6 @@ export default {
       }
 
       traverseDirectories(this.files, []);
-
-      this.openDirectoryCollapseables(matchingDirectories[0].path)
       return matchingDirectories;
     },
   },
@@ -137,3 +171,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.toolbar-icons {
+  font-size: 24px;
+}
+
+.file-drop-zone {
+  border: 8px dashed gray;
+}
+</style>
