@@ -15,6 +15,10 @@ export const fileExplorerService = {
         })
     },
 
+    moveFile(move){
+        return axios.put(`fileexplorer/move/file`, move)
+    },
+
     deleteDirOrFile(formData){
         return axios.delete(`/fileexplorer/file-dir`,  {
             headers: {

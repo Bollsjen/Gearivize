@@ -1,6 +1,7 @@
 ﻿using Gerivize.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Gerivize.Managers
 {
@@ -101,6 +102,39 @@ namespace Gerivize.Managers
                 return false;
             }
 
+            return true;
+        }
+
+        public bool MoveFile(FileExplorerMoveFile move)
+        {
+            string filePath = "";
+            string destinationPath = "";
+
+            foreach (string _path in move.FilePath)
+            {
+                filePath += _path+"\\";
+            }
+
+            filePath = filePath.Replace(",", "\\");
+
+            foreach (string _path in move.DestinationPath)
+            {
+                destinationPath += _path+"\\";
+            }
+
+            destinationPath = destinationPath.Replace(",", "\\");
+
+            try
+            {
+                // Move the file
+                File.Move(filePath + move.FileName, destinationPath + move.FileName);
+                Console.WriteLine("File moved successfully.");
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
             return true;
         }
 

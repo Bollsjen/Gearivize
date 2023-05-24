@@ -50,7 +50,7 @@ export default {
   methods: {
     fileDragOver(event){
       event.preventDefault()
-      if(event.dataTransfer.files) {
+      if(event.dataTransfer.files && (this.$refs.fileBrowse === undefined || !this.$refs.fileBrowse.isDragging)) {
         this.isDragingFile = true
         this.$refs.fileDrop.classList.add('file-drop-zone')
       }
@@ -58,7 +58,7 @@ export default {
 
     fileDragLeave(event){
       event.preventDefault()
-      if(event.dataTransfer.files) {
+      if(event.dataTransfer.files && (this.$refs.fileBrowse === undefined || !this.$refs.fileBrowse.isDragging)) {
         this.isDragingFile = false
         this.$refs.fileDrop.classList.remove('file-drop-zone')
       }
@@ -66,7 +66,8 @@ export default {
 
     fileDrop(event){
       event.preventDefault()
-      if(event.dataTransfer.files) {
+      if(event.dataTransfer.files && (this.$refs.fileBrowse === undefined || !this.$refs.fileBrowse.isDragging) && event.dataTransfer.files.length > 0) {
+        console.log("hallo")
         this.isDragingFile = false
         this.$refs.fileDrop.classList.remove('file-drop-zone')
 

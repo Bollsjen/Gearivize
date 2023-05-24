@@ -1,5 +1,5 @@
 <template>
-    <div style="z-index: 1; display: flex; flex-wrap: wrap; align-items: flex-start; width: 100%; position: relative; height: 100%" @click="isContextMenuVisible ? disableContextMenu() : null">
+    <div style="z-index: 1; display: flex; flex-wrap: wrap; align-items: flex-start; width: 100%; position: relative; height: 100%" @click="isContextMenuVisible ? disableContextMenu() : null" @dragover="dragThingOver($event,null)" @drop="dropThing($event)">
       <b-row>
         <b-col sm="12" class="d-flex">
           <div style="flex: 1">
@@ -15,7 +15,7 @@
           </div>
         </b-col>
 
-        <button class="col-12 btn btn-block" v-for="item in items" @click="!isContextMenuVisible ? onRowSelected(item) : disableContextMenu()" @contextmenu="onRightClick($event, item)">
+        <button class="col-12 btn btn-block" v-for="item in items" @click="!isContextMenuVisible ? onRowSelected(item) : disableContextMenu()" @contextmenu="onRightClick($event, item)" @drag="dragThing($event,item)" @dragover.stop="dragThingOver($event,item)" @dragleave="dragThingLeave($event)" @drop.stop="dropThing($event)" draggable="true">
           <div class="d-flex">
             <div style="flex: 1; white-space: nowrap;" class="text-left">
               <div v-if="item.type === 'folder'">
@@ -74,10 +74,55 @@ export default {
         myName: '',
         myPath: [],
         myType: ''
+      },
+
+      isDragging: false,
+      moveThing: {
+        thingToMove: null,
+        destinationForThing: null,
       }
     }
   },
   methods: {
+    dragThing(event, item){
+      event.preventDefault()
+      this.moveThing.thingToMove = item
+      this.isDragging = true
+    },
+
+    dragThingLeave(event){
+      event.preventDefault()
+      this.moveThing.thingToMove = null
+    },
+
+    dragThingOver(event, item){
+      event.preventDefault()
+      if(item !== this.moveThing.thingToMove && (item !== null && item.type === 'folder'))
+        this.moveThing.destinationForThing = item
+      else
+        this.moveThing.destinationForThing = null
+    },
+
+    dropThing(event){
+      event.preventDefault()
+      if(this.moveThing.destinationForThing !== null) {
+        let filePath = this.findFileDirectory(this.moveThing.thingToMove.name, this.directory.directoryName)[0].path
+        let destinationPath = this.findDirectory(this.moveThing.destinationForThing.name)[0].path
+        //console.log(this.moveThing)
+
+        let move = {
+          filePath: filePath,
+          destinationPath: destinationPath,
+          fileName: this.moveThing.thingToMove.name
+        }
+
+        fileExplorerService.moveFile(move)
+            .then(result => this.$emit('reload'))
+            .catch(error => console.error(error))
+      }
+      this.isDragging = false
+    },
+
     checkIfImage(name){
       return (name.includes('jpg') || name.includes('jpeg') || name.includes('png'))
     },
@@ -139,6 +184,31 @@ export default {
       traverseDirectories(this.files, []);
       return matchingDirectories;
     },
+
+    findDirectory(dir){
+      const matchingDirectories = []
+
+      function traverseDirectories(directories, path){
+        for (const directory of directories) {
+          // Construct the current directory's path
+          const currentPath = path.concat(directory.directoryName);
+
+          if (directory.directoryName === dir) {
+            matchingDirectories.push({
+              directory: directory,
+              path: currentPath
+            });
+          }
+
+          if (directory.directories.length > 0) {
+            traverseDirectories(directory.directories, currentPath);
+          }
+        }
+      }
+
+      traverseDirectories(this.files, []);
+      return matchingDirectories;
+    }
   },
   computed: {
     items(){

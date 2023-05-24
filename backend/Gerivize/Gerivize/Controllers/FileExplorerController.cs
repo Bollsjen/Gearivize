@@ -62,9 +62,11 @@ namespace Gerivize.Controllers
         }
 
         // PUT api/<FileExplorerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("move/file")]
+        public ActionResult Put(int id, [FromBody] FileExplorerMoveFile move)
         {
+            if(_fileManager.MoveFile(move)) return Ok();
+            return StatusCode(500);
         }
 
         // DELETE api/<FileExplorerController>/5
