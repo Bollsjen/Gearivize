@@ -33,7 +33,7 @@
 
         <b-row>
           <b-col sm="12" class="text-center mt-3">
-              <b-button class="w-50" variant="primary"><span style="margin-right: 7px">Data</span><i class="fa-solid fa-arrow-right"></i></b-button>
+              <b-button @click="openFileExplorer" class="w-50" variant="primary"><span style="margin-right: 7px">Data</span><i class="fa-solid fa-arrow-right"></i></b-button>
           </b-col>
           <b-col sm="12" class="text-center mt-3">
               <b-button class="w-50" variant="primary" @click="openFileExplorer"><span style="margin-right: 7px">Manuals</span><i class="fa-solid fa-arrow-right"></i></b-button>
