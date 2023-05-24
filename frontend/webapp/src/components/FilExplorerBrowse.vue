@@ -1,7 +1,7 @@
 <template>
-    <div style="z-index: 1; display: flex; flex-wrap: wrap; align-items: flex-start; width: 100%; position: relative; height: 100%" @click="isContextMenuVisible ? disableContextMenu() : null" @dragover="dragThingOver($event,null)" @drop="dropThing($event)">
-      <b-row>
-        <b-col sm="12" class="d-flex">
+    <div class="w-100" style="z-index: 1; display: flex; flex-wrap: wrap; align-items: flex-start; width: 100%; position: relative; height: 100%" @click="isContextMenuVisible ? disableContextMenu() : null" @dragover="dragThingOver($event,null)" @drop="dropThing($event)">
+      <b-row class="w-100">
+        <b-col sm="12" class="d-flex w-100">
           <div style="flex: 1">
             Name
           </div>

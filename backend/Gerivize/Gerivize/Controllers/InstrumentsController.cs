@@ -14,11 +14,13 @@ namespace Gerivize.Controllers
     {
         private readonly InstrumentRepository _instrumentRepository;
         private readonly InstrumentsManager _instrumentsManager;
+        private readonly FileExplorerManager _fileExplorerManager;
 
         public InstrumentsController()
         {
             _instrumentRepository = new InstrumentRepository();
             _instrumentsManager = new InstrumentsManager();
+            _fileExplorerManager = new FileExplorerManager();
         }
 
 
@@ -42,7 +44,9 @@ namespace Gerivize.Controllers
         [HttpPost]
         public ActionResult<Instrument> Post([FromBody] Instrument instrument)
         {
-            return Ok(_instrumentRepository.createInstrument(instrument));
+            Instrument newInstrument = _instrumentRepository.createInstrument(instrument);
+            if(newInstrument != null && _fileExplorerManager.CreateINstrumentDIrectories(newInstrument.ANumber)) return Ok();
+            return BadRequest();
         }
 
         // PUT api/<InstrumentsController>/5

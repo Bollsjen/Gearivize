@@ -1,4 +1,5 @@
-﻿using Gerivize.Models;
+﻿using Gerivize.Controllers;
+using Gerivize.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +8,23 @@ namespace Gerivize.Managers
 {
     public class FileExplorerManager
     {
+
+        public bool CreateINstrumentDIrectories(string ANumber)
+        {
+            try
+            {
+                if (!Directory.Exists(FileExplorerController._rootPath + "\\Instrumenter\\" + ANumber))
+                {
+                    Directory.CreateDirectory(FileExplorerController._rootPath + "\\Instrumenter\\" + ANumber);
+                    Directory.CreateDirectory(FileExplorerController._rootPath + "\\Instrumenter\\" + ANumber + "\\Old");
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+            return true;
+        }
 
         public List<DirectoryData> GetDirectoryTree(string path)
         {

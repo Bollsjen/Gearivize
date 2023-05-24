@@ -11,7 +11,7 @@ namespace Gerivize.Controllers
     public class FileExplorerController : ControllerBase
     {
         private readonly FileExplorerManager _fileManager;
-        private readonly string _rootPath = @"A:\Datamatiker\BollsRoot";
+        public static readonly string _rootPath = @"A:\Datamatiker\BollsRoot";
 
         public FileExplorerController()
         {
