@@ -70,6 +70,11 @@ export default {
       contextMenuLeft: 0,
       isContextMenuVisible: false,
       rightClickedDirOrFile: null,
+      dataToSend: {
+        myName: '',
+        myPath: [],
+        myType: ''
+      }
     }
   },
   methods: {
@@ -97,13 +102,10 @@ export default {
     deleteFile(){
       if(this.rightClickedDirOrFile.type === 'file') {
         let formData = new FormData()
+
         formData.append('name', this.rightClickedDirOrFile.actualObject.fileName)
         formData.append('path', this.findFileDirectory(this.rightClickedDirOrFile.name, this.directory.directoryName)[0].path)
         formData.append('type', this.rightClickedDirOrFile.type)
-
-        console.log(this.rightClickedDirOrFile.actualObject.fileName)
-        console.log(this.findFileDirectory(this.rightClickedDirOrFile.name, this.directory.directoryName)[0].path)
-        console.log(this.rightClickedDirOrFile.type)
 
         fileExplorerService.deleteDirOrFile(formData)
             .then(result => this.$emit('reload'))
@@ -201,8 +203,9 @@ export default {
   cursor: pointer;
 }
 
-.context-menu-button {
-
+.context-menu-button:focus {
+  border: none;
+  background-color: rgb(250,250,250);
 }
 
 .context-menu-button:hover {

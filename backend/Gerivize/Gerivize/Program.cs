@@ -6,6 +6,8 @@ using Hangfire;
 using Hangfire.MemoryStorage;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +51,24 @@ builder.Services.AddHangfire(configuration => {
 builder.Services.AddHangfireServer();
 
 var app = builder.Build();
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "text/plain";
+
+        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        var error = exceptionHandlerPathFeature?.Error;
+
+        // Use ILogger<T> interface within your custom middleware or controller to log the error
+        var logger = context.RequestServices.GetService<ILogger<Program>>();
+        logger?.LogError(error, "Unhandled exception occurred");
+
+        await context.Response.WriteAsync("An unexpected error occurred. Please try again later.");
+    });
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

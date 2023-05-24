@@ -69,9 +69,9 @@ namespace Gerivize.Controllers
 
         // DELETE api/<FileExplorerController>/5
         [HttpDelete("file-dir")]
-        public ActionResult Delete([FromForm] FileExplorerDeleteFileOrDirectory data)
+        public ActionResult Delete([FromForm] FileExplorerDeleteFileOrDirectory dataToSend)
         {
-            if (_fileManager.DeleteFileOrDirectory(data.Name, data.Path, data.Type)) return Ok();
+            if (_fileManager.DeleteFileOrDirectory(dataToSend.Name, dataToSend.Path.ToList(), dataToSend.Type)) return Ok();
             return StatusCode(500);
         }
     }

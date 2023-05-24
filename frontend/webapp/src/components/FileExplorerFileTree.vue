@@ -25,31 +25,6 @@
         </template>
       </div>
   </div>
-
-
-  <!--
-      <div v-if="displayType === 'list'" v-for="directory in directories" :key="directory.directoryName">
-        <button v-b-toggle="directory.directoryName + '' + directory.size"
-                style="width: 100%"
-                class="btn btn-block text-left custom-directory-button-styling"
-                :style="doInTapping ? 'padding-left:' + (Number(10) + Number((25 * inTabbing))).toString() + 'px' : ''"
-                @click="selectDirectory(directory)">
-          <i class="fa-solid fa-folder mr-2"></i>{{ directory.directoryName }}
-        </button>
-        <template v-if="directory.directories.length > 0">
-          <b-collapse :id="directory.directoryName + '' + directory.size" :visible="false">
-            <file-explorer-file-tree :directories="directory.directories" :show-files="showFiles" :is-parent="false" :in-tabbing="(inTabbing + 1)" @select-directory="selectDirectory" :do-in-tapping="doInTapping"></file-explorer-file-tree>
-          </b-collapse>
-        </template>
-        <template v-if="directory.files.length > 0">
-            <div v-if="showFiles === true"
-                 v-for="file in directory.files"
-                 :key="file.fileName"
-                 :style="doInTapping ? 'padding-left:' + (Number(10) + Number((25 * inTabbing))).toString() + 'px' : ''">
-              {{ file.fileName }}
-            </div>
-        </template>
-      </div>-->
 </template>
 
 <script>
@@ -143,7 +118,6 @@ export default {
   watch: {
     selectedDirectory(){
       this.path = this.findInstrumentDirectory(this.selectedDirectory.directoryName)[0].path
-      console.log(this.path)
     }
   }
 }

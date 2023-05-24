@@ -104,7 +104,7 @@ namespace Gerivize.Managers
             return true;
         }
 
-        public bool DeleteFileOrDirectory(string name, string[] path, string type)
+        public bool DeleteFileOrDirectory(string name, List<string> path, string type)
         {
             string actualPath = "";
             foreach (string _path in path)

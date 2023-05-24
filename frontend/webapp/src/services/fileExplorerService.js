@@ -16,12 +16,13 @@ export const fileExplorerService = {
     },
 
     deleteDirOrFile(formData){
-        return axios.delete(`/fileexplorer/file-dir`, formData, {
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
+        return axios.delete(`/fileexplorer/file-dir`,  {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data'
+            },
+            data: formData
+        })
     }
     
 }
