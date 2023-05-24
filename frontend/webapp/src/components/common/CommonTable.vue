@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="common-table-top-container w-100">
+    <div class="common-table-top-container w-100" v-if="filterProperties.length > 0">
       <b-row v-if="filterProperties.length > 0" class="w-100">
         <b-col sm="3">
           <b-form-group
@@ -152,7 +152,7 @@ export default {
     items: Array,
     filterProperties: {
       type: Array,
-      default: [],
+      default: () => [],
     },
 
     striped: {

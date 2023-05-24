@@ -36,7 +36,7 @@
               <b-button class="w-50" variant="primary"><span style="margin-right: 7px">Data</span><i class="fa-solid fa-arrow-right"></i></b-button>
           </b-col>
           <b-col sm="12" class="text-center mt-3">
-              <b-button class="w-50" variant="primary"><span style="margin-right: 7px">Manuals</span><i class="fa-solid fa-arrow-right"></i></b-button>
+              <b-button class="w-50" variant="primary" @click="openFileExplorer"><span style="margin-right: 7px">Manuals</span><i class="fa-solid fa-arrow-right"></i></b-button>
           </b-col>
         </b-row>
 
@@ -309,6 +309,7 @@
         <b-button variant="secondary" @click="hide" style="margin-right: 10px">Close</b-button>
       </div>
     </template>
+      <file-explorer-modal ref="FileExplorer" />
   </b-modal>
 </template>
 
@@ -319,12 +320,13 @@ import {userService} from "@/services/userService";
 import {required} from "vuelidate/lib/validators";
 import { useVuelidate } from '@vuelidate/core'
 import {computed, reactive} from "vue";
+import FileExplorerModal from "@/components/instruments/FileExplorerModal.vue";
 export default {
   setup(){
     return {v$: useVuelidate()}
   },
   components: {
-
+    FileExplorerModal
   },
   props: {
 
@@ -398,6 +400,10 @@ export default {
     imageLoaded(){
       URL.revokeObjectURL(this.imageURL)
     },
+      openFileExplorer(){
+          this.$refs.FileExplorer.show(this.instrument.aNumber)
+      },
+
     load(){
       userService.getAll()
           .then(result => this.users = result.data)

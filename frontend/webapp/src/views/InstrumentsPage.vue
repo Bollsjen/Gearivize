@@ -1,7 +1,15 @@
 <template>
   <b-container fluid class="w-75 text-left" style="margin-bottom: 100px">
     <h1>Instruments</h1>
-    <common-table :items="instruments" :fields="fields" striped hover pagination :filter-properties="filterProperties" borderless :default-filter="['get_active']" />
+    <common-table
+        :items="instruments"
+        :fields="fields"
+        striped
+        hover
+        pagination
+        :filter-properties="filterProperties"
+        borderless
+        :default-filter="['get_active']" />
     <instrument-modal ref="InstrumentModal" />
   </b-container>
 </template>
@@ -164,7 +172,6 @@ export default {
   },
   mounted() {
     this.getInstruments()
-    //this.filterOn = this.filterProperties.map()
   }
 }
 </script>
