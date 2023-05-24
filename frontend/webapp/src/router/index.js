@@ -7,6 +7,7 @@ import TemplatesPage from "@/views/TemplatesPage.vue";
 import SiginPage from "@/views/SiginPage.vue";
 import SettingsPage from "@/views/SettingsPage.vue";
 import SuperUserPage from "@/views/SuperUserPage.vue";
+import NotificationsPage from "@/views/NotificationsPage.vue";
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/super-user',
     name: 'Super user',
     component: SuperUserPage
+  },
+  {
+    path: '/notifications',
+    name: 'Notification Panel',
+    component: NotificationsPage
   }
 ]
 

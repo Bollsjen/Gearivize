@@ -297,18 +297,18 @@ export default {
       let itemProperties = Object.keys(this.filterItems[0])
       let regex = new RegExp(this.search, 'g')
       this.filterItems = this.filterItems.filter(item =>
-          {
-            for(let i = 0; i < itemProperties.length; i++){
-              let prop = itemProperties[i]
-              if(prop.toLowerCase().includes("id")) continue
-              let value = item[prop]
-              if(value != null && value.toString().toLocaleLowerCase().includes(this.search.toLowerCase()) ||
-                  (typeof value == 'number' && value.toString().match(regex))){
-                return true
-              }
-            }
-            return false
-          })
+      {
+        for(let i = 0; i < itemProperties.length; i++){
+          let prop = itemProperties[i]
+          if(prop.toLowerCase().includes("id")) continue
+          let value = item[prop]
+          if(value != null && value.toString().toLocaleLowerCase().includes(this.search.toLowerCase()) ||
+              (typeof value == 'number' && value.toString().match(regex))){
+            return true
+          }
+        }
+        return false
+      })
     },
 
     sortInstruments(array){

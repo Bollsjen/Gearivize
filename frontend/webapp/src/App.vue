@@ -18,10 +18,10 @@
 
                         <!-- Right aligned nav items -->
                         <b-navbar-nav class="ml-auto">
-                            <b-nav-item class="notification-box">
+                            <b-nav-item class="notification-box" v-if="$store.state.isAuthenticated.responsible">
                                 <router-link to="/notifications">
                                     <i class="fa-solid fa-bell notification-bell"></i>
-                                    <span class="badge-buble" v-if="false">9</span>
+                                    <span class="badge-buble" v-if="notifications.filter(not => not.hasReacted === false).length > 0">{{notifications.filter(not => not.hasReacted === false).length}}</span>
                                 </router-link>
                             </b-nav-item>
 
@@ -47,11 +47,17 @@
 <script>
 import {mapActions} from "vuex";
 import {authService} from "@/services/authService";
+import {notificationService} from "@/services/notificationService";
 
 export default {
   name: 'App',
   created() {
     this.checkAuthentication()
+  },
+  data(){
+    return {
+      notifications: []
+    }
   },
   methods: {
     ...mapActions(['checkAuthentication']),
@@ -59,6 +65,11 @@ export default {
       authService.logout().then(result => window.location.href="/")
           .catch(error => console.log(error))
     }
+  },
+  mounted() {
+    notificationService.getAll()
+        .then(result => this.notifications = result.data)
+        .catch(error => console.error(error))
   }
 }
 </script>
