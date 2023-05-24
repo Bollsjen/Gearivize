@@ -103,5 +103,37 @@ namespace Gerivize.Managers
 
             return true;
         }
+
+        public bool DeleteFileOrDirectory(string name, string[] path, string type)
+        {
+            string actualPath = "";
+            foreach (string _path in path)
+            {
+                actualPath += _path;
+            }
+
+            actualPath = actualPath.Replace(",", "\\");
+
+            try
+            {
+                if (type == "file")
+                {
+                    if (File.Exists(actualPath + "\\" + name))
+                    {
+                        File.Delete(actualPath + "\\" + name);
+                    }
+                }else if(type == "folder")
+                {
+                    if(Directory.Exists(actualPath + "\\" + name))
+                    {
+                        Directory.Delete(actualPath + "\\" + name);
+                    }
+                }
+            }catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            return true;
+        }
     }
 }

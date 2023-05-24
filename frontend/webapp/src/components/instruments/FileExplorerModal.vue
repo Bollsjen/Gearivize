@@ -15,7 +15,7 @@
           </b-col>
           
           <b-col sm="8" ref="fileDrop" @dragover="fileDragOver" @dragleave="fileDragLeave" @drop="fileDrop">
-            <fil-explorer-browse v-if="!isDragingFile" ref="fileBrowse" @select-directory="selectDirectory" :directory="getDirectory" />
+            <fil-explorer-browse v-if="!isDragingFile" ref="fileBrowse" @select-directory="selectDirectory" :files="files" :directory="getDirectory" @reload="reload" @get-directorypath="findInstrumentDirectory" />
           </b-col>
       </b-row>
       
@@ -129,7 +129,6 @@ export default {
     },
 
     findInstrumentDirectory(aNumber){
-
       const matchingDirectories = []
 
       function traverseDirectories(directories, path){

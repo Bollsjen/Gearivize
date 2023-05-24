@@ -57,8 +57,7 @@ namespace Gerivize.Controllers
         [HttpPost("file")]
         public ActionResult Post([FromForm] FileExplorerFileUpload file)
         {
-            bool success = _fileManager.UploadFile(file);
-            if (success) { return Ok(); }
+            if (_fileManager.UploadFile(file)) { return Ok(); }
             return StatusCode(500);
         }
 
@@ -69,9 +68,11 @@ namespace Gerivize.Controllers
         }
 
         // DELETE api/<FileExplorerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("file-dir")]
+        public ActionResult Delete([FromForm] FileExplorerDeleteFileOrDirectory data)
         {
+            if (_fileManager.DeleteFileOrDirectory(data.Name, data.Path, data.Type)) return Ok();
+            return StatusCode(500);
         }
     }
 }

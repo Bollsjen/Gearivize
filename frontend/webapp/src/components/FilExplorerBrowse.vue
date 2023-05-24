@@ -1,80 +1,60 @@
 <template>
-  <div style="display: flex; flex-wrap: wrap; width: 100%">
-    <b-row>
-
-      <b-col sm="12" class="d-flex">
-        <div style="flex: 1">
-          Name
-        </div>
-
-        <div style="flex: 1">
-          Last modified
-        </div>
-
-        <div style="flex: 1">
-          Size
-        </div>
-      </b-col>
-
-      <button class="col-12 btn btn-block" v-for="item in items" @click="onRowSelected(item)">
-        <div class="d-flex">
-          <div style="flex: 1; white-space: nowrap;" class="text-left">
-            <div v-if="item.type === 'folder'">
-              <i class="fa-solid fa-folder mr-2"></i>{{item.name}}
-            </div>
-            <div v-else-if="item.type === 'file'">
-              <i v-if="item.name.includes('.pdf')" class="fa-solid fa-file-pdf mr-2"></i>
-              <i v-else-if="checkIfImage(item.name)" class="fa-solid fa-file-image mr-2"></i>
-              <i v-else-if="item.name.includes('.txt')" class="fa-solid fa-file-lines mr-2"></i>
-              <i v-else-if="item.name.includes('.docx')" class="fa-solid fa-file-word mr-2"></i>
-              <i v-else-if="item.name.includes('.ods')" class="fa-solid fa-file-excel mr-2"></i>
-              <i v-else class="fa-solid fa-file mr-2"></i>
-              {{item.name}}
-            </div>
+    <div style="z-index: 1; display: flex; flex-wrap: wrap; align-items: flex-start; width: 100%; position: relative; height: 100%" @click="isContextMenuVisible ? disableContextMenu() : null">
+      <b-row>
+        <b-col sm="12" class="d-flex">
+          <div style="flex: 1">
+            Name
           </div>
 
-          <div style="white-space: nowrap; flex: 1" class="text-left">
-            {{item.lastModified}}
+          <div style="flex: 1">
+            Last modified
           </div>
 
-          <div style="flex: 1; white-space: nowrap;" class="text-left">
-            {{item.size}}
+          <div style="flex: 1">
+            Size
           </div>
-        </div>
-      </button>
+        </b-col>
 
-      <!--<b-col sm="12">
-        <b-table
-            :items="items"
-            :fields="fields"
-            borderless
-            hover
-            @row-clicked="onRowSelected"
-            ref="ExplorerTable">
-
-          <template #cell(name)="data">
-            <div v-if="data.item.type === 'folder'">
-              <i class="fa-solid fa-folder mr-2"></i>{{data.item.name}}
+        <button class="col-12 btn btn-block" v-for="item in items" @click="!isContextMenuVisible ? onRowSelected(item) : disableContextMenu()" @contextmenu="onRightClick($event, item)">
+          <div class="d-flex">
+            <div style="flex: 1; white-space: nowrap;" class="text-left">
+              <div v-if="item.type === 'folder'">
+                <i class="fa-solid fa-folder mr-2"></i>{{item.name}}
+              </div>
+              <div v-else-if="item.type === 'file'">
+                <i v-if="item.name.includes('.pdf')" class="fa-solid fa-file-pdf mr-2"></i>
+                <i v-else-if="checkIfImage(item.name)" class="fa-solid fa-file-image mr-2"></i>
+                <i v-else-if="item.name.includes('.txt')" class="fa-solid fa-file-lines mr-2"></i>
+                <i v-else-if="item.name.includes('.docx')" class="fa-solid fa-file-word mr-2"></i>
+                <i v-else-if="item.name.includes('.ods')" class="fa-solid fa-file-excel mr-2"></i>
+                <i v-else class="fa-solid fa-file mr-2"></i>
+                {{item.name}}
+              </div>
             </div>
-            <div v-else-if="data.item.type === 'file'">
-              <i v-if="data.item.name.includes('.pdf')" class="fa-solid fa-file-pdf"></i>
-              <i v-else-if="checkIfImage(data.item.name)" class="fa-solid fa-file-image"></i>
-              <i v-else-if="data.item.name.includes('.txt')" class="fa-solid fa-file-lines"></i>
-              <i v-else-if="data.item.name.includes('.docx')" class="fa-solid fa-file-word"></i>
-              <i v-else-if="data.item.name.includes('.ods')" class="fa-solid fa-file-excel"></i>
-              <i v-else class="fa-solid fa-file"></i>
-              {{data.item.name}}
-            </div>
-          </template>
 
-        </b-table>
-      </b-col>-->
-    </b-row>
-  </div>
+            <div style="white-space: nowrap; flex: 1" class="text-left">
+              {{item.lastModified}}
+            </div>
+
+            <div style="flex: 1; white-space: nowrap;" class="text-left">
+              {{item.size}}
+            </div>
+          </div>
+        </button>
+      </b-row>
+
+      <div v-if="isContextMenuVisible" style="z-index: 10; position: fixed; background-color: white; border: 1px solid rgb(230,230,230); min-width: 150px" :style="{top: contextMenuTop + 'px', left: contextMenuLeft + 'px'}">
+        <button class="btn btn-block text-left context-menu-button" @click.stop="deleteFile">
+          <i class="fa-solid fa-trash-can"></i>
+          Delete
+        </button>
+      </div>
+    </div>
 </template>
 
 <script>
 import CommonTable from "@/components/common/CommonTable.vue";
+import {fileExplorerService} from "@/services/fileExplorerService";
 export default {
   components: {
     CommonTable
@@ -82,9 +62,14 @@ export default {
   props: {
     directory: null,
     selectedDirectory: null,
+    files: []
   },
   data(){
     return {
+      contextMenuTop: 0,
+      contextMenuLeft: 0,
+      isContextMenuVisible: false,
+      rightClickedDirOrFile: null,
     }
   },
   methods: {
@@ -95,6 +80,62 @@ export default {
     onRowSelected(item){
       if(item.type === 'folder')
         this.$emit('select-directory', item.actualObject)
+    },
+    onRightClick(event, item){
+      event.preventDefault()
+      if(item !== null){
+        this.rightClickedDirOrFile = item
+        this.contextMenuTop = event.clientY
+        this.contextMenuLeft = event.clientX
+        this.isContextMenuVisible = true
+      }
+    },
+    disableContextMenu(){
+      this.isContextMenuVisible = false
+    },
+
+    deleteFile(){
+      if(this.rightClickedDirOrFile.type === 'file') {
+        let formData = new FormData()
+        formData.append('name', this.rightClickedDirOrFile.actualObject.fileName)
+        formData.append('path', this.findFileDirectory(this.rightClickedDirOrFile.name, this.directory.directoryName)[0].path)
+        formData.append('type', this.rightClickedDirOrFile.type)
+
+        console.log(this.rightClickedDirOrFile.actualObject.fileName)
+        console.log(this.findFileDirectory(this.rightClickedDirOrFile.name, this.directory.directoryName)[0].path)
+        console.log(this.rightClickedDirOrFile.type)
+
+        fileExplorerService.deleteDirOrFile(formData)
+            .then(result => this.$emit('reload'))
+            .catch(error => console.error(error))
+      }
+
+      this.disableContextMenu()
+    },
+
+    findFileDirectory(fileName, folder){
+      const matchingDirectories = []
+
+      function traverseDirectories(directories, path){
+        for (const directory of directories) {
+          // Construct the current directory's path
+          const currentPath = path.concat(directory.directoryName);
+
+          if (directory.files.find(file => file.fileName === fileName) !== null && directory.files.find(file => file.fileName === fileName) !== undefined && directory.directoryName === folder) {
+            matchingDirectories.push({
+              directory: directory,
+              path: currentPath
+            })
+          }
+
+          if (directory.directories.length > 0) {
+            traverseDirectories(directory.directories, currentPath);
+          }
+        }
+      }
+
+      traverseDirectories(this.files, []);
+      return matchingDirectories;
     },
   },
   computed: {
@@ -158,5 +199,13 @@ export default {
 <style scoped>
 .hover-row:hover{
   cursor: pointer;
+}
+
+.context-menu-button {
+
+}
+
+.context-menu-button:hover {
+  background-color: rgb(245,245,245);
 }
 </style>
