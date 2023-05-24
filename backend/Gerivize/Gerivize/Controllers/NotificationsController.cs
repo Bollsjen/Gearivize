@@ -1,4 +1,5 @@
-﻿using Gerivize.Managers;
+﻿using Gerivize.Attributes;
+using Gerivize.Managers;
 using Gerivize.Models;
 using Gerivize.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -28,6 +29,15 @@ namespace Gerivize.Controllers
             List<Notification> notifications = _notificationRepository.getAll();
             if(notifications.Count == 0) { NotFound(); }
             return Ok(notifications);
+        }
+
+        [HttpGet("by-user")]
+        [Authorize]
+        public ActionResult<Notification> GetByUser([AuthenticatedUser] User user) 
+        {
+            List<Notification> list = _notificationRepository.getByUserId(user.Id);
+            if(list.Count == 0) { NotFound(); }
+            return Ok(list);
         }
 
         // GET api/<NotificationsController>/5

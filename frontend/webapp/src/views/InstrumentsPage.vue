@@ -1,8 +1,16 @@
 <template>
   <b-container fluid class="w-75 text-left" style="margin-bottom: 100px">
     <h1>Instruments</h1>
-    <common-table :items="instruments" :fields="fields" striped hover pagination :filter-properties="filterProperties" borderless />
-    <instrument-modal ref="InstrumentModal" />
+    <common-table
+        :items="instruments"
+        :fields="fields"
+        striped
+        hover
+        pagination
+        :filter-properties="filterProperties"
+        borderless
+        :default-filter="['get_active']"/>
+    <instrument-modal ref="InstrumentModal"/>
   </b-container>
 </template>
 
@@ -11,46 +19,54 @@ import CommonTable from "@/components/common/CommonTable.vue";
 import {instrumentsService} from "@/services/instrumentsService";
 import InstrumentModal from "@/components/instruments/InstrumentModal.vue";
 import {testTypes} from "@/types/TestTypes";
+
 export default {
   components: {
     CommonTable,
     InstrumentModal
   },
-  props: {
-
-  },
-  data(){
+  props: {},
+  data() {
     return {
       instruments: [],
       testTypes: testTypes,
       filterProperties: [
         {
-          key: 'inactive',
-          value: true,
+          condition: (item) => {
+            return item.inactive === true
+          },
+          value: 'get_inactive',
           label: 'Inactive',
-          default: 0,
         },
         {
-          key: 'inactive',
-          value: false,
+          condition: (item) => {
+            return item.inactive === false && item.needsCalibration === true
+          },
+          value: 'get_active',
           label: 'Active',
-          default: 1,
         },
+        {
+          condition: (item) => {
+            return item.needsCalibration === false
+          },
+          value: 'get_need_calibration',
+          label: 'No cal.',
+        }
       ]
     }
   },
   methods: {
-    getInstruments(){
+    getInstruments() {
       instrumentsService.getAll()
           .then(result => this.instruments = this.sortInstruments(result.data))
           .catch(error => console.log(error))
     },
-    sortInstruments(array){
-      return array.sort(function(a,b){
+    sortInstruments(array) {
+      return array.sort(function (a, b) {
         const aNumber = parseInt(a.aNumber.match(/\d+/)[0]);
         const bNumber = parseInt(b.aNumber.match(/\d+/)[0]);
         if (aNumber === bNumber) {
-          return a.aNumber.localeCompare(b.aNumber, undefined, { numeric: true, sensitivity: 'base' });
+          return a.aNumber.localeCompare(b.aNumber, undefined, {numeric: true, sensitivity: 'base'});
         } else {
           return aNumber - bNumber;
         }
@@ -58,7 +74,7 @@ export default {
     }
   },
   computed: {
-    fields(){
+    fields() {
       return [
         {
           key: 'aNumber',
@@ -78,13 +94,15 @@ export default {
         },
         {
           key: 'test',
-          formatter: (data) => {return testTypes[data.test]},
+          formatter: (data) => {
+            return testTypes[data.test]
+          },
           sortable: true
         },
         {
           key: 'daysLeft',
           formatter: (data) => {
-            if(data){
+            if (data) {
               const today = new Date()
               const diff = new Date(data.nextCalibrationDate).getTime() - today.getTime()
               const days = Math.ceil(diff / (1000 * 3600 * 24))
@@ -100,7 +118,7 @@ export default {
         },
         {
           key: 'actions',
-          label:'',
+          label: '',
           template: {
             //
             //  For at tilføje et knapper til headeren af common table laves et array kaldet head
@@ -122,7 +140,7 @@ export default {
                 visible: this.$store.state.isAuthenticated.responsible,
                 variant: 'success',
                 size: 'sm',
-                action: () => this.$refs['InstrumentModal'].show('add',null)
+                action: () => this.$refs['InstrumentModal'].show('add', null)
               }
             ],
 
@@ -143,7 +161,7 @@ export default {
                 variant: 'primary',
                 visible: true,
                 size: 'sm',
-                action: (data) => this.$refs['InstrumentModal'].show('watch',data)
+                action: (data) => this.$refs['InstrumentModal'].show('watch', data)
               },
               {
                 icon: 'fa-pen-to-square',
@@ -151,7 +169,7 @@ export default {
                 variant: 'success',
                 visible: this.$store.state.isAuthenticated.responsible,
                 size: 'sm',
-                action: (data) => this.$refs['InstrumentModal'].show('edit',data)
+                action: (data) => this.$refs['InstrumentModal'].show('edit', data)
               }
             ]
           }
