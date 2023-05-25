@@ -55,6 +55,28 @@ namespace Gerivize.Repositories
             return imageName;
         }
 
+        public List<Instrument> getCalibrationNextXMonths(int months, bool external)
+        {
+            DateTime nextXMonths = DateTime.Today.AddMonths(months).AddDays(7);
+            return _localContext.Instruments.Where(i =>
+            (i.ExternalCalibration == external) &&
+            i.NextCalibrationDate <= nextXMonths &&
+            i.NextCalibrationDate > DateTime.Today.AddDays(7) &&
+            i.NeedsCalibration &&
+            !i.Inactive
+            ).ToList();
+        }
+
+        public List<Instrument> getCalibrationOverdue(bool external)
+        {
+            return _localContext.Instruments.Where(i =>
+            (i.ExternalCalibration == external) &&
+            i.NextCalibrationDate <= DateTime.Today.AddDays(7) &&
+            i.NeedsCalibration &&
+            !i.Inactive
+            ).ToList();
+        }
+
         public Instrument createInstrument(Instrument instrument)
         {
             instrument.ANumber = nextANumber();

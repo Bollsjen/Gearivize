@@ -30,7 +30,7 @@
         </b-col>
       </b-row>
     </div>
-    <div class="common-table-container">
+    <div :class="background ? 'common-table-container' : ''">
       <b-table
           :striped="striped"
           :bordered="bordered"
@@ -64,7 +64,7 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc">
         <template #empty="scope">
-          <div class="my-3 text-center">
+          <div class="my-0 text-center">
             <span>No items to display</span>
           </div>
         </template>
