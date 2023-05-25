@@ -1,5 +1,7 @@
-﻿using Gerivize.Managers;
+﻿using Gerivize.Attributes;
+using Gerivize.Managers;
 using Gerivize.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -46,17 +48,12 @@ namespace Gerivize.Controllers
             return files;
         }
 
-        // GET api/<FileExplorerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<FileExplorerController>
         [HttpPost("file")]
-        public ActionResult Post([FromForm] FileExplorerFileUpload file)
+        [Authorize]
+        public ActionResult Post([FromForm] FileExplorerFileUpload file, [AuthenticatedUser] User user)
         {
+            if(!user.Responsible) return Unauthorized();
             bool success = _fileManager.UploadFile(file);
             if (success) { return Ok(); }
             return StatusCode(500);

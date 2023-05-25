@@ -66,9 +66,21 @@ export default {
 
     fileDrop(event){
       event.preventDefault()
+      this.isDragingFile = false
+      this.$refs.fileDrop.classList.remove('file-drop-zone')
+      if(!this.$store.state.isAuthenticated.responsible){
+        this.$bvModal.msgBoxOk('You are not allowed to perform this action!', {
+          title: 'Unauthorized use',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          centered: true
+        })
+
+        return
+      }
+
       if(event.dataTransfer.files) {
-        this.isDragingFile = false
-        this.$refs.fileDrop.classList.remove('file-drop-zone')
 
         let formData = new FormData()
 
@@ -77,7 +89,13 @@ export default {
 
         fileExplorerService.uploadFile(formData)
             .then(result => this.reload())
-            .catch(error => console.error(error))
+            .catch(error => this.$bvModal.msgBoxOk('You are not allowed to perform this action!', {
+              title: 'Unauthorized use',
+              size: 'sm',
+              buttonSize: 'sm',
+              okVariant: 'danger',
+              centered: true
+            }))
 
       }
     },
