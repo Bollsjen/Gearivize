@@ -1,3 +1,4 @@
+using dotenv.net;
 using Gerivize.Managers;
 using Gerivize.Models;
 using Gerivize.Repositories;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+DotEnv.Load();
 
 // Add services to the container.
 builder.Services.AddControllers();

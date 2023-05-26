@@ -9,6 +9,19 @@ namespace Gerivize.Managers
     public class FileExplorerManager
     {
 
+        public FileExplorerManager() 
+        {
+            try
+            {
+                if (!Directory.Exists(FileExplorerController._rootPath + "\\Instrumenter"){
+                    Directory.CreateDirectory(FileExplorerController._rootPath + "\\Instrumenter";
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
         public bool CreateINstrumentDIrectories(string ANumber)
         {
             try

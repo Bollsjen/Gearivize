@@ -3,6 +3,7 @@ using Gerivize.Managers;
 using Gerivize.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using dotenv.net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,11 +14,13 @@ namespace Gerivize.Controllers
     public class FileExplorerController : ControllerBase
     {
         private readonly FileExplorerManager _fileManager;
-        public static readonly string _rootPath = @"A:\Datamatiker\BollsRoot";
+        public static string _rootPath ="";
 
         public FileExplorerController()
         {
             _fileManager = new FileExplorerManager();
+            var envVars = DotEnv.Read();
+            _rootPath = envVars["INSTRUMENT_DATA"];
         }
 
         // GET: api/<FileExplorerController>
