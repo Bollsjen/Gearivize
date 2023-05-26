@@ -145,6 +145,19 @@ export default {
     },
 
     deleteFile(){
+      this.disableContextMenu()
+      if(!this.$store.state.isAuthenticated.responsible){
+        this.$bvModal.msgBoxOk('You are not allowed to perform this action!', {
+          title: 'Unauthorized use',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          centered: true
+        })
+
+        return
+      }
+
       if(this.rightClickedDirOrFile.type === 'file') {
         let formData = new FormData()
 
@@ -156,8 +169,6 @@ export default {
             .then(result => this.$emit('reload'))
             .catch(error => console.error(error))
       }
-
-      this.disableContextMenu()
     },
 
     findFileDirectory(fileName, folder){
