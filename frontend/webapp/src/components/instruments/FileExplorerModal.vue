@@ -66,10 +66,23 @@ export default {
 
     fileDrop(event){
       event.preventDefault()
-      if(event.dataTransfer.files && (this.$refs.fileBrowse === undefined || !this.$refs.fileBrowse.isDragging) && event.dataTransfer.files.length > 0) {
-        console.log("hallo")
         this.isDragingFile = false
         this.$refs.fileDrop.classList.remove('file-drop-zone')
+      this.isDragingFile = false
+      this.$refs.fileDrop.classList.remove('file-drop-zone')
+      if(!this.$store.state.isAuthenticated.responsible){
+        this.$bvModal.msgBoxOk('You are not allowed to perform this action!', {
+          title: 'Unauthorized use',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          centered: true
+        })
+
+        return
+      }
+
+      if(event.dataTransfer.files && (this.$refs.fileBrowse === undefined || !this.$refs.fileBrowse.isDragging) && event.dataTransfer.files.length > 0) {
 
         let formData = new FormData()
 
@@ -78,7 +91,13 @@ export default {
 
         fileExplorerService.uploadFile(formData)
             .then(result => this.reload())
-            .catch(error => console.error(error))
+            .catch(error => this.$bvModal.msgBoxOk('You are not allowed to perform this action!', {
+              title: 'Unauthorized use',
+              size: 'sm',
+              buttonSize: 'sm',
+              okVariant: 'danger',
+              centered: true
+            }))
 
       }
     },
