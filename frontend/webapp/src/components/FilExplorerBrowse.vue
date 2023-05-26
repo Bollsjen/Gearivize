@@ -105,6 +105,19 @@ export default {
 
     dropThing(event){
       event.preventDefault()
+      this.isDragging = false
+      if(!this.$store.state.isAuthenticated.responsible){
+        this.$bvModal.msgBoxOk('You are not allowed to perform this action!', {
+          title: 'Unauthorized use',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          centered: true
+        })
+
+        return
+      }
+
       if(this.moveThing.destinationForThing !== null) {
         let filePath = this.findFileDirectory(this.moveThing.thingToMove.name, this.directory.directoryName)[0].path
         let destinationPath = this.findDirectory(this.moveThing.destinationForThing.name)[0].path
@@ -120,7 +133,6 @@ export default {
             .then(result => this.$emit('reload'))
             .catch(error => console.error(error))
       }
-      this.isDragging = false
     },
 
     checkIfImage(name){

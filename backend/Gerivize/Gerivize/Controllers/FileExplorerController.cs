@@ -60,8 +60,10 @@ namespace Gerivize.Controllers
 
         // PUT api/<FileExplorerController>/5
         [HttpPut("move/file")]
-        public ActionResult Put(int id, [FromBody] FileExplorerMoveFile move)
+        [Authorize]
+        public ActionResult Put(int id, [FromBody] FileExplorerMoveFile move, [AuthenticatedUser] User user)
         {
+            if(!user.Responsible) return Unauthorized();
             if(_fileManager.MoveFile(move)) return Ok();
             return StatusCode(500);
         }
