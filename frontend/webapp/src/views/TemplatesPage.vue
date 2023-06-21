@@ -31,7 +31,11 @@ export default {
   methods: {
     getTemplates() {
       templateService.getAll()
-          .catch(error => console.log(error))
+          .then(result => this.templates = result.data)
+          .catch(error => {
+              console.log("fisk")
+              console.log(error)
+          })
     },
   },
   computed: {
@@ -42,7 +46,7 @@ export default {
           sortable: true,
         },
         {
-          key: 'templateName',
+          key: 'name',
           sortable: true,
         },
         {
