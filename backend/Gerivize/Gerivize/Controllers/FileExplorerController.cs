@@ -4,6 +4,8 @@ using Gerivize.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using dotenv.net;
+using Microsoft.AspNetCore.Cors;
+using System.Web.Http.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,50 +16,67 @@ namespace Gerivize.Controllers
     public class FileExplorerController : ControllerBase
     {
         private readonly FileExplorerManager _fileManager;
-        public static string _rootPath ="";
+        public static string _rootPath ="/home/magnus/Documents";
+        private readonly ILogger<FileExplorerController> _logger;
 
-        public FileExplorerController()
+        public FileExplorerController(ILogger<FileExplorerController> logger)
         {
             _fileManager = new FileExplorerManager();
             var envVars = DotEnv.Read();
-            _rootPath = envVars["INSTRUMENT_DATA"];
+            //_rootPath = envVars["INSTRUMENT_DATA"];
+            _logger = logger;
         }
 
         // GET: api/<FileExplorerController>
         [HttpGet]
         public List<DirectoryData> Get()
         {
-            List<DirectoryData> files = new List<DirectoryData>() { 
-                new DirectoryData(){ 
-                    DirectoryName = _rootPath,
-                    Directories =  _fileManager.GetDirectoryTree(_rootPath),
-                    Files = new List<FileData>(),
-                    Size = 0,
-                    LastModified = new DirectoryInfo(_rootPath).LastWriteTime,
-        }
-            };
-            files[0].Files = _fileManager.GetFilesInDirectory(new DirectoryInfo(_rootPath));
-
-            foreach (var fileNode in files[0].Files)
+            try
             {
-                files[0].Size += fileNode.Size;
-            }
+                List<DirectoryData> files = new List<DirectoryData>()
+                {
+                    new DirectoryData()
+                    {
+                        DirectoryName = _rootPath,
+                        Directories = _fileManager.GetDirectoryTree(_rootPath),
+                        Files = new List<FileData>(),
+                        Size = 0,
+                        LastModified = new DirectoryInfo(_rootPath).LastWriteTime,
+                    }
+                };
+                files[0].Files = _fileManager.GetFilesInDirectory(new DirectoryInfo(_rootPath));
 
-            foreach (var subDirectoryNode in files[0].Directories)
+                foreach (var fileNode in files[0].Files)
+                {
+                    files[0].Size += fileNode.Size;
+                }
+
+                foreach (var subDirectoryNode in files[0].Directories)
+                {
+                    files[0].Size += subDirectoryNode.Size;
+                }
+                return files;
+            }
+            catch (Exception e)
             {
-                files[0].Size += subDirectoryNode.Size;
+                _logger.LogInformation(e.Message);
+                _logger.LogInformation(e.StackTrace);
+                return null;
             }
-
-            return files;
         }
 
         // POST api/<FileExplorerController>
         [HttpPost("file")]
         [Authorize]
-        public ActionResult Post([FromForm] FileExplorerFileUpload file, [AuthenticatedUser] User user)
+        public ActionResult Post([FromForm] FileExplorerFileUpload file)
         {
-            if(!user.Responsible) return Unauthorized();
-            if (_fileManager.UploadFile(file)) { return Ok(); }
+            Console.WriteLine("Hallo");
+            //if(!user.Responsible) return Unauthorized();
+            if (_fileManager.UploadFile(file))
+            {
+                Response.Headers.Add("Access-Control-Allow-Origin", "https://localhost:3000");
+                return Ok();
+            }
             return StatusCode(500);
         }
 

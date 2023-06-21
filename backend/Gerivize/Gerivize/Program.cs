@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using dotenv.net;
 using Gerivize.Managers;
 using Gerivize.Models;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File($"logs/log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders();
+    loggingBuilder.AddSerilog(dispose: true);
+});
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication("gearivise")
@@ -47,7 +58,7 @@ builder.Services.AddSingleton<User>();
 
 builder.Services.AddCors(options => 
     options.AddPolicy("AllowAll", builder => 
-        builder.WithOrigins("http://testting.arpa", "testting.arpa")
+        builder.WithOrigins("https://176.23.69.93:3000")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()

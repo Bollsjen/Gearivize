@@ -47,8 +47,8 @@
     <None Include="wwwroot\img\instruments\BOLLS_1471-scaled-268x178x14x0x239x178x1612536827.jpg" />
     <None Include="wwwroot\img\logos\Bolls.png" />
     <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\js\app.27eacfc8.js" />
-    <None Include="wwwroot\js\app.27eacfc8.js.map" />
+    <None Include="wwwroot\js\app.66f51ff2.js" />
+    <None Include="wwwroot\js\app.66f51ff2.js.map" />
     <None Include="wwwroot\js\chunk-vendors.12049297.js" />
     <None Include="wwwroot\js\chunk-vendors.12049297.js.map" />
     <None Include="wwwroot\manifest.json" />
@@ -78,6 +78,9 @@
     </PackageReference>
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+    <PackageReference Include="Serilog" Version="3.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
