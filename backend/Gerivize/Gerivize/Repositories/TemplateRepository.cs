@@ -22,9 +22,54 @@ namespace Gerivize.Repositories
             return _localContext.TestTemplates.ToList();
         }
 
+        public List<TemplateConnector> getAllInstruments()
+        {
+            return _localContext.TemplateConnector.ToList();
+        }
+
         public TestTemplate? getById(Guid id)
         {
             return _localContext.TestTemplates.ToList().Find(i => i.Id == id);
+        }
+
+        public TestTemplate AddTemplate(TestTemplate testTemplate)
+        {
+            _localContext.TestTemplates.Add(testTemplate);
+            _localContext.SaveChanges();
+            return testTemplate;
+        }
+
+        public TemplateConnector AddInstrumentToTemplate(Guid templateId, string instrumentId)
+        {
+            TemplateConnector templateConnector = new TemplateConnector();
+            templateConnector.TestTemplateId = templateId;
+            templateConnector.InstrumentId = instrumentId;
+            _localContext.TemplateConnector.Add(templateConnector);
+            _localContext.SaveChanges();
+            return templateConnector;
+        }
+
+        public TestTemplate UpdateTemplate(TestTemplate testTemplate)
+        {
+            _localContext.TestTemplates.Update(testTemplate);
+            _localContext.SaveChanges();
+            return testTemplate;
+        }
+
+        public TemplateConnector DeleteInstrumentFromTemplate(Guid templateId, string instrumentId)
+        {
+            TemplateConnector templateConnector = _localContext.TemplateConnector.Find(templateId, instrumentId);
+            _localContext.TemplateConnector.Remove(templateConnector);
+            _localContext.SaveChanges();
+            return templateConnector;
+        }
+
+        public TestTemplate DeleteTemplate(Guid templateId)
+        {
+            TestTemplate testTemplate = _localContext.TestTemplates.Find(templateId);
+            _localContext.TestTemplates.Remove(testTemplate);
+            _localContext.SaveChanges();
+            return testTemplate;
         }
     }
 }

@@ -7,20 +7,19 @@
                       hover
                       pagination
                       :filter-properties="filterProperties"
-                      borderless
-                      :default-filter="['get_active']" />
-        <template-modal ref="TemplateModal" />
-    </b-container>
+                      borderless />
+        <template-modal ref="TemplatesModal" />
+        </b-container>
 </template>
 
 <script>
 import CommonTable from "@/components/common/CommonTable.vue";
 import {templateService} from "@/services/templateService";
-import TemplateModal from "@/components/templates/TemplatesModal.vue";
+import TemplatesModal from "@/components/templates/TemplatesModal.vue";
 export default {
   components: {
     CommonTable,
-    TemplateModal
+    TemplatesModal
   },
   props: {},
   data() {
@@ -50,10 +49,6 @@ export default {
           sortable: true,
         },
         {
-          key: 'value',
-          sortable: true,
-        },
-        {
           key: 'actions',
           label: '',
           template: {
@@ -76,7 +71,7 @@ export default {
                 variant: 'primary',
                 visible: true,
                 size: 'sm',
-                action: (data) => this.$refs['TemplateModal'].show('watch', data)
+                action: (data) => this.$refs['TemplatesModal'].show('watch', data)
               },
               {
                 icon: 'fa-pen-to-square',

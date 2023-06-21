@@ -32,5 +32,46 @@ namespace Gerivize.Controllers
         {
             return _templateRepository.getById(id);
         }
+
+        [HttpGet("Instruments")]
+        public ActionResult<TemplateConnector> GetAllInstruments()
+        {
+              return Ok(_templateRepository.getAllInstruments());
+        }
+
+        [HttpPost("Template")]
+        public ActionResult<TestTemplate> AddTemplate([FromBody] TestTemplate testTemplate)
+        {
+            _templateRepository.AddTemplate(testTemplate);
+            return Ok();
+        }
+
+        [HttpPost("Instrument/{templateId}/{instrumentId}")]
+        public ActionResult<TemplateConnector> AddInstrumentToTemplate(Guid templateId, string instrumentId)
+        {
+            _templateRepository.AddInstrumentToTemplate(templateId, instrumentId);
+            return Ok();
+        }
+
+        [HttpPut("Template")]
+        public ActionResult<TestTemplate> UpdateTemplate([FromBody] TestTemplate testTemplate)
+        {
+            _templateRepository.UpdateTemplate(testTemplate);
+            return Ok();
+        }
+
+        [HttpDelete("{Id}")]
+        public ActionResult<TestTemplate> DeleteTemplate(Guid templateId)
+        {
+            _templateRepository.DeleteTemplate(templateId);
+            return Ok();
+        }
+
+        [HttpDelete("Instrument/{templateId}/{instrumentId}")]
+        public ActionResult<TemplateConnector> DeleteInstrumentFromTemplate(Guid templateId, string instrumentId)
+        {
+            _templateRepository.DeleteInstrumentFromTemplate(templateId, instrumentId);
+            return Ok();
+        }
     }
 }

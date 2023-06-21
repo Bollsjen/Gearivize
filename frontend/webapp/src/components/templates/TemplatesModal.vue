@@ -42,6 +42,9 @@
         destroyed() {
         },
         methods: {
+            show(purpose, template) {
+                this.active = true;
+            },
         },
     });
 </script>
