@@ -42,6 +42,7 @@ namespace Gerivize.Controllers
         [HttpPost("Template")]
         public ActionResult<TestTemplate> AddTemplate([FromBody] TestTemplate testTemplate)
         {
+            testTemplate.Id = Guid.NewGuid();
             _templateRepository.AddTemplate(testTemplate);
             return Ok();
         }
@@ -61,9 +62,9 @@ namespace Gerivize.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public ActionResult<TestTemplate> DeleteTemplate(Guid templateId)
+        public ActionResult<TestTemplate> DeleteTemplate(Guid Id)
         {
-            _templateRepository.DeleteTemplate(templateId);
+            _templateRepository.DeleteTemplate(Id);
             return Ok();
         }
 

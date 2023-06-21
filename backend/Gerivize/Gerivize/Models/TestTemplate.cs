@@ -13,8 +13,5 @@ namespace Gerivize.Models
 
         [Column("name")]
         public string Name { get; set; }
-
-        [DefaultValue(null)]
-        public virtual List<Instrument>? Instrument { get; set; }
     }
 }

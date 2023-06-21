@@ -8,7 +8,7 @@
                       pagination
                       :filter-properties="filterProperties"
                       borderless />
-        <template-modal ref="TemplatesModal" />
+        <templates-modal ref="TemplatesModal" />
         </b-container>
 </template>
 
@@ -32,7 +32,6 @@ export default {
       templateService.getAll()
           .then(result => this.templates = result.data)
           .catch(error => {
-              console.log("fisk")
               console.log(error)
           })
     },
@@ -61,7 +60,7 @@ export default {
                 visible: this.$store.state.isAuthenticated.responsible,
                 variant: 'success',
                 size: 'sm',
-                action: () => this.$refs['TemplateModal'].show('add', null)
+                action: () => this.$refs['TemplatesModal'].show('add', null)
               }
             ],
             cell: [
@@ -79,7 +78,7 @@ export default {
                 variant: 'success',
                 visible: this.$store.state.isAuthenticated.responsible,
                 size: 'sm',
-                action: (data) => this.$refs['TemplateModal'].show('edit', data)
+                action: (data) => this.$refs['TemplatesModal'].show('edit', data)
               }
             ]
           }

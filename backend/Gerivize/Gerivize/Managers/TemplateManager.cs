@@ -35,6 +35,7 @@ namespace Gerivize.Managers
 
         public TestTemplate AddTemplate(TestTemplate testTemplate)
         {
+            testTemplate.Id = Guid.NewGuid();
             _templateRepository.AddTemplate(testTemplate);
             return testTemplate;
         }

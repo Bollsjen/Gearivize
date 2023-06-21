@@ -66,7 +66,8 @@ namespace Gerivize.Repositories
 
         public TestTemplate DeleteTemplate(Guid templateId)
         {
-            TestTemplate testTemplate = _localContext.TestTemplates.Find(templateId);
+            Console.WriteLine(templateId);
+            TestTemplate testTemplate = _localContext.TestTemplates.ToList().Find(t=>t.Id==templateId);
             _localContext.TestTemplates.Remove(testTemplate);
             _localContext.SaveChanges();
             return testTemplate;
