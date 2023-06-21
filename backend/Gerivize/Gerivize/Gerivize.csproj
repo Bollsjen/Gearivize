@@ -19,6 +19,44 @@
     <None Remove="AttributeHelpers\**" />
     <None Remove="Interfaces\**" />
     <None Remove="Public\Images\Instruments\**" />
+    <None Include="wwwroot\css\app.54d422eb.css" />
+    <None Include="wwwroot\css\chunk-vendors.e32a4b5d.css" />
+    <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\fonts\fa-brands-400.5f7c5bb7.ttf" />
+    <None Include="wwwroot\fonts\fa-brands-400.9210030c.woff2" />
+    <None Include="wwwroot\fonts\fa-regular-400.02ad4ff9.woff2" />
+    <None Include="wwwroot\fonts\fa-regular-400.570a165b.ttf" />
+    <None Include="wwwroot\fonts\fa-solid-900.0b5caff7.ttf" />
+    <None Include="wwwroot\fonts\fa-solid-900.3eae9857.woff2" />
+    <None Include="wwwroot\fonts\fa-v4compatibility.92dce52f.ttf" />
+    <None Include="wwwroot\img\icons\android-chrome-192x192.png" />
+    <None Include="wwwroot\img\icons\android-chrome-512x512.png" />
+    <None Include="wwwroot\img\icons\android-chrome-maskable-192x192.png" />
+    <None Include="wwwroot\img\icons\android-chrome-maskable-512x512.png" />
+    <None Include="wwwroot\img\icons\apple-touch-icon-120x120.png" />
+    <None Include="wwwroot\img\icons\apple-touch-icon-152x152.png" />
+    <None Include="wwwroot\img\icons\apple-touch-icon-180x180.png" />
+    <None Include="wwwroot\img\icons\apple-touch-icon-60x60.png" />
+    <None Include="wwwroot\img\icons\apple-touch-icon-76x76.png" />
+    <None Include="wwwroot\img\icons\apple-touch-icon.png" />
+    <None Include="wwwroot\img\icons\favicon-16x16.png" />
+    <None Include="wwwroot\img\icons\favicon-32x32.png" />
+    <None Include="wwwroot\img\icons\msapplication-icon-144x144.png" />
+    <None Include="wwwroot\img\icons\mstile-150x150.png" />
+    <None Include="wwwroot\img\icons\safari-pinned-tab.svg" />
+    <None Include="wwwroot\img\instruments\BOLLS_1471-scaled-268x178x14x0x239x178x1612536827.jpg" />
+    <None Include="wwwroot\img\logos\Bolls.png" />
+    <None Include="wwwroot\index.html" />
+    <None Include="wwwroot\js\app.27eacfc8.js" />
+    <None Include="wwwroot\js\app.27eacfc8.js.map" />
+    <None Include="wwwroot\js\chunk-vendors.12049297.js" />
+    <None Include="wwwroot\js\chunk-vendors.12049297.js.map" />
+    <None Include="wwwroot\manifest.json" />
+    <None Include="wwwroot\robots.txt" />
+    <None Include="wwwroot\service-worker.js" />
+    <None Include="wwwroot\service-worker.js.map" />
+    <None Include="wwwroot\workbox-db5fc017.js" />
+    <None Include="wwwroot\workbox-db5fc017.js.map" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +65,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.34" />
     <PackageReference Include="Hangfire.Core" Version="1.7.34" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -44,6 +83,28 @@
 
   <ItemGroup>
     <Folder Include="mykeys\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="**\*.cshtml" />
+    <_ContentIncludedByDefault Remove="**\*.razor" />
+    <_ContentIncludedByDefault Remove="**\*.config" />
+    <_ContentIncludedByDefault Remove="**\*.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="**\*.razor" />
+    <UpToDateCheckInput Remove="**\*.cshtml" />
+    <UpToDateCheckInput Remove="**\*.razor" />
+    <UpToDateCheckInput Remove="**\*.cshtml" />
+    <UpToDateCheckInput Remove="**\*.razor" />
+    <UpToDateCheckInput Remove="**\*.cshtml" />
+    <UpToDateCheckInput Remove="**\*.razor" />
+    <UpToDateCheckInput Remove="**\*.cshtml" />
+    <UpToDateCheckInput Remove="**\*.razor" />
+    <UpToDateCheckInput Remove="**\*.cshtml" />
+    <UpToDateCheckInput Remove="**\*.razor" />
+    <UpToDateCheckInput Remove="**\*.cshtml" />
   </ItemGroup>
 
 </Project>
