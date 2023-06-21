@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,9 +41,18 @@ builder.Services.AddAuthentication("gearivise")
     }
 );
 
+builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo("mykeys"));
+
 builder.Services.AddSingleton<User>();
 
-builder.Services.AddCors(options => options.AddPolicy("AllowAll", builder => builder.WithOrigins("http://localhost:8081").AllowAnyMethod().AllowAnyHeader().AllowCredentials()));
+builder.Services.AddCors(options => 
+    options.AddPolicy("AllowAll", builder => 
+        builder.WithOrigins("http://testting.arpa", "testting.arpa")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        )
+    );
 
 builder.Services.AddHangfire(configuration => {
     configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -55,24 +65,6 @@ builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
-    {
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        context.Response.ContentType = "text/plain";
-
-        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-        var error = exceptionHandlerPathFeature?.Error;
-
-        // Use ILogger<T> interface within your custom middleware or controller to log the error
-        var logger = context.RequestServices.GetService<ILogger<Program>>();
-        logger?.LogError(error, "Unhandled exception occurred");
-
-        await context.Response.WriteAsync("An unexpected error occurred. Please try again later.");
-    });
-});
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -82,14 +74,44 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAll");
-
 app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseHttpsRedirection();
+app.UseDefaultFiles(); 
+app.UseFileServer();
+
+app.Map("/api", apiApp =>
+{
+    // Configure API-specific middleware, routes, and controllers
+    apiApp.UseRouting();
+    apiApp.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+});
+
+app.Run(async (context) =>
+{
+    if (!context.Request.Path.StartsWithSegments("/api") && !context.Request.Path.StartsWithSegments("/swagger") && !context.Request.Path.StartsWithSegments("/hangfire"))
+    {
+        context.Response.ContentType = "text/html";
+        await context.Response.SendFileAsync(Path.Combine(app.Environment.ContentRootPath, "wwwroot", "index.html"));
+    }
+});
+
+app.UseCors("AllowAll");
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
 app.UseHangfireDashboard("/hangfire");
 app.UseHangfireServer();
 SchedulerBaseClass.InittializeSchedulers();
