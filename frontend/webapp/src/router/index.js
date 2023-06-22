@@ -8,6 +8,8 @@ import SiginPage from "@/views/SiginPage.vue";
 import SettingsPage from "@/views/SettingsPage.vue";
 import SuperUserPage from "@/views/SuperUserPage.vue";
 import NotificationsPage from "@/views/NotificationsPage.vue";
+import UsersPage from "@/views/UsersPage.vue";
+import ImportPage from "@/views/ImportPage.vue";
 
 Vue.use(VueRouter)
 
@@ -46,6 +48,16 @@ const routes = [
     path: '/notifications',
     name: 'Notification Panel',
     component: NotificationsPage
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: UsersPage
+  },
+  {
+    path: '/import',
+    name: 'Import',
+    component: ImportPage
   }
 ]
 

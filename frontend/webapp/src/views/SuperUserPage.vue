@@ -1,20 +1,10 @@
 <template>
-  <b-container fluid class="w-75 text-left">
-    <authenticator minimum-requirement="superUser" />
-    <b-row>
-      <b-col sm="12">
-        <h1 style="margin: 25px 0px;">Super user</h1>
-        <hr/>
-      </b-col>
-      <b-col sm="12">
-        <h3>Users</h3>
-      </b-col>
-      <b-col sm="12">
-        <common-table :items="users" :fields="fields" />
-      </b-col>
-    </b-row>
-    <user-modal ref="UserModal" @delete-user="deleteUser" />
-    <create-user-modal ref="CreateUserModal" @add-user="addUser"/>
+  <b-container class="text-left mt-5">
+      <b-list-group>
+        <b-list-group-item style="background-color: rgb(240,240,240)"><h1 style="font-size: 24px" class="m-0">Super user</h1></b-list-group-item>
+        <b-list-group-item to="/users" class="super-user-hover">Users</b-list-group-item>
+        <b-list-group-item to="/import" class="super-user-hover">Import</b-list-group-item>
+      </b-list-group>
   </b-container>
 </template>
 
@@ -130,3 +120,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.super-user-hover:hover {
+  background-color: rgb(240,240,240);
+}
+</style>
