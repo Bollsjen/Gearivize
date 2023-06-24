@@ -37,6 +37,8 @@ builder.Services.AddTransient<FileExplorerManager>();
 builder.Services.AddTransient<InstrumentsManager>();
 builder.Services.AddTransient<NotificationsManager>();
 
+IServiceProvider serviceProvider = builder.Services.BuildServiceProvider();
+
 builder.Services.AddAuthentication("gearivise")
     .AddCookie("gearivise", options =>
     {
@@ -61,7 +63,7 @@ builder.Services.AddSingleton<User>();
 
 builder.Services.AddCors(options => 
     options.AddPolicy("AllowAll", builder => 
-        builder.WithOrigins("https://192.168.150.70:5000")
+        builder.WithOrigins("https://localhost:5000")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
@@ -129,6 +131,10 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-SchedulerBaseClass.InittializeSchedulers();
+// Create an instance of SchedulerBaseClass
+var scheduler = ActivatorUtilities.CreateInstance<SchedulerController>(serviceProvider);
+
+// Call the InitializeSchedulers method
+scheduler.InitializeSchedulers();
 
 app.Run();
