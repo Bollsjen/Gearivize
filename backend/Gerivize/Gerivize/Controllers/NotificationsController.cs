@@ -16,10 +16,10 @@ namespace Gerivize.Controllers
         private NotificationRepository _notificationRepository;
         private NotificationsManager _notificationManager;
 
-        public NotificationsController()
+        public NotificationsController(NotificationsManager manager)
         {
             _notificationRepository = new NotificationRepository();
-            _notificationManager = new NotificationsManager();
+            _notificationManager = manager;
         }
 
         // GET: api/<NotificationsController>

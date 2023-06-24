@@ -16,11 +16,11 @@ namespace Gerivize.Controllers
         private readonly InstrumentsManager _instrumentsManager;
         private readonly FileExplorerManager _fileExplorerManager;
 
-        public InstrumentsController()
+        public InstrumentsController(FileExplorerManager manager, InstrumentsManager instrumentManager)
         {
             _instrumentRepository = new InstrumentRepository();
-            _instrumentsManager = new InstrumentsManager();
-            _fileExplorerManager = new FileExplorerManager();
+            _instrumentsManager = instrumentManager;
+            _fileExplorerManager = manager;
         }
 
 
@@ -42,6 +42,7 @@ namespace Gerivize.Controllers
         [HttpGet("image/{imageFileName}")]
         public ActionResult GetImage(string imageFileName)
         {
+            if (!System.IO.File.Exists(Environment.CurrentDirectory + @"\Public\Images\Instrument\" + imageFileName)) return NotFound();
             var image = System.IO.File.OpenRead(Environment.CurrentDirectory + @"\Public\Images\Instrument\" + imageFileName);
             return File(image, "image/jpeg");
         }

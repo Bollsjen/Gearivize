@@ -33,6 +33,9 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSerilog(dispose: true);
 });
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<FileExplorerManager>();
+builder.Services.AddTransient<InstrumentsManager>();
+builder.Services.AddTransient<NotificationsManager>();
 
 builder.Services.AddAuthentication("gearivise")
     .AddCookie("gearivise", options =>
@@ -58,7 +61,7 @@ builder.Services.AddSingleton<User>();
 
 builder.Services.AddCors(options => 
     options.AddPolicy("AllowAll", builder => 
-        builder.WithOrigins("https://176.23.69.93:3000")
+        builder.WithOrigins("https://192.168.150.70:5000")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
@@ -106,6 +109,9 @@ app.Map("/api", apiApp =>
     });
 });
 
+app.UseHangfireDashboard("/hangfire");
+app.UseHangfireServer();
+
 app.Run(async (context) =>
 {
     if (!context.Request.Path.StartsWithSegments("/api") && !context.Request.Path.StartsWithSegments("/swagger") && !context.Request.Path.StartsWithSegments("/hangfire"))
@@ -123,8 +129,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-app.UseHangfireDashboard("/hangfire");
-app.UseHangfireServer();
 SchedulerBaseClass.InittializeSchedulers();
 
 app.Run();

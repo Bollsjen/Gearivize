@@ -10,11 +10,11 @@ namespace Gerivize.Managers
         private UserRepository _userRepository;
         private InstrumentsManager _instrumentsManager;
 
-        public NotificationsManager() {
+        public NotificationsManager(InstrumentsManager instrumentManager) {
             _notificationRepository = new NotificationRepository();
             _instrumentRepository = new InstrumentRepository();
             _userRepository = new UserRepository();
-            _instrumentsManager = new InstrumentsManager();
+            _instrumentsManager = instrumentManager;
         }
 
         public void findIstrumenmtsToCreateNotificationsFor()

@@ -1,4 +1,5 @@
-﻿using Gerivize.Controllers;
+﻿using dotenv.net;
+using Gerivize.Controllers;
 using Gerivize.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -8,28 +9,30 @@ namespace Gerivize.Managers
 {
     public class FileExplorerManager
     {
+        private readonly ILogger<FileExplorerController> _logger;
 
-        public FileExplorerManager() 
+        public FileExplorerManager(ILogger<FileExplorerController> logger) 
         {
             try
             {
-                if (!Directory.Exists(FileExplorerController._rootPath + "\\Instrumenter")){
-                    Directory.CreateDirectory(FileExplorerController._rootPath + "\\Instrumenter");
+                if (!Directory.Exists(FileExplorerController._rootPath + "/Instrumenter")){
+                    Directory.CreateDirectory(FileExplorerController._rootPath + "/Instrumenter");
                 }
             }catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
+            _logger = logger;
         }
 
         public bool CreateINstrumentDIrectories(string ANumber)
         {
             try
             {
-                if (!Directory.Exists(FileExplorerController._rootPath + "\\Instrumenter\\" + ANumber))
+                if (!Directory.Exists(FileExplorerController._rootPath + "/Instrumenter/" + ANumber))
                 {
-                    Directory.CreateDirectory(FileExplorerController._rootPath + "\\Instrumenter\\" + ANumber);
-                    Directory.CreateDirectory(FileExplorerController._rootPath + "\\Instrumenter\\" + ANumber + "\\Old");
+                    Directory.CreateDirectory(FileExplorerController._rootPath + "/Instrumenter/" + ANumber);
+                    Directory.CreateDirectory(FileExplorerController._rootPath + "/Instrumenter/" + ANumber + "/Old");
                 }
             }catch (Exception ex)
             {
@@ -41,6 +44,7 @@ namespace Gerivize.Managers
 
         public List<DirectoryData> GetDirectoryTree(string path)
         {
+            _logger.LogInformation("######## GET DIRECTORY TREE ########");
             List<DirectoryData> directoryNodes = new List<DirectoryData>();
 
             try
@@ -70,12 +74,15 @@ namespace Gerivize.Managers
                         directoryNode.Size += subDirectoryNode.Size;
                     }
 
+                    _logger.LogInformation("######## ADDING NODE ########");
                     directoryNodes.Add(directoryNode);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading directory: {ex.Message}");
+                _logger.LogInformation(ex.Message);
+                _logger.LogInformation(ex.StackTrace);
             }
 
             return directoryNodes;
@@ -104,6 +111,8 @@ namespace Gerivize.Managers
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading files: {ex.Message}");
+                _logger.LogInformation(ex.Message);
+                _logger.LogInformation(ex.StackTrace);
             }
 
             return files;
@@ -117,11 +126,11 @@ namespace Gerivize.Managers
                 path += _path;
             }
 
-            path = path.Replace(",", "\\");
+            path = path.Replace(",", "/");
 
             try
             {
-                using (FileStream fileStream = System.IO.File.Create(path + "\\" + fileData.File.FileName))
+                using (FileStream fileStream = System.IO.File.Create(path + "/" + fileData.File.FileName))
                 {
                     fileData.File.CopyTo(fileStream);
                     fileStream.Flush();
@@ -130,6 +139,8 @@ namespace Gerivize.Managers
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.ToString());
+                _logger.LogInformation(ex.Message);
+                _logger.LogInformation(ex.StackTrace);
                 return false;
             }
 
@@ -143,17 +154,17 @@ namespace Gerivize.Managers
 
             foreach (string _path in move.FilePath)
             {
-                filePath += _path+"\\";
+                filePath += _path+"/";
             }
 
-            filePath = filePath.Replace(",", "\\");
+            filePath = filePath.Replace(",", "/");
 
             foreach (string _path in move.DestinationPath)
             {
-                destinationPath += _path+"\\";
+                destinationPath += _path+"/";
             }
 
-            destinationPath = destinationPath.Replace(",", "\\");
+            destinationPath = destinationPath.Replace(",", "/");
 
             try
             {
@@ -164,6 +175,8 @@ namespace Gerivize.Managers
             catch (IOException e)
             {
                 Console.WriteLine(e.Message);
+                _logger.LogInformation(e.Message);
+                _logger.LogInformation(e.StackTrace);
                 return false;
             }
             return true;
@@ -177,25 +190,27 @@ namespace Gerivize.Managers
                 actualPath += _path;
             }
 
-            actualPath = actualPath.Replace(",", "\\");
+            actualPath = actualPath.Replace(",", "/");
 
             try
             {
                 if (type == "file")
                 {
-                    if (File.Exists(actualPath + "\\" + name))
+                    if (File.Exists(actualPath + "/" + name))
                     {
-                        File.Delete(actualPath + "\\" + name);
+                        File.Delete(actualPath + "/" + name);
                     }
                 }else if(type == "folder")
                 {
-                    if(Directory.Exists(actualPath + "\\" + name))
+                    if(Directory.Exists(actualPath + "/" + name))
                     {
-                        Directory.Delete(actualPath + "\\" + name);
+                        Directory.Delete(actualPath + "/" + name);
                     }
                 }
             }catch(Exception ex) {
                 Console.WriteLine(ex.Message);
+                _logger.LogInformation(ex.Message);
+                _logger.LogInformation(ex.StackTrace);
                 return false;
             }
             return true;

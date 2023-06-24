@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using dotenv.net;
 using Microsoft.AspNetCore.Cors;
-using System.Web.Http.Cors;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,12 +15,12 @@ namespace Gerivize.Controllers
     public class FileExplorerController : ControllerBase
     {
         private readonly FileExplorerManager _fileManager;
-        public static string _rootPath ="/home/magnus/Documents";
+        public static string _rootPath = "/shared/Gearivize";
         private readonly ILogger<FileExplorerController> _logger;
 
-        public FileExplorerController(ILogger<FileExplorerController> logger)
+        public FileExplorerController(ILogger<FileExplorerController> logger, FileExplorerManager manager)
         {
-            _fileManager = new FileExplorerManager();
+            _fileManager = manager;
             var envVars = DotEnv.Read();
             //_rootPath = envVars["INSTRUMENT_DATA"];
             _logger = logger;
@@ -31,6 +30,7 @@ namespace Gerivize.Controllers
         [HttpGet]
         public List<DirectoryData> Get()
         {
+            _logger.LogInformation("######## FILEEXPLORER CALL ########");
             try
             {
                 List<DirectoryData> files = new List<DirectoryData>()
@@ -74,7 +74,7 @@ namespace Gerivize.Controllers
             //if(!user.Responsible) return Unauthorized();
             if (_fileManager.UploadFile(file))
             {
-                Response.Headers.Add("Access-Control-Allow-Origin", "https://localhost:3000");
+                Response.Headers.Add("Access-Control-Allow-Origin", "https://192.168.150.70:5000");
                 return Ok();
             }
             return StatusCode(500);
