@@ -50,8 +50,8 @@
     <Content Remove="wwwroot\img\instruments\BOLLS_1471-scaled-268x178x14x0x239x178x1612536827.jpg" />
     <Content Remove="wwwroot\img\logos\Bolls.png" />
     <Content Remove="wwwroot\index.html" />
-    <Content Remove="wwwroot\js\app.2e9a18ef.js" />
-    <Content Remove="wwwroot\js\app.2e9a18ef.js.map" />
+    <Content Remove="wwwroot\js\app.9afe7b5d.js" />
+    <Content Remove="wwwroot\js\app.9afe7b5d.js.map" />
     <Content Remove="wwwroot\js\chunk-vendors.51f21ab6.js" />
     <Content Remove="wwwroot\js\chunk-vendors.51f21ab6.js.map" />
     <Content Remove="wwwroot\manifest.json" />
@@ -119,8 +119,8 @@
     <None Include="wwwroot\img\instruments\BOLLS_1471-scaled-268x178x14x0x239x178x1612536827.jpg" />
     <None Include="wwwroot\img\logos\Bolls.png" />
     <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\js\app.2e9a18ef.js" />
-    <None Include="wwwroot\js\app.2e9a18ef.js.map" />
+    <None Include="wwwroot\js\app.9afe7b5d.js" />
+    <None Include="wwwroot\js\app.9afe7b5d.js.map" />
     <None Include="wwwroot\js\chunk-vendors.51f21ab6.js" />
     <None Include="wwwroot\js\chunk-vendors.51f21ab6.js.map" />
     <None Include="wwwroot\manifest.json" />

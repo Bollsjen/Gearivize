@@ -30,7 +30,6 @@ namespace Gerivize.Controllers
         [HttpGet]
         public List<DirectoryData> Get()
         {
-            _logger.LogInformation("######## FILEEXPLORER CALL ########");
             try
             {
                 List<DirectoryData> files = new List<DirectoryData>()

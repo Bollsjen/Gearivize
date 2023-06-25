@@ -63,7 +63,7 @@ builder.Services.AddSingleton<User>();
 
 builder.Services.AddCors(options => 
     options.AddPolicy("AllowAll", builder => 
-        builder.WithOrigins("https://localhost:5000")
+        builder.WithOrigins("https://192.168.150.70:5000")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()

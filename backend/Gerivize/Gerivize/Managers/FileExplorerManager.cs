@@ -44,7 +44,6 @@ namespace Gerivize.Managers
 
         public List<DirectoryData> GetDirectoryTree(string path)
         {
-            _logger.LogInformation("######## GET DIRECTORY TREE ########");
             List<DirectoryData> directoryNodes = new List<DirectoryData>();
 
             try
@@ -73,8 +72,6 @@ namespace Gerivize.Managers
                     {
                         directoryNode.Size += subDirectoryNode.Size;
                     }
-
-                    _logger.LogInformation("######## ADDING NODE ########");
                     directoryNodes.Add(directoryNode);
                 }
             }
