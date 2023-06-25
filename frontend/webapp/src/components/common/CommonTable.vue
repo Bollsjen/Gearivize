@@ -57,6 +57,9 @@
 
           :per-page="perPage"
           :current-page="currentPage"
+          :selectable="selectable"
+          :select-mode="selectMode"
+          @row-selected="rowSelected"
 
           :fields="fields"
           :items="filterItems"
@@ -109,6 +112,16 @@
               <i class="fa-solid" :class="cell.icon"></i>
             </b-button>
           </div>
+        </template>
+
+        <template #cell(selected)="{ rowSelected }">
+          <template v-if="rowSelected">
+            <span class="sr-only">Selected</span>
+          </template>
+          <template v-else>
+            <span class="sr-only">Not selected</span>
+          </template>
+          <b-checkbox v-model="rowSelected"></b-checkbox>
         </template>
 
       </b-table>
@@ -248,6 +261,23 @@ export default {
     pagination: {
       type: Boolean,
       default: false
+    },
+
+    selectable: {
+      type: Boolean,
+      default: false
+    },
+
+    selectMode: {
+      type: String,
+      default: 'multi'
+    },
+
+
+
+    rowSelected: {
+      type: Function,
+      default: (data) => console.log('row selected')
     }
   },
   data(){
