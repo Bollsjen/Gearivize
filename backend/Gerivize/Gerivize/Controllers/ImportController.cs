@@ -16,7 +16,7 @@ namespace Gerivize.Controllers
         }
 
         [HttpPost("instruments")]
-        public string[] ImportInstruments([FromForm] IFormFile file)
+        public List<string> ImportInstruments([FromForm] IFormFile file)
         {
             return _manager.ImportInstruments(file);
         }

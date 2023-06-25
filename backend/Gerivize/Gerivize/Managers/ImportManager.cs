@@ -4,8 +4,8 @@ namespace Gerivize.Managers
 {
     public class ImportManager
     {
-        public string[] ImportInstruments(IFormFile file){
-
+        public List<string> ImportInstruments(IFormFile file){
+            return new List<string>();
         }
     }
 }
