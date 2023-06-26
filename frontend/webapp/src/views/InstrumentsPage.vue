@@ -52,7 +52,23 @@ export default {
   methods: {
     getInstruments() {
       instrumentsService.getAll()
-          .then(result => this.instruments = this.sortInstruments(result.data))
+          .then(result => {
+            this.instruments = this.sortInstruments(result.data)
+
+            this.instruments.forEach(data => {
+              if (data && data.needsCalibration) {
+                const today = new Date()
+                const diff = new Date(data.nextCalibrationDate).getTime() - today.getTime()
+                const days = Math.ceil(diff / (1000 * 3600 * 24))
+                data['daysLeft'] = days
+
+              }else {
+                data['daysLeft'] = "-"
+              }
+
+              data['testType'] = testTypes[data.test]
+            })
+          })
           .catch(error => console.log(error))
     },
     sortInstruments(array) {
@@ -87,23 +103,12 @@ export default {
           sortable: true
         },
         {
-          key: 'test',
-          formatter: (data) => {
-            return testTypes[data.test]
-          },
+          key: 'testType',
+          label: 'Test',
           sortable: true
         },
         {
           key: 'daysLeft',
-          formatter: (data) => {
-            if (data && data.needsCalibration) {
-              const today = new Date()
-              const diff = new Date(data.nextCalibrationDate).getTime() - today.getTime()
-              const days = Math.ceil(diff / (1000 * 3600 * 24))
-              return days
-            }
-            return "-"
-          },
           sortable: true
         },
         {

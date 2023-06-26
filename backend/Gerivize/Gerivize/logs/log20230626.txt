@@ -6449,3 +6449,235 @@ DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
 2023-06-26 03:57:31.829 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 13.1504ms
 2023-06-26 03:57:31.829 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
 2023-06-26 03:57:31.834 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 18.1814ms
+2023-06-26 10:02:53.154 +02:00 [INF] Starting Hangfire Server using job storage: 'Hangfire.MemoryStorage.MemoryStorage'
+2023-06-26 10:02:53.180 +02:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2023-06-26 10:02:53.335 +02:00 [INF] Server desktop-k89tqel:22052:e8f365e5 successfully announced in 125,7366 ms
+2023-06-26 10:02:53.340 +02:00 [INF] Server desktop-k89tqel:22052:e8f365e5 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2023-06-26 10:02:53.417 +02:00 [INF] Server desktop-k89tqel:22052:e8f365e5 all the dispatchers started
+2023-06-26 10:02:53.618 +02:00 [INF] Now listening on: https://localhost:3000
+2023-06-26 10:02:53.618 +02:00 [INF] Starting Hangfire Server using job storage: 'Hangfire.MemoryStorage.MemoryStorage'
+2023-06-26 10:02:53.618 +02:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2023-06-26 10:02:53.622 +02:00 [INF] Server desktop-k89tqel:22052:3570157d successfully announced in 0,0568 ms
+2023-06-26 10:02:53.622 +02:00 [INF] Server desktop-k89tqel:22052:3570157d is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2023-06-26 10:02:53.650 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-06-26 10:02:53.662 +02:00 [INF] Hosting environment: Development
+2023-06-26 10:02:53.666 +02:00 [INF] Content root path: A:\Datamatiker\Gearivize\backend\Gerivize\Gerivize\
+2023-06-26 10:02:53.708 +02:00 [INF] Server desktop-k89tqel:22052:3570157d all the dispatchers started
+2023-06-26 10:03:03.070 +02:00 [INF] Starting Hangfire Server using job storage: 'Hangfire.MemoryStorage.MemoryStorage'
+2023-06-26 10:03:03.097 +02:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2023-06-26 10:03:03.306 +02:00 [INF] Server desktop-k89tqel:23500:d7144775 successfully announced in 180,8449 ms
+2023-06-26 10:03:03.312 +02:00 [INF] Server desktop-k89tqel:23500:d7144775 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2023-06-26 10:03:03.392 +02:00 [INF] Server desktop-k89tqel:23500:d7144775 all the dispatchers started
+2023-06-26 10:03:03.580 +02:00 [INF] Now listening on: https://localhost:3000
+2023-06-26 10:03:03.580 +02:00 [INF] Starting Hangfire Server using job storage: 'Hangfire.MemoryStorage.MemoryStorage'
+2023-06-26 10:03:03.580 +02:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2023-06-26 10:03:03.584 +02:00 [INF] Server desktop-k89tqel:23500:461380fe successfully announced in 0,0519 ms
+2023-06-26 10:03:03.584 +02:00 [INF] Server desktop-k89tqel:23500:461380fe is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2023-06-26 10:03:03.618 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-06-26 10:03:03.628 +02:00 [INF] Hosting environment: Development
+2023-06-26 10:03:03.628 +02:00 [INF] Content root path: A:\Datamatiker\Gearivize\backend\Gerivize\Gerivize\
+2023-06-26 10:03:03.673 +02:00 [INF] Server desktop-k89tqel:23500:461380fe all the dispatchers started
+2023-06-26 10:05:49.819 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/authentication - -
+2023-06-26 10:05:49.819 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/authentication - -
+2023-06-26 10:05:49.819 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/notifications/by-user - -
+2023-06-26 10:05:49.819 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/service-worker.js - -
+2023-06-26 10:05:49.819 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:05:49.872 +02:00 [INF] Sending file. Request path: '/service-worker.js'. Physical path: 'A:\Datamatiker\Gearivize\backend\Gerivize\Gerivize\wwwroot\service-worker.js'
+2023-06-26 10:05:49.874 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/service-worker.js - - - 200 1834 application/javascript 55.5076ms
+2023-06-26 10:05:49.887 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:05:49.888 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:05:49.888 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:05:49.888 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:05:49.894 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:05:49.894 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:05:49.894 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:05:49.895 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/notifications/by-user - - - 401 0 - 76.4451ms
+2023-06-26 10:05:49.897 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/authentication - - - 401 0 - 78.3583ms
+2023-06-26 10:05:49.897 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/authentication - - - 401 0 - 78.3715ms
+2023-06-26 10:05:49.898 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:05:50.007 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/img/icons/apple-touch-icon-152x152.png - -
+2023-06-26 10:05:50.007 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/img/icons/favicon.svg - -
+2023-06-26 10:05:50.010 +02:00 [INF] Sending file. Request path: '/img/icons/apple-touch-icon-152x152.png'. Physical path: 'A:\Datamatiker\Gearivize\backend\Gerivize\Gerivize\wwwroot\img\icons\apple-touch-icon-152x152.png'
+2023-06-26 10:05:50.010 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/img/icons/apple-touch-icon-152x152.png - - - 0 4046 image/png 2.7116ms
+2023-06-26 10:05:50.010 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/img/icons/favicon.svg - - - 0 - - 3.0314ms
+2023-06-26 10:05:50.210 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:05:50.223 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 6.117ms.
+2023-06-26 10:05:50.227 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:05:50.303 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 400.074ms
+2023-06-26 10:05:50.303 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:05:50.303 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 484.5411ms
+2023-06-26 10:05:50.527 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/service-worker.js - -
+2023-06-26 10:05:50.528 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/workbox-db5fc017.js - -
+2023-06-26 10:05:50.528 +02:00 [INF] The file /service-worker.js was not modified
+2023-06-26 10:05:50.528 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/service-worker.js - - - 304 - application/javascript 0.8784ms
+2023-06-26 10:05:50.531 +02:00 [INF] Sending file. Request path: '/workbox-db5fc017.js'. Physical path: 'A:\Datamatiker\Gearivize\backend\Gerivize\Gerivize\wwwroot\workbox-db5fc017.js'
+2023-06-26 10:05:50.531 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/workbox-db5fc017.js - - - 200 14450 application/javascript 3.1986ms
+2023-06-26 10:05:59.681 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/authentication - -
+2023-06-26 10:05:59.686 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/authentication - -
+2023-06-26 10:05:59.687 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:05:59.687 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:05:59.687 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:05:59.687 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:05:59.687 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/authentication - - - 401 0 - 1.3156ms
+2023-06-26 10:05:59.687 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/authentication - - - 401 0 - 6.0102ms
+2023-06-26 10:05:59.693 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/notifications/by-user - -
+2023-06-26 10:05:59.694 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:05:59.694 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:05:59.694 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/notifications/by-user - - - 401 0 - 0.9005ms
+2023-06-26 10:05:59.765 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:05:59.769 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:05:59.770 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:05:59.770 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:05:59.787 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:05:59.789 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.8319ms.
+2023-06-26 10:05:59.790 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:05:59.800 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 30.5025ms
+2023-06-26 10:05:59.802 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:05:59.803 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 38.6243ms
+2023-06-26 10:06:14.758 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/authentication - -
+2023-06-26 10:06:14.758 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2023-06-26 10:06:14.758 +02:00 [INF] AuthenticationScheme: gearivise was challenged.
+2023-06-26 10:06:14.758 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/authentication - - - 401 0 - 0.3350ms
+2023-06-26 10:06:14.803 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/user - -
+2023-06-26 10:06:14.804 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:06:14.804 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:06:14.807 +02:00 [INF] Route matched with {action = "Get", controller = "User"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.User]] Get() on controller Gerivize.Controllers.UserController (Gerivize).
+2023-06-26 10:06:14.808 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:06:14.808 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:06:14.808 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:06:14.808 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:06:14.817 +02:00 [INF] Executing action method Gerivize.Controllers.UserController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:06:14.825 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:06:14.828 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.8689ms.
+2023-06-26 10:06:14.828 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:06:14.830 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 21.9479ms
+2023-06-26 10:06:14.830 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:06:14.830 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 22.4581ms
+2023-06-26 10:06:14.831 +02:00 [INF] Executed action method Gerivize.Controllers.UserController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 14.3856ms.
+2023-06-26 10:06:14.831 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.User, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:06:14.836 +02:00 [INF] Executed action Gerivize.Controllers.UserController.Get (Gerivize) in 28.8178ms
+2023-06-26 10:06:14.836 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:06:14.836 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/user - - - 200 - application/json;+charset=utf-8 33.2581ms
+2023-06-26 10:09:50.556 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:09:50.556 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/user - -
+2023-06-26 10:09:50.557 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:09:50.557 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:09:50.557 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:09:50.557 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:09:50.557 +02:00 [INF] Route matched with {action = "Get", controller = "User"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.User]] Get() on controller Gerivize.Controllers.UserController (Gerivize).
+2023-06-26 10:09:50.557 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:09:50.578 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:09:50.578 +02:00 [INF] Executing action method Gerivize.Controllers.UserController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:09:50.580 +02:00 [INF] Executed action method Gerivize.Controllers.UserController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.327ms.
+2023-06-26 10:09:50.580 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.User, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:09:50.580 +02:00 [INF] Executed action Gerivize.Controllers.UserController.Get (Gerivize) in 23.2745ms
+2023-06-26 10:09:50.580 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:09:50.580 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/user - - - 200 - application/json;+charset=utf-8 24.1039ms
+2023-06-26 10:09:50.587 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9.6681ms.
+2023-06-26 10:09:50.591 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:09:50.593 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 35.7609ms
+2023-06-26 10:09:50.593 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:09:50.593 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 36.6538ms
+2023-06-26 10:10:01.211 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/user - -
+2023-06-26 10:10:01.212 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:10:01.212 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:10:01.212 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:10:01.212 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:10:01.212 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:10:01.212 +02:00 [INF] Route matched with {action = "Get", controller = "User"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.User]] Get() on controller Gerivize.Controllers.UserController (Gerivize).
+2023-06-26 10:10:01.212 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:10:01.225 +02:00 [INF] Executing action method Gerivize.Controllers.UserController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:10:01.225 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:10:01.226 +02:00 [INF] Executed action method Gerivize.Controllers.UserController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.8868ms.
+2023-06-26 10:10:01.226 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.User, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:10:01.226 +02:00 [INF] Executed action Gerivize.Controllers.UserController.Get (Gerivize) in 13.8425ms
+2023-06-26 10:10:01.226 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:10:01.226 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/user - - - 200 - application/json;+charset=utf-8 14.4623ms
+2023-06-26 10:10:01.227 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.7241ms.
+2023-06-26 10:10:01.227 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:10:01.229 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 17.2816ms
+2023-06-26 10:10:01.229 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:10:01.229 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 17.8906ms
+2023-06-26 10:10:32.049 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/user - -
+2023-06-26 10:10:32.049 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:10:32.049 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:10:32.049 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:10:32.049 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:10:32.049 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:10:32.049 +02:00 [INF] Route matched with {action = "Get", controller = "User"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.User]] Get() on controller Gerivize.Controllers.UserController (Gerivize).
+2023-06-26 10:10:32.049 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:10:32.063 +02:00 [INF] Executing action method Gerivize.Controllers.UserController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:10:32.063 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:10:32.063 +02:00 [INF] Executed action method Gerivize.Controllers.UserController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.8351ms.
+2023-06-26 10:10:32.063 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.User, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:10:32.064 +02:00 [INF] Executed action Gerivize.Controllers.UserController.Get (Gerivize) in 14.324ms
+2023-06-26 10:10:32.064 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:10:32.064 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/user - - - 200 - application/json;+charset=utf-8 14.8953ms
+2023-06-26 10:10:32.065 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 2.7262ms.
+2023-06-26 10:10:32.065 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:10:32.068 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 18.3534ms
+2023-06-26 10:10:32.068 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:10:32.074 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 24.6258ms
+2023-06-26 10:11:54.243 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/user - -
+2023-06-26 10:11:54.244 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:11:54.244 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:11:54.244 +02:00 [INF] Route matched with {action = "Get", controller = "User"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.User]] Get() on controller Gerivize.Controllers.UserController (Gerivize).
+2023-06-26 10:11:54.256 +02:00 [INF] Executing action method Gerivize.Controllers.UserController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:11:54.257 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:11:54.257 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:11:54.257 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:11:54.257 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:11:54.260 +02:00 [INF] Executed action method Gerivize.Controllers.UserController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 4.2974ms.
+2023-06-26 10:11:54.260 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.User, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:11:54.268 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:11:54.270 +02:00 [INF] Executed action Gerivize.Controllers.UserController.Get (Gerivize) in 26.1273ms
+2023-06-26 10:11:54.270 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:11:54.271 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/user - - - 200 - application/json;+charset=utf-8 27.5216ms
+2023-06-26 10:11:54.279 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 10.3816ms.
+2023-06-26 10:11:54.279 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:11:54.283 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 25.6803ms
+2023-06-26 10:11:54.283 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:11:54.283 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 25.9709ms
+2023-06-26 10:12:15.125 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/instruments - -
+2023-06-26 10:12:15.125 +02:00 [INF] Request starting HTTP/2 GET https://localhost:3000/api/user - -
+2023-06-26 10:12:15.125 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:12:15.125 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:12:15.125 +02:00 [INF] CORS policy execution successful.
+2023-06-26 10:12:15.125 +02:00 [INF] Executing endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:12:15.125 +02:00 [INF] Route matched with {action = "Get", controller = "Instruments"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.Instrument]] Get() on controller Gerivize.Controllers.InstrumentsController (Gerivize).
+2023-06-26 10:12:15.125 +02:00 [INF] Route matched with {action = "Get", controller = "User"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[Gerivize.Models.User]] Get() on controller Gerivize.Controllers.UserController (Gerivize).
+2023-06-26 10:12:15.135 +02:00 [INF] Executing action method Gerivize.Controllers.InstrumentsController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:12:15.142 +02:00 [INF] Executing action method Gerivize.Controllers.UserController.Get (Gerivize) - Validation state: "Valid"
+2023-06-26 10:12:15.143 +02:00 [INF] Executed action method Gerivize.Controllers.UserController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 0.7189ms.
+2023-06-26 10:12:15.143 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.User, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:12:15.143 +02:00 [INF] Executed action Gerivize.Controllers.UserController.Get (Gerivize) in 17.4704ms
+2023-06-26 10:12:15.143 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.UserController.Get (Gerivize)'
+2023-06-26 10:12:15.143 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/user - - - 200 - application/json;+charset=utf-8 17.9797ms
+2023-06-26 10:12:15.144 +02:00 [INF] Executed action method Gerivize.Controllers.InstrumentsController.Get (Gerivize), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 9.4914ms.
+2023-06-26 10:12:15.144 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Gerivize.Models.Instrument, Gerivize, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2023-06-26 10:12:15.146 +02:00 [INF] Executed action Gerivize.Controllers.InstrumentsController.Get (Gerivize) in 20.9337ms
+2023-06-26 10:12:15.146 +02:00 [INF] Executed endpoint 'Gerivize.Controllers.InstrumentsController.Get (Gerivize)'
+2023-06-26 10:12:15.159 +02:00 [INF] Request finished HTTP/2 GET https://localhost:3000/api/instruments - - - 200 - application/json;+charset=utf-8 33.6769ms
