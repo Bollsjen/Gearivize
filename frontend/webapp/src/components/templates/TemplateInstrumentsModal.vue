@@ -1,10 +1,17 @@
 <template>
+    <common-table :fields="fields1" :items="instruments" selectable :row-selected="rowSelected" />
 </template>
 
 <script lang="ts">
-    import { defineComponent } from 'vue';
+    import { templateService } from '@/services/templateService';
+    import { userService } from '@/services/userService';
+    import { useVuelidate } from '@vuelidate/core'
+    import { required } from '@vuelidate/validators'
 
-    export default defineComponent({
+    export default {
+        setup() {
+            return { v$: useVuelidate() }
+        },
         components: {
         },
         directives: {
@@ -40,8 +47,9 @@
         destroyed() {
         },
         methods: {
+            selectedInstruments: []
         },
-    });
+    };
 </script>
 
 <style>
