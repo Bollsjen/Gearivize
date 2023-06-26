@@ -227,17 +227,20 @@
 
 
 
-              <b-form-group label="Internal calibration" class="col-sm-6">
-                  <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
-                                v-model="instrument.internalCalibration">
-                  </b-form-input>
+            <div class="col-sm-6">
+              <b-form-group label="External calibrator" >
+                <b-form-input v-if="purpose === 'add' || purpose === 'edit'"
+                              v-model="instrument.externalCalibrator"
+                              :disabled="!instrument.externalCalibration">
+                </b-form-input>
 
-                  <b-form-input v-if="purpose === 'watch'"
-                                v-model="instrument.internalCalibration"
-                                required
-                                disabled>
-                  </b-form-input>
+                <b-form-input v-if="purpose === 'watch'"
+                              v-model="instrument.externalCalibrator"
+                              required
+                              disabled>
+                </b-form-input>
               </b-form-group>
+            </div>
 
 
 
@@ -263,7 +266,7 @@
 
 
 
-              <b-form-group label="External calibration" class="col-sm-6">
+              <b-form-group label="External Calibration" class="col-sm-6">
                   <b-checkbox v-if="purpose === 'add' || purpose === 'edit'"
                               v-model="instrument.externalCalibration"
                               type="number"
@@ -321,6 +324,7 @@ import {required} from "vuelidate/lib/validators";
 import { useVuelidate } from '@vuelidate/core'
 import {computed, reactive} from "vue";
 import FileExplorerModal from "@/components/instruments/FileExplorerModal.vue";
+import {requiredIf} from "@vuelidate/validators";
 export default {
   setup(){
     return {v$: useVuelidate()}
@@ -345,19 +349,17 @@ export default {
       instrument: {},
       defaultInstrument: {
         aNumber: 'A0',
-        calibrationReportNumber: '',
         comment: '',
         creationTime: new Date(),
         externalCalibration: false,
         image: '',
         inactive: false,
         instrumentName: '',
-        internalCalibration: '',
+        externalCalibrator: '',
         lastCalibratedDate: new Date(),
         manufacturer: '',
         nextCalibrationDate: new Date(new Date().setFullYear(new Date().getFullYear() + 2)).toISOString().slice(0, 10),
         note: '',
-        referenceCalibrationInstruction: '',
         serialNumber: '',
         test: 0,
         testTemplateId: null,
@@ -392,6 +394,11 @@ export default {
         },
         userId: {
           required
+        },
+        externalCalibrator: {
+          required: requiredIf(function(){
+            return this.instrument.externalCalibration
+          })
         }
       }
     }

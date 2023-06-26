@@ -48,10 +48,6 @@ namespace MyApp.Models
                         .HasColumnType("varchar(255)")
                         .HasColumnName("a_number");
 
-                    b.Property<string>("CalibrationReportNumber")
-                        .HasColumnType("longtext")
-                        .HasColumnName("calibration_report_number");
-
                     b.Property<string>("Comment")
                         .HasColumnType("longtext")
                         .HasColumnName("comment");
@@ -63,6 +59,10 @@ namespace MyApp.Models
                     b.Property<bool>("ExternalCalibration")
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("external_calibration");
+
+                    b.Property<string>("ExternalCalibrator")
+                        .HasColumnType("longtext")
+                        .HasColumnName("external_calibrator");
 
                     b.Property<string>("Image")
                         .HasColumnType("longtext")
@@ -76,10 +76,6 @@ namespace MyApp.Models
                         .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("instrument_name");
-
-                    b.Property<string>("InternalCalibration")
-                        .HasColumnType("longtext")
-                        .HasColumnName("internal_calibration");
 
                     b.Property<DateTime>("LastCalibratedDate")
                         .HasColumnType("datetime(6)")
@@ -101,10 +97,6 @@ namespace MyApp.Models
                     b.Property<string>("Note")
                         .HasColumnType("longtext")
                         .HasColumnName("note");
-
-                    b.Property<string>("ReferenceCalibrationInstruction")
-                        .HasColumnType("longtext")
-                        .HasColumnName("reference_calibration_instruction");
 
                     b.Property<string>("SerialNumber")
                         .HasColumnType("longtext")
@@ -141,6 +133,8 @@ namespace MyApp.Models
                     b.HasIndex("TestTemplateId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId2");
 
                     b.ToTable("instrument");
                 });
@@ -244,9 +238,15 @@ namespace MyApp.Models
                         .WithMany()
                         .HasForeignKey("UserId");
 
+                    b.HasOne("Gerivize.Models.User", "User2")
+                        .WithMany()
+                        .HasForeignKey("UserId2");
+
                     b.Navigation("TestTemplate");
 
                     b.Navigation("User");
+
+                    b.Navigation("User2");
                 });
 
             modelBuilder.Entity("Gerivize.Models.Notification", b =>

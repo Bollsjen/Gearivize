@@ -56,14 +56,8 @@ namespace Gerivize.Models
         [Column("comment")]
         public string? Comment { get; set; }
 
-        [Column("reference_calibration_instruction")]
-        public string? ReferenceCalibrationInstruction { get; set; }
-
-        [Column("internal_calibration")]
-        public string? InternalCalibration { get; set; }
-
-        [Column("calibration_report_number")]
-        public string? CalibrationReportNumber { get; set; }
+        [Column("external_calibrator")]
+        public string? ExternalCalibrator { get; set; }
 
         [Column("note")]
         public string? Note { get; set; }
