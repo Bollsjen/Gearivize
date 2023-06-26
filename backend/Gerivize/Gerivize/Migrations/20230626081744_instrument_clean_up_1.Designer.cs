@@ -3,16 +3,19 @@ using System;
 using Gerivize.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace MyApp.Models
+namespace Gerivize.Migrations
 {
     [DbContext(typeof(GearivizeLocalContext))]
-    partial class GearivizeLocalContextModelSnapshot : ModelSnapshot
+    [Migration("20230626081744_instrument_clean_up_1")]
+    partial class instrument_clean_up_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,6 +97,10 @@ namespace MyApp.Models
                         .HasColumnType("datetime(6)")
                         .HasColumnName("next_calibration_date");
 
+                    b.Property<string>("Note")
+                        .HasColumnType("longtext")
+                        .HasColumnName("note");
+
                     b.Property<string>("SerialNumber")
                         .HasColumnType("longtext")
                         .HasColumnName("serial_number");
@@ -101,6 +108,10 @@ namespace MyApp.Models
                     b.Property<int>("Test")
                         .HasColumnType("int")
                         .HasColumnName("test");
+
+                    b.Property<Guid?>("TestTemplateId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("test_template_id");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -121,6 +132,8 @@ namespace MyApp.Models
                         .HasColumnName("value");
 
                     b.HasKey("ANumber");
+
+                    b.HasIndex("TestTemplateId");
 
                     b.HasIndex("UserId");
 
@@ -160,6 +173,23 @@ namespace MyApp.Models
                     b.HasIndex("UserId");
 
                     b.ToTable("notification");
+                });
+
+            modelBuilder.Entity("Gerivize.Models.TestTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("test_template");
                 });
 
             modelBuilder.Entity("Gerivize.Models.User", b =>
@@ -203,6 +233,10 @@ namespace MyApp.Models
 
             modelBuilder.Entity("Gerivize.Models.Instrument", b =>
                 {
+                    b.HasOne("Gerivize.Models.TestTemplate", "TestTemplate")
+                        .WithMany("Instrument")
+                        .HasForeignKey("TestTemplateId");
+
                     b.HasOne("Gerivize.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -210,6 +244,8 @@ namespace MyApp.Models
                     b.HasOne("Gerivize.Models.User", "User2")
                         .WithMany()
                         .HasForeignKey("UserId2");
+
+                    b.Navigation("TestTemplate");
 
                     b.Navigation("User");
 
@@ -233,6 +269,11 @@ namespace MyApp.Models
                     b.Navigation("Instrument");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Gerivize.Models.TestTemplate", b =>
+                {
+                    b.Navigation("Instrument");
                 });
 #pragma warning restore 612, 618
         }

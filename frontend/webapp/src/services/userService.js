@@ -5,6 +5,10 @@ export const userService = {
         return axios.get(`/user`)
     },
 
+    getAllNoPasswords() {
+        return axios.get(`/user/no-password`)
+    },
+
     getUserById(id){
         return axios.get(`/user/${id}`)
     },

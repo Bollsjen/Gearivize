@@ -24,10 +24,20 @@ namespace Gerivize.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        public ActionResult<List<User>> Get()
+        [Authorize]
+        public ActionResult<List<User>> Get([AuthenticatedUser] User user)
         {
+            if(!user.SuperUser) return Unauthorized();
             List<User> users = _userRepository.getAll();
             if(users.Count == 0) { return NotFound(); }
+            return Ok(users);
+        }
+
+        [HttpGet("no-password")]
+        public ActionResult<List<User>> Get()
+        {
+            List<User> users = _userRepository.getAllWithNoPasswords();
+            if (users.Count == 0) { return NotFound(); }
             return Ok(users);
         }
 

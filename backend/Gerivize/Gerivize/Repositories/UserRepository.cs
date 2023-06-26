@@ -16,6 +16,16 @@ namespace Gerivize.Repositories
             return _localContext.Users.ToList();
         }
 
+        public List<User> getAllWithNoPasswords()
+        {
+            List<User> users = _localContext.Users.ToList();
+            users.ForEach(user =>
+            {
+                user.Password = "";
+            });
+            return users;
+        }
+
         public User? getById(Guid id)
         {
             return _localContext.Users.ToList().Find(x => x.Id == id);

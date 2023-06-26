@@ -23,10 +23,6 @@ namespace Gerivize.Models
         [DefaultValue(null)]
         public Guid? UserId2 { get; set; }
 
-        [Column("test_template_id")]
-        [DefaultValue(null)]
-        public Guid? TestTemplateId { get; set; }
-
         [Column("instrument_name")]
         public string InstrumentName { get; set; }
 
@@ -59,9 +55,6 @@ namespace Gerivize.Models
         [Column("external_calibrator")]
         public string? ExternalCalibrator { get; set; }
 
-        [Column("note")]
-        public string? Note { get; set; }
-
         [Column("value")]
         [DefaultValue(0)]
         public int? Value { get; set; }
@@ -89,10 +82,6 @@ namespace Gerivize.Models
         [ForeignKey(nameof(UserId2))]
         [JsonIgnore]
         public virtual User? User2 { get; set; }
-
-        [ForeignKey(nameof(TestTemplateId))]
-        [JsonIgnore]
-        public virtual TestTemplate? TestTemplate { get; set; }
 
         public override string ToString()
         {

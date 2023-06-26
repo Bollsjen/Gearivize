@@ -44,7 +44,7 @@
           <div class="w-100 text-center">
             <h3 style="font-weight: bold; text-align: center">Comment:</h3>
           </div>
-          <p v-if="purpose === 'watch'">{{instrument.comment}}</p>
+          <b-textarea v-if="purpose === 'watch'" v-model="instrument.comment" rows="5" placeholder="Write a comment..." disabled>{{instrument.comment}}}</b-textarea>
           <b-textarea v-else v-model="instrument.comment" rows="5" placeholder="Write a comment..."></b-textarea>
         </b-row>
       </b-col>
@@ -138,11 +138,13 @@
                       </option>
                   </b-select>
 
-                  <b-form-input v-if="purpose === 'watch'"
-                                v-model="instrument.test"
-                                required
-                                disabled>
-                  </b-form-input>
+                <b-select v-if="purpose === 'watch'"
+                          v-model="instrument.test"
+                          disabled>
+                  <option v-for="(test, index) in testTypes" :key="index" :value="index">
+                    {{test}}
+                  </option>
+                </b-select>
                   <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.test.$error">
                       {{v$.instrument.test.$errors[0].$message}}
                   </span>
@@ -212,14 +214,17 @@
                       </template>
                   </b-form-select>
 
-                  <b-select v-if="purpose === 'watch'"
-                            v-model="instrument.test"
-                            :class="{error: v$.instrument.test.$error}"
-                            disabled>
-                      <option v-for="(user, index) in users" :key="index" :value="user.id">
-                          {{user.name}}
-                      </option>
-                  </b-select>
+                <b-form-select v-if="purpose === 'watch'"
+                               v-model="instrument.userId"
+                               :class="{error: v$.instrument.userId.$error}"
+                               :options="users"
+                               :value-field="'id'"
+                               :text-field="'name'"
+                                disabled>
+                  <template #first>
+                    <option :value="null">None selected</option>
+                  </template>
+                </b-form-select>
                   <span class="text-danger" style="font-size: 14px" v-if="v$.instrument.userId.$error">
                       {{v$.instrument.userId.$errors[0].$message}}
                   </span>
@@ -255,13 +260,16 @@
                       </template>
                   </b-form-select>
 
-                  <b-select v-if="purpose === 'watch'"
-                            v-model="instrument.test"
-                            disabled>
-                      <option v-for="(user, index) in users" :key="index" :value="user.id">
-                          {{user.name}}
-                      </option>
-                  </b-select>
+                <b-form-select v-if="purpose === 'watch'"
+                               v-model="instrument.userId2"
+                               :options="users"
+                               :value-field="'id'"
+                               :text-field="'name'"
+                                disabled>
+                  <template #first>
+                    <option :value="null">None selected</option>
+                  </template>
+                </b-form-select>
               </b-form-group>
 
 
@@ -412,7 +420,7 @@ export default {
       },
 
     load(){
-      userService.getAll()
+      userService.getAllNoPasswords()
           .then(result => this.users = result.data)
           .catch(error => console.error(error))
     },
