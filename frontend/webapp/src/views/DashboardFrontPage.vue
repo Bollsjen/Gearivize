@@ -1,76 +1,5 @@
 ﻿<template>
   <b-container fluid class="w-75 text-start">
-    <!--<b-row class="mt-5">
-      <b-card class="shadow rounded col-sm-12">
-        <b-row>
-          <b-col sm="12">
-            <h2>Overdue</h2>
-          </b-col>
-          <b-col sm="4" class="w-100 d-flex justify-content-center">
-            <gauge-chart background-color="#E51616" foreground-color="#57E216" label="Active" :percentage="activePercentage"  style="width: 75%"/>
-          </b-col>
-          <b-col sm="4" class="w-100 d-flex justify-content-center">
-            <gauge-chart background-color="#E51616" foreground-color="#57E216" label="External calibration" :percentage="externalPercentage" style="width: 75%" />
-          </b-col>
-          <b-col sm="4" class="w-100 d-flex justify-content-center">
-            <gauge-chart background-color="#E51616" foreground-color="#57E216" label="Internal calibration" :percentage="internalPercentage" style="width: 75%;" />
-          </b-col>
-        </b-row>
-      </b-card>
-
-      <b-col lg="12" xl="6" class="mt-5 pl-0">
-        <b-card class="shadow rounded">
-          <b-row>
-            <b-col sm="12">
-              <h3>External calibration - overdue</h3>
-            </b-col>
-            <b-col sm="12" style="overflow: auto">
-              <common-table :items="externalCalibrationOverdue" :fields="fields" responsive />
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-col>
-
-      <b-col lg="12" xl="6" class="mt-5 pr-0">
-        <b-card class="shadow rounded">
-          <b-row>
-            <b-col sm="12">
-              <h3>Internal calibration - overdue</h3>
-            </b-col>
-            <b-col sm="12" style="overflow: auto">
-              <common-table :items="internalCalibrationOverdue" :fields="fields" responsive  />
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-col>
-
-      <b-col lg="12" xl="6" class="mt-5 pl-0">
-        <b-card class="shadow rounded">
-          <b-row>
-            <b-col sm="12">
-              <h3>External calibration - within next 3 months</h3>
-            </b-col>
-            <b-col sm="12" style="overflow: auto">
-              <common-table :items="externalCalibrationWithin3Months" :fields="fields" responsive />
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-col>
-
-      <b-col lg="12" xl="6" class="mt-5 pr-0">
-        <b-card class="shadow rounded">
-          <b-row>
-            <b-col sm="12">
-              <h3>Internal calibration - within next month</h3>
-            </b-col>
-            <b-col sm="12" style="overflow: auto">
-              <common-table :items="internalCalibrationWithin1Month" :fields="fields" responsive  />
-            </b-col>
-          </b-row>
-        </b-card>
-      </b-col>
-    </b-row>-->
-
     <b-row class="mb-5">
       <b-col sm="12" class="pl-0 pr-0 mt-5">
         <b-card class="shadow rounded col-sm-12">
@@ -79,13 +8,13 @@
               <h2>Overdue</h2>
             </b-col>
             <b-col sm="4" class="w-100 d-flex justify-content-center">
-              <gauge-chart background-color="#E51616" foreground-color="#57E216" label="Active" :percentage="activePercentage"  style="width: 75%"/>
+              <gauge-chart background-color="#57E216" foreground-color="#E51616" label="Active" :percentage="activePercentage"  style="width: 75%"/>
             </b-col>
             <b-col sm="4" class="w-100 d-flex justify-content-center">
-              <gauge-chart background-color="#E51616" foreground-color="#57E216" label="External calibration" :percentage="externalPercentage" style="width: 75%" />
+              <gauge-chart background-color="#57E216" foreground-color="#E51616" label="External calibration" :percentage="externalPercentage" style="width: 75%" />
             </b-col>
             <b-col sm="4" class="w-100 d-flex justify-content-center">
-              <gauge-chart background-color="#E51616" foreground-color="#57E216" label="Internal calibration" :percentage="internalPercentage" style="width: 75%;" />
+              <gauge-chart background-color="#57E216" foreground-color="#E51616" label="Internal calibration" :percentage="internalPercentage" style="width: 75%;" />
             </b-col>
           </b-row>
         </b-card>
@@ -114,14 +43,14 @@
           <b-col sm="12" class="mt-0 pr-0">
             <b-card class="shadow-lg">
               <h5>External clibration - within 3 months</h5>
-              <common-table :fields="fields" :items="externalCalibrationWithin3Months" pagination :page-sizes="[5]" />
+              <common-table :fields="fields" :items="externalCalibrationOverdue" pagination :page-sizes="[5]" />
             </b-card>
           </b-col>
 
           <b-col sm="12" class="mt-3 pr-0">
             <b-card class="shadow-lg">
               <h5>Internal clibration - within 1 month</h5>
-              <common-table :fields="fields" :items="internalCalibrationWithin1Month" pagination :page-sizes="[5]" />
+              <common-table :fields="fields" :items="internalCalibrationOverdue" pagination :page-sizes="[5]" />
             </b-card>
           </b-col>
         </b-row>
@@ -130,14 +59,14 @@
       <b-col sm="6" class="mt-5 pr-0 pb-0 pl-0">
         <b-card class="shadow-lg">
           <h3>External calibration - overdue</h3>
-          <common-table :fields="fields" :items="externalCalibrationOverdue" pagination :page-sizes="[5]" />
+          <common-table :fields="fields" :items="externalCalibrationWithin3Months" pagination :page-sizes="[5]" />
         </b-card>
       </b-col>
 
       <b-col sm="6" class="mt-5 pr-0 mb-5">
         <b-card class="shadow-lg">
           <h3>Internal calibration - overdue</h3>
-          <common-table :fields="fields" :items="internalCalibrationOverdue" pagination :page-sizes="[5]" />
+          <common-table :fields="fields" :items="internalCalibrationWithin1Month" pagination :page-sizes="[5]" />
         </b-card>
       </b-col>
 
@@ -375,30 +304,30 @@ export default {
 
     activePercentage(){
       let today = new Date()
-      let noneOverdue = this.instruments.filter(instrument =>
+      let Overdue = this.instruments.filter(instrument =>
           today >= new Date(instrument.nextCalibrationDate) &&
           !instrument.inactive &&
           instrument.needsCalibration
       ).length
-      return noneOverdue > 0 ? Number(((noneOverdue + 0.0001) / (this.instruments.filter(i => i.needsCalibration && !i.inactive).length + 0.0001) * 100).toFixed(0)) : 0
+      return Overdue > 0 ? Number(((Overdue + 0.0001) / (this.instruments.filter(i => i.needsCalibration && !i.inactive).length + 0.0001) * 100).toFixed(0)) : 0
     },
 
     externalPercentage(){
       let today = new Date()
-      let noneOverdue = this.instruments.filter(instrument =>
-          today < new Date(instrument.nextCalibrationDate) &&
+      let Overdue = this.instruments.filter(instrument =>
+          today >= new Date(instrument.nextCalibrationDate) &&
           instrument.externalCalibration &&
           !instrument.inactive &&
           instrument.needsCalibration
       ).length
-      return noneOverdue > 0 ? Number((((noneOverdue + 0.00001) / (this.instruments.filter(i => i.externalCalibration && i.needsCalibration && !i.inactive).length + 0.00001)) * 100).toFixed(0)) : 0
+      return Overdue > 0 ? Number((((Overdue + 0.00001) / (this.instruments.filter(i => i.externalCalibration && i.needsCalibration && !i.inactive).length + 0.00001)) * 100).toFixed(0)) : 0
     },
 
     internalPercentage(){
       let today = new Date()
       let noneOverdue = this.instruments.filter(instrument =>
-          today < new Date(instrument.nextCalibrationDate) &&
-          instrument.externalCalibration &&
+          today >= new Date(instrument.nextCalibrationDate) &&
+          !instrument.externalCalibration &&
           !instrument.inactive &&
           instrument.needsCalibration
       ).length

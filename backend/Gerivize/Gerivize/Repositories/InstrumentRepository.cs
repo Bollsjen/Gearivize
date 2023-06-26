@@ -84,6 +84,13 @@ namespace Gerivize.Repositories
             _localContext.SaveChanges();
             return instrument;
         }
+
+        public Instrument CreateInstrumentWithANumber(Instrument instrument)
+        {
+            _localContext.Instruments.Add(instrument);
+            _localContext.SaveChanges();
+            return instrument;
+        }
         public Instrument updateInstrument(Instrument instrument)
         {
             _localContext.Instruments.Update(instrument);

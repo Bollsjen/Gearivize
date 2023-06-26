@@ -96,13 +96,13 @@ export default {
         {
           key: 'daysLeft',
           formatter: (data) => {
-            if (data) {
+            if (data && data.needsCalibration) {
               const today = new Date()
               const diff = new Date(data.nextCalibrationDate).getTime() - today.getTime()
               const days = Math.ceil(diff / (1000 * 3600 * 24))
               return days
             }
-            return 0
+            return "-"
           },
           sortable: true
         },
