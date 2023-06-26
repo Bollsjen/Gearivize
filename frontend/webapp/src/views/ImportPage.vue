@@ -20,15 +20,17 @@
       </b-col>
     </b-row>
     <input type="file" style="display: none" ref="InstrumentImportInput" accept=".xlsx, .xls, .xlsb" @change="selectedFile" />
+    <import-instruments-modal ref="ImportErrorModal" />
   </b-container>
 </template>
 
 <script>
 import {importService} from "@/services/importService";
+import ImportInstrumentsModal from "@/components/ImportInstrumentsModal.vue";
 
 export default {
   components: {
-
+    ImportInstrumentsModal
   },
   props: {
 
@@ -48,7 +50,11 @@ export default {
       formData.append('file', file)
 
       importService.importInstruments(formData)
-          .then(result => console.log(result))
+          .then(result => {
+            if(result.data.length > 0){
+              this.$refs['ImportErrorModal'].show(result.data)
+            }
+          })
           .catch(error => console.log(error))
     }
   },

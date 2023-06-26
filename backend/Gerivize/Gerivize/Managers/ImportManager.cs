@@ -4,6 +4,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Gerivize.EnumTypes;
 using Gerivize.Models;
 using Gerivize.Repositories;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Globalization;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Gerivize.Managers
 {
     public class ImportManager
     {
-        List<string> columnNames = new List<string>() 
+        List<string> columnMasterNames = new List<string>() 
         {
             "Instrument",
             "Manufacturer",
@@ -74,47 +75,52 @@ namespace Gerivize.Managers
                                         string cellLetter = GetCellLetter(cellReference);
                                         uint rowNumber = GetRowNumber(cellReference);
 
-                                        errorMessages.Add("Wrong column name at: row " + rowNumber + ", cell " + cellLetter+", you typed \"" + columnName + "\" but was supposed to be \"" + columnNames[cellId] + "\"");
-                                        Console.WriteLine(errorMessages[errorMessages.Count - 1]);
+                                        errorMessages.Add("Wrong column name at: row " + rowNumber + ", cell " + cellLetter+", you typed \"" + columnName + "\" but was supposed to be \"" + columnMasterNames[cellId] + "\"");
                                     }
                                     cellId++;
                                 }
                             }
 
-                            // Read data from the remaining rows
-                            IEnumerable<Row> dataRows = worksheet.GetFirstChild<SheetData>().Elements<Row>().Skip(1);
-                            i++;
-                            foreach (Row dataRow in dataRows)
+                            if (errorMessages.Count <= 0)
                             {
-                                Dictionary<string,string> rowData = new Dictionary<string,string>();
-                                int cellId = 0;
-                                foreach (Cell cell in dataRow.Elements<Cell>())
+                                // Read data from the remaining rows
+                                IEnumerable<Row> dataRows = worksheet.GetFirstChild<SheetData>().Elements<Row>().Skip(1);
+                                i++;
+                                foreach (Row dataRow in dataRows)
                                 {
-                                    string cellReference = cell.CellReference.Value;
-                                    string cellLetter = GetCellLetter(cellReference);
-                                    uint rowNumber = GetRowNumber(cellReference);
+                                    Dictionary<string, string> rowData = new Dictionary<string, string>();
+                                    int cellId = 0;
+                                    foreach (Cell cell in dataRow.Elements<Cell>())
+                                    {
+                                        string cellReference = cell.CellReference.Value;
+                                        string cellLetter = GetCellLetter(cellReference);
+                                        uint rowNumber = GetRowNumber(cellReference);
 
-                                    string cellData = GetCellValue(workbookPart, cell);
-                                    if (cellId == 0 && cellData == "") break;
-                                        if (cellId + 1 <= columnNames.Count) rowData.Add(columnNames[cellId], cellData);
+                                        string cellData = GetCellValue(workbookPart, cell);
+                                        if (cellId == 0 && cellData == "") break;
+                                        if (cellId + 1 <= columnMasterNames.Count) rowData.Add(columnMasterNames[cellId], cellData);
                                         else break;
                                         cellId++;
+                                    }
+                                    if (cellId == columnMasterNames.Count)
+                                    {
+                                        Instrument instrument = CreateInstrument(rowData, i);
+                                        if (instrument != null)
+                                            instruments.Add(instrument);
+                                    }
                                 }
-                                if(cellId == columnNames.Count)
-                                    instruments.Add(CreateInstrument(rowData, i));
                             }
-                            Console.WriteLine("\n\n");
                         }
                     }
                 }
             }
 
-            instruments.ForEach(instrument =>
-            {
-                Console.WriteLine(instrument != null ? instrument : "NULL");
-                if(instrument != null)
-                    instrumentRepository.CreateInstrumentWithANumber(instrument);
-            });
+            if(errorMessages.Count <= 0)
+                instruments.ForEach(instrument =>
+                {
+                    if(instrument != null)
+                        instrumentRepository.CreateInstrumentWithANumber(instrument);
+                });
 
             return errorMessages;
         }
@@ -128,8 +134,6 @@ namespace Gerivize.Managers
                 DateTime fromDate = int.TryParse(rowData["Last Cal. Date"], out unixThing) ? DateTime.FromOADate(Convert.ToInt32(rowData["Last Cal. Date"])) : DateTime.ParseExact("01/01/1970", "MM/dd/yyyy", new CultureInfo("da-DK"));
                 DateTime toDate = int.TryParse(rowData["Next Cal. date"], out unixThing) ? DateTime.FromOADate(Convert.ToInt32(rowData["Next Cal. date"])) : DateTime.ParseExact("01/01/3000", "MM/dd/yyyy", new CultureInfo("da-DK"));
                 int valueTing = 0;
-                Console.WriteLine(fromDate.ToString() + " | " + sheetId);
-                Console.WriteLine(rowData["Last Cal. Date"] + " | " + rowData["Next Cal. date"]);
                 return new Instrument()
                 {
                     ANumber = rowData["Bolls No."],
@@ -204,7 +208,7 @@ namespace Gerivize.Managers
         private bool ValidateColumnName(string column)
         {
             bool match = false;
-            columnNames.ForEach(columnName =>
+            columnMasterNames.ForEach(columnName =>
             {
                 if(column == columnName) match = true;
             });
