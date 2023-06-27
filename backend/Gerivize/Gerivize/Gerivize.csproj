@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\css\app.20f4f365.css" />
+    <Content Remove="wwwroot\css\app.c57eb306.css" />
     <Content Remove="wwwroot\css\chunk-vendors.e32a4b5d.css" />
     <Content Remove="wwwroot\favicon.ico" />
     <Content Remove="wwwroot\fonts\fa-brands-400.5f7c5bb7.ttf" />
@@ -46,10 +46,10 @@
     <Content Remove="wwwroot\img\instruments\BOLLS_1471-scaled-268x178x14x0x239x178x1612536827.jpg" />
     <Content Remove="wwwroot\img\logos\Bolls.png" />
     <Content Remove="wwwroot\index.html" />
-    <Content Remove="wwwroot\js\app.6c2e0520.js" />
-    <Content Remove="wwwroot\js\app.6c2e0520.js.map" />
-    <Content Remove="wwwroot\js\chunk-vendors.51f21ab6.js" />
-    <Content Remove="wwwroot\js\chunk-vendors.51f21ab6.js.map" />
+    <Content Remove="wwwroot\js\app.f5717854.js" />
+    <Content Remove="wwwroot\js\app.f5717854.js.map" />
+    <Content Remove="wwwroot\js\chunk-vendors.b8ff6a48.js" />
+    <Content Remove="wwwroot\js\chunk-vendors.b8ff6a48.js.map" />
     <Content Remove="wwwroot\manifest.json" />
     <Content Remove="wwwroot\robots.txt" />
     <Content Remove="wwwroot\service-worker.js" />
@@ -89,7 +89,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\css\app.20f4f365.css" />
+    <None Include="wwwroot\css\app.c57eb306.css" />
     <None Include="wwwroot\css\chunk-vendors.e32a4b5d.css" />
     <None Include="wwwroot\favicon.ico" />
     <None Include="wwwroot\fonts\fa-brands-400.5f7c5bb7.ttf" />
@@ -117,10 +117,10 @@
     <None Include="wwwroot\img\instruments\BOLLS_1471-scaled-268x178x14x0x239x178x1612536827.jpg" />
     <None Include="wwwroot\img\logos\Bolls.png" />
     <None Include="wwwroot\index.html" />
-    <None Include="wwwroot\js\app.6c2e0520.js" />
-    <None Include="wwwroot\js\app.6c2e0520.js.map" />
-    <None Include="wwwroot\js\chunk-vendors.51f21ab6.js" />
-    <None Include="wwwroot\js\chunk-vendors.51f21ab6.js.map" />
+    <None Include="wwwroot\js\app.f5717854.js" />
+    <None Include="wwwroot\js\app.f5717854.js.map" />
+    <None Include="wwwroot\js\chunk-vendors.b8ff6a48.js" />
+    <None Include="wwwroot\js\chunk-vendors.b8ff6a48.js.map" />
     <None Include="wwwroot\manifest.json" />
     <None Include="wwwroot\robots.txt" />
     <None Include="wwwroot\service-worker.js" />

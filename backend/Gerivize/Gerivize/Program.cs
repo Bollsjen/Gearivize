@@ -58,7 +58,7 @@ builder.Services.AddSingleton<User>();
 
 builder.Services.AddCors(options => 
     options.AddPolicy("AllowAll", builder => 
-        builder.WithOrigins("http://localhost:8081")
+        builder.WithOrigins("https://localhost:3000")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
@@ -96,24 +96,24 @@ app.UseHttpsRedirection();
 app.UseDefaultFiles(); 
 app.UseFileServer();
 
-//app.Map("/api", apiApp =>
-//{
-//    // Configure API-specific middleware, routes, and controllers
-//    apiApp.UseRouting();
-//    apiApp.UseEndpoints(endpoints =>
-//    {
-//        endpoints.MapControllers();
-//    });
-//});
+app.Map("/api", apiApp =>
+{
+    // Configure API-specific middleware, routes, and controllers
+    apiApp.UseRouting();
+    apiApp.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllers();
+    });
+});
 
-//app.Run(async (context) =>
-//{
-//    if (!context.Request.Path.StartsWithSegments("/api") && !context.Request.Path.StartsWithSegments("/swagger") && !context.Request.Path.StartsWithSegments("/hangfire"))
-//    {
-//        context.Response.ContentType = "text/html";
-//        await context.Response.SendFileAsync(Path.Combine(app.Environment.ContentRootPath, "wwwroot", "index.html"));
-//    }
-//});
+app.Run(async (context) =>
+{
+    if (!context.Request.Path.StartsWithSegments("/api") && !context.Request.Path.StartsWithSegments("/swagger") && !context.Request.Path.StartsWithSegments("/hangfire"))
+    {
+        context.Response.ContentType = "text/html";
+        await context.Response.SendFileAsync(Path.Combine(app.Environment.ContentRootPath, "wwwroot", "index.html"));
+    }
+});
 
 app.UseCors("AllowAll");
 

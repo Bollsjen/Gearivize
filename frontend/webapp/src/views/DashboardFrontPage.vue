@@ -32,7 +32,7 @@
           <b-col sm="12" class="mt-3 pr-0">
             <b-card class="shadow-lg">
               <h4>Instrument total value</h4>
-              <common-table :fields="instrumentsTotalValueFields" :items="instrumentsTotalValue" />
+              <common-table :fields="instrumentsTotalValueFields" :items="instrumentsTotalValue" responsive />
             </b-card>
           </b-col>
         </b-row>
@@ -43,14 +43,14 @@
           <b-col sm="12" class="mt-0 pr-0">
             <b-card class="shadow-lg">
               <h5>External clibration - within 3 months</h5>
-              <common-table :fields="fields" :items="externalCalibrationOverdue" pagination :page-sizes="[5]" />
+              <common-table :fields="fields" :items="externalCalibrationOverdue" pagination :page-sizes="[5]" responsive />
             </b-card>
           </b-col>
 
           <b-col sm="12" class="mt-3 pr-0">
             <b-card class="shadow-lg">
               <h5>Internal clibration - within 1 month</h5>
-              <common-table :fields="fields" :items="internalCalibrationOverdue" pagination :page-sizes="[5]" />
+              <common-table :fields="fields" :items="internalCalibrationOverdue" pagination :page-sizes="[5]" responsive />
             </b-card>
           </b-col>
         </b-row>
@@ -59,14 +59,14 @@
       <b-col sm="6" class="mt-5 pr-0 pb-0 pl-0">
         <b-card class="shadow-lg">
           <h3>External calibration - overdue</h3>
-          <common-table :fields="fields" :items="externalCalibrationWithin3Months" pagination :page-sizes="[5]" />
+          <common-table :fields="fields" :items="externalCalibrationWithin3Months" pagination :page-sizes="[5]" responsive />
         </b-card>
       </b-col>
 
       <b-col sm="6" class="mt-5 pr-0 mb-5">
         <b-card class="shadow-lg">
           <h3>Internal calibration - overdue</h3>
-          <common-table :fields="fields" :items="internalCalibrationWithin1Month" pagination :page-sizes="[5]" />
+          <common-table :fields="fields" :items="internalCalibrationWithin1Month" pagination :page-sizes="[5]" responsive />
         </b-card>
       </b-col>
 
